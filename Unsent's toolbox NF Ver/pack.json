@@ -1,0 +1,6 @@
+{
+    "name": "Unsent's toolbox NF Ver",
+    "description": "Version : 2.0\nThis developer toolbox designed for NovaFlare Engine 1.2.x.\nDeveloper Tools:\nC - Toggle Botplay  Shift + C - Toggle Fake Botplay\nV - Toggle Practice Mode  N/M - Adjust Scroll Speed\nCtrl + N/M - Adjust Playback Rate  P - Toggle Developer Output\nCtrl + R - Reset Playback Rate  Shift + R - Reset Scroll Speed\nAlt + R - Reset Health to 50%  Alt + N/M - Adjust Health\nSpace + H/G - Soft Pause  Space - Exit Soft Pause\n\nReset Property requires NovaFlare Engine's No Reset option to be enabled.",
+    "restart": true,
+    "runsGlobally": true
+}
