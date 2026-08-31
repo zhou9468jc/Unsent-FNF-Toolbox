@@ -61,7 +61,7 @@
 
 **Developer Toolbox Mod for NovaFlare Engine 1.2.x**
 
-Author: **Unsent**
+Author: **Unsent**(NanJi QiXu)
 
 ## ⚠️ Important Notice
 
