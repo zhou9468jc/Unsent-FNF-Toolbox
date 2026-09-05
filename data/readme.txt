@@ -1,0 +1,1 @@
+"settings.json" is mod settings config file.

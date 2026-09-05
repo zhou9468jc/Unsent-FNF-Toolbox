@@ -1,0 +1,1 @@
+This is the folder for fonts. Two of the font files, "pixel.ttf" and "vcr.ttf," will replace the fonts in the game. If you don't want to replace the fonts, please rename or delete these two files.
