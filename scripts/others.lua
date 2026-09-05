@@ -144,6 +144,25 @@ function getScoreTextColor(elapsed)
 		if r~=nil and g~=nil and b~=nil then
 			return string.format('%02X%02X%02X',r,g,b)
 		end
+	elseif color=='Follow Op.' then
+		local r=getProperty('dad.healthColorArray[0]')
+		local g=getProperty('dad.healthColorArray[1]')
+		local b=getProperty('dad.healthColorArray[2]')
+
+		if r~=nil and g~=nil and b~=nil then
+			return string.format('%02X%02X%02X',r,g,b)
+		end
+	elseif color=='Custom' then
+		local r=getModSetting('textColorR') or 255
+		local g=getModSetting('textColorG') or 255
+		local b=getModSetting('textColorB') or 255
+
+		return string.format(
+			'%02X%02X%02X',
+			math.max(0,math.min(255,r)),
+			math.max(0,math.min(255,g)),
+			math.max(0,math.min(255,b))
+		)
 	elseif color~='Disable' and scoreColors[color] then
 		return scoreColors[color]
 	end
@@ -153,6 +172,7 @@ end
 
 function scoreTextColorCreate()
 	local color=getScoreTextColor(0)
+
 	if color then
 		setTextColor('scoreTxt',color)
 	end
@@ -160,22 +180,93 @@ end
 
 function scoreTextColorUpdate(elapsed)
 	local color=getScoreTextColor(elapsed)
+
 	if color then
 		setTextColor('scoreTxt',color)
 	end
 end
 
 --================================================
+--Blind Play
+--================================================
+local blindPlayTimer=0
+
+function applyBlindPlay()
+	local mode=getModSetting('blindPlay')
+
+	if mode=='Disable' then
+		return
+	end
+
+	runHaxeCode([[
+		function hideBlindNote(note:games.objects.Note)
+		{
+			if (note == null || note.noteData < 0)
+				return;
+
+			var mode = ']]..mode..[[';
+
+			if (mode == 'Only Player' && !note.mustPress)
+				return;
+
+			if (mode == 'All' || (mode == 'Only Player' && note.mustPress))
+			{
+				note.texture = 'noteSkins/BlindNote';
+
+				if (note.rgbShader != null)
+					note.rgbShader.enabled = false;
+
+				note.shader = null;
+			}
+		}
+
+		if (game.unspawnNotes != null)
+		{
+			for (note in game.unspawnNotes)
+				hideBlindNote(note);
+		}
+
+		if (game.notes != null)
+		{
+			for (note in game.notes)
+				hideBlindNote(note);
+		}
+	]])
+end
+
+function blindPlayCreate()
+	applyBlindPlay()
+end
+
+function blindPlayUpdate(elapsed)
+	if getModSetting('blindPlay')=='Disable' then
+		return
+	end
+
+	blindPlayTimer=blindPlayTimer+elapsed
+
+	if blindPlayTimer>=0.1 then
+		blindPlayTimer=0
+		applyBlindPlay()
+	end
+end
+
+--================================================
 --Main
 --================================================
+function onCreatePost()
+	blindPlayCreate()
+end
+
 function onCreate()
 	disableBotplayCreate()
 	scoreTextColorCreate()
 end
 
-function onUpdate()
+function onUpdate(elapsed)
 	disableBotplayUpdate()
 	missLimitUpdate()
+	blindPlayUpdate(elapsed)
 end
 
 function onUpdatePost(elapsed)

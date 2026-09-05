@@ -51,13 +51,6 @@
         "value": true
     },
     {
-        "save": "disableCheckVer",
-        "name": "Disable Engine Version Check",
-        "type": "bool",
-        "description": "If enabled, the script will no longer check whether the runtime environment is NovaFlare Engine. Under normal circumstances, \n*DO NOT* enable this option.",
-        "value": false
-    },
-    {
         "save": "title2",
         "name": "Taunt Settings",
         "type": "string",
@@ -67,7 +60,8 @@
     },
     {
 	"save": "taunt",
-	"name": "Taunt Key  :",
+	"name": "   Taunt Key  :",
+        "format":"   %v",
 	"type": "string",
 	"description": "Select the key used to taunt.",
 	"value": "Disable",
@@ -75,7 +69,8 @@
     },
     {
         "save": "tauntCharacter",
-        "name": "Taunt Character  :",
+        "name": "   Taunt Character  :",
+        "format":"   %v",
         "type": "string",
         "description": "Select which character plays the \"Hey\" animation.",
         "value": "BF",
@@ -83,9 +78,9 @@
     },
     {
         "save": "tauntDuration",
-        "name": "Taunt Duration  :",
+        "name": "   Taunt Duration  :",
         "type": "float",
-        "format": "%vs",
+        "format": "   %vs",
         "description": "Set how long the \"Hey\" animation lasts.",
         "value": 0.6,
         "decimals": 1,
@@ -96,7 +91,8 @@
     },
     {
         "save": "tauntSoundVolume",
-        "name": "\"Hey\" Sound Volume  :",
+        "name": "   \"Hey\" Sound Volume  :",
+        "format":"   %v",
         "type": "percent",
         "description": "Set the volume of the \"Hey\" sound effect when taunting.",
         "value": 0.6,
@@ -123,7 +119,8 @@
     },
     {
         "save": "missLimit",
-        "name": "Miss Limit Count  :",
+        "name": "   Miss Limit Count  :",
+        "format":"   %v",
         "type": "int",
         "description": "If the number of misses exceeds this value, you will immediately fail (in all songs). Set it to -1 to disable.",
         "value": -1,
@@ -133,17 +130,35 @@
     },
     {
 	"save":"scoreTextColor",
-	"name":"Score Text Color",
+	"name":"   Score Text Color :",
+        "format":"  %v",
 	"type":"string",
 	"description":"Set the score text color. Disable to allow other mods to modify it.\n(Have 28 Colors!)",
 	"value":"Disable",
-	"options":["Disable","Follow Player","Rainbow","White","Black","Red","DarkRed","Green","DarkGreen","Blue","DarkBlue","SkyBlue","DodgerBlue","Cyan","Teal","Yellow","Gold","Orange","Coral","Purple","Violet","Pink","HotPink","Magenta","Brown","Chocolate","Gray","DarkGray","LightGray","Silver"]
+	"options":["Disable","Follow Player","Follow Op.","Rainbow","Custom","White","Black","Red","DarkRed","Green","DarkGreen","Blue","DarkBlue","SkyBlue","DodgerBlue","Cyan","Teal","Yellow","Gold","Orange","Coral","Purple","Violet","Pink","HotPink","Magenta","Brown","Chocolate","Gray","DarkGray","LightGray","Silver"]
+    },
+    {
+        "save": "blindPlay",
+        "name": "   Blind Play",
+        "format":"   %v",
+        "type": "string",
+        "description": "If enabled, will hide all notes during gameplay.\nOnly Player: Just hiding the player's notes, it allows you to guess the player's notes through the opponent's notes.\nAll: Hiding all the notes (would be way too hard, good luck)",
+        "value": "Disable",
+        "options": ["Disable","Only Player","All"]
+    },
+    {
+        "save": "titleAdvanced",
+        "name": "Advanced Settings",
+        "type": "string",
+        "description": "If you don't know what the settings below are for, \nDON'T touch them!!!",
+        "value": " ",
+        "options":[" "]
     },
     {
 	"save":"rainbowSpeed",
-	"name":"Rainbow Speed",
+	"name":"   Rainbow Speed",
 	"type":"float",
-	"format":"%vx",
+	"format":"   %vx",
 	"description":"Adjust the color transition speed multiplier.\n(only takes effect when the score text color is set to \"Rainbow\").",
 	"value":1,
 	"decimals":1,
@@ -151,5 +166,56 @@
 	"max":50,
 	"step":0.1,
 	"scroll":10
+    },
+    {
+        "save": "titleCustomRGB",
+        "name": "   Custom Score Text Color(RGB)",
+        "type": "string",
+        "description": "Set the RGB value of a custom score color.\n(only takes effect when the score text color is set to \"Custom\").",
+        "value": " ",
+        "options":[" "]
+    },
+    {
+	"save":"textColorR",
+	"name":"      R  :",
+        "format":"      %v",
+	"type":"int",
+	"description":"Set the R value of a custom score RGB color.",
+	"value":0,
+	"decimals":1,
+	"min":0,
+	"max":255,
+	"step":1
+    },
+    {
+	"save":"textColorG",
+	"name":"      G  :",
+        "format":"      %v",
+	"type":"int",
+	"description":"Set the G value of a custom score RGB color.",
+	"value":0,
+	"decimals":1,
+	"min":0,
+	"max":255,
+	"step":1
+    },
+    {
+	"save":"textColorB",
+	"name":"      B  :",
+        "format":"      %v",
+	"type":"int",
+	"description":"Set the B value of a custom score RGB color.",
+	"value":0,
+	"decimals":1,
+	"min":0,
+	"max":255,
+	"step":1
+    },
+    {
+        "save": "disableCheckVer",
+        "name": "Disable Engine Version Check",
+        "type": "bool",
+        "description": "If enabled, the script will no longer check whether the runtime environment is NovaFlare Engine. Under normal circumstances, \n*DO NOT* enable this option.",
+        "value": false
     }
 ]
