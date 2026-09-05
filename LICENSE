@@ -1,21 +1,483 @@
-MIT License
+UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE
+Version 1.1
 
-Copyright (c) 2026 zhou9468jc (Unsent / NanJi QiXu)
+Copyright (c) 2026 Unsent / 难寄期许
+GitHub: zhou9468jc
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+IMPORTANT NOTICE
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This is a custom software license created for the Software identified
+and distributed by the Licensor.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This License grants certain rights to use, copy, modify, and
+redistribute the Software, subject to the terms and conditions
+contained herein.
+
+This License is not an Open Source Initiative (OSI) Approved License
+and shall not be represented as an OSI-approved open source license.
+
+By exercising any rights granted under this License, you agree to be
+bound by all terms and conditions of this License.
+
+
+1. DEFINITIONS
+
+For the purposes of this License, the following definitions shall
+apply:
+
+"Licensor" means the copyright holder who distributes the Software
+under this License.
+
+"Original Author" means:
+
+    Unsent / 难寄期许
+    GitHub: zhou9468jc
+
+"Software" means the original software, source code, object code,
+scripts, documentation, configuration files, and other copyrightable
+materials distributed by the Licensor under this License.
+
+"Modified Version" means any work based upon, derived from,
+incorporating, or containing the Software, in which the Software or
+any substantial portion thereof has been modified, adapted,
+translated, extended, or otherwise altered.
+
+"Redistribute" or "Redistribution" means to provide, publish,
+distribute, transmit, make available, or otherwise transfer the
+Software or a Modified Version to another person or entity.
+
+"Non-Commercial Purpose" means a purpose that is not primarily
+intended for commercial advantage, monetary compensation, revenue,
+or financial gain.
+
+"Commercial Use" means any use, distribution, sale, licensing,
+sublicensing, monetization, or other activity primarily intended to
+obtain revenue, monetary compensation, commercial advantage, or
+financial gain.
+
+"License" means the Unsent's Non-Commercial Share-Alike License
+Version 1.1.
+
+
+2. COPYRIGHT
+
+The Software is protected by applicable copyright and other
+intellectual property laws.
+
+Except for the rights expressly granted by this License, all rights,
+title, and interest in and to the Software remain with the Licensor.
+
+Nothing in this License transfers ownership of the Software or any
+copyright therein to any other person or entity.
+
+
+3. GRANT OF RIGHTS
+
+Subject to the terms and conditions of this License, the Licensor
+grants you a worldwide, royalty-free, non-exclusive license to:
+
+a. use the Software for Non-Commercial Purposes;
+
+b. obtain and access the source code of the Software;
+
+c. copy the Software;
+
+d. modify, adapt, translate, and create Modified Versions of the
+   Software;
+
+e. publish Modified Versions for Non-Commercial Purposes; and
+
+f. Redistribute the original Software or Modified Versions for
+   Non-Commercial Purposes.
+
+These rights are granted only for as long as you comply with this
+License.
+
+
+4. ATTRIBUTION REQUIREMENT
+
+Any Redistribution of the Software or a Modified Version must provide
+clear and reasonable credit to the Original Author.
+
+At a minimum, the following attribution must be retained:
+
+    Unsent / 难寄期许
+    GitHub: zhou9468jc
+
+The original copyright notice and attribution must not be removed,
+obscured, altered, or misrepresented.
+
+If the Software is distributed through a website, repository,
+release page, application, or other online service, the attribution
+must be displayed in a reasonably visible location where technically
+practicable.
+
+You may add your own name or attribution for modifications that you
+personally created.
+
+However, your attribution must not remove, replace, or imply
+ownership of the Original Author's work.
+
+
+5. SHARE-ALIKE REQUIREMENT
+
+Any Modified Version that is Redistributed must be distributed under
+this same License.
+
+A complete copy of this License must accompany every Redistribution
+of the Software or a Modified Version.
+
+You may not relicense the Software or a Modified Version under another
+license in a manner that removes, reduces, or conflicts with the
+rights and restrictions of this License.
+
+You may not distribute a Modified Version under a license that permits
+Commercial Use where such use is prohibited by this License.
+
+Additional terms may be applied only to your own original
+contributions, provided that those terms do not conflict with this
+License as it applies to the original Software.
+
+
+6. NON-COMMERCIAL USE ONLY
+
+The Software and all Modified Versions covered by this License may
+only be used, copied, modified, published, or Redistributed for
+Non-Commercial Purposes.
+
+Commercial Use is expressly prohibited unless the Licensor grants
+separate written permission.
+
+Without limiting the general meaning of Commercial Use, the following
+activities are prohibited without prior written permission from the
+Licensor:
+
+a. selling the Software;
+
+b. selling a Modified Version of the Software;
+
+c. charging a fee specifically for access to the Software;
+
+d. distributing the Software or a Modified Version as a paid download;
+
+e. commercially licensing or sublicensing the Software;
+
+f. using the Software as part of a commercial product or service;
+
+g. monetizing the Software through advertisements, subscriptions,
+   paid access, licensing fees, or substantially similar mechanisms;
+
+h. using the Software primarily for commercial advantage or monetary
+   compensation; or
+
+i. otherwise using the Software for the primary purpose of generating
+   commercial revenue or financial gain.
+
+The fact that a transaction does not directly involve the sale of the
+Software does not automatically make the activity Non-Commercial.
+
+The Licensor may grant written permission for specific Commercial Use
+at the Licensor's discretion.
+
+Any such permission must be explicit and may be limited to a specific
+person, organization, version, product, service, territory, duration,
+or purpose.
+
+
+7. NO SALE OR COMMERCIAL DISTRIBUTION
+
+No person or entity may sell, rent, lease, commercially license,
+sublicense, or otherwise commercially distribute the Software or any
+Modified Version without prior written permission from the Licensor.
+
+A person may freely provide a copy of the Software or a Modified
+Version to another person without monetary compensation, provided
+that all other terms of this License are satisfied.
+
+
+8. MODIFICATION NOTICE
+
+If you Redistribute a Modified Version, you must make a reasonable
+statement identifying that the Software has been modified.
+
+For example:
+
+    This software is a modified version of Unsent-FNF-Toolbox.
+    Original Author: Unsent / 难寄期许.
+
+You must not represent a Modified Version as the original Software.
+
+You must not claim that the Original Author created modifications that
+were not created by the Original Author.
+
+
+9. NO FALSE ENDORSEMENT
+
+This License does not grant permission to use the name, pseudonym,
+username, logo, trademarks, service marks, or other identifying
+branding of the Original Author for the purpose of implying
+endorsement, sponsorship, partnership, or approval.
+
+You may truthfully state that your work is based upon, derived from,
+or modified from the Software, provided that such statement does not
+imply endorsement by the Original Author.
+
+
+10. TRADEMARKS AND BRANDING
+
+This License does not grant any rights to trademarks, service marks,
+trade names, logos, or other branding belonging to the Licensor or
+the Original Author.
+
+Any such rights must be obtained separately from the applicable
+rights holder.
+
+
+11. THIRD-PARTY MATERIALS
+
+The Software may contain or depend upon third-party software,
+libraries, assets, fonts, artwork, music, documentation, or other
+materials.
+
+Nothing in this License grants rights to third-party materials that
+the Licensor does not own or have authority to license.
+
+Third-party materials remain subject to their own applicable
+copyrights, licenses, terms of use, and other legal restrictions.
+
+If a portion of the Software is identified as being subject to a
+different license, that license shall govern that portion to the
+extent required by law.
+
+In the event of a conflict between this License and a third-party
+license applicable to a particular portion of the Software, the
+third-party license shall govern that portion to the extent required
+by law.
+
+
+12. NO PATENT LICENSE
+
+No express or implied patent rights or licenses are granted under
+this License.
+
+Nothing in this License shall be interpreted as granting any patent
+rights except to the minimum extent, if any, that such rights cannot
+legally be excluded under applicable law.
+
+
+13. NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT
+WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, TO THE MAXIMUM EXTENT
+PERMITTED BY APPLICABLE LAW.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR
+DISCLAIMS ALL WARRANTIES, INCLUDING, WITHOUT LIMITATION, WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+NON-INFRINGEMENT, ACCURACY, RELIABILITY, AVAILABILITY, SECURITY,
+AND SATISFACTORY QUALITY.
+
+THE LICENSOR DOES NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE,
+SECURE, UNINTERRUPTED, COMPATIBLE WITH ANY PARTICULAR SYSTEM, OR
+SUITABLE FOR ANY PARTICULAR PURPOSE.
+
+
+14. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR,
+THE ORIGINAL AUTHOR, AND THEIR CONTRIBUTORS SHALL NOT BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL,
+OR OTHER DAMAGES ARISING OUT OF OR RELATING TO THE SOFTWARE OR THE
+USE, INABILITY TO USE, MODIFICATION, DISTRIBUTION, OR REDISTRIBUTION
+OF THE SOFTWARE.
+
+THIS INCLUDES, WITHOUT LIMITATION, LOSS OF DATA, LOSS OF PROFITS,
+LOSS OF REVENUE, LOSS OF BUSINESS, LOSS OF GOODWILL, SYSTEM DAMAGE,
+SERVICE INTERRUPTION, OR ANY OTHER LOSS OR DAMAGE.
+
+THIS LIMITATION SHALL APPLY REGARDLESS OF THE LEGAL THEORY ON WHICH
+THE CLAIM IS BASED, INCLUDING CONTRACT, TORT, NEGLIGENCE, STRICT
+LIABILITY, OR OTHERWISE, EXCEPT TO THE EXTENT THAT SUCH LIMITATION
+IS PROHIBITED BY APPLICABLE LAW.
+
+
+15. USER RESPONSIBILITY
+
+You are solely responsible for your use of the Software and for any
+Modified Version that you create or distribute.
+
+You are responsible for determining whether your intended use
+complies with applicable laws, regulations, third-party licenses,
+and other legal requirements.
+
+The Licensor and Original Author do not assume responsibility for
+consequences arising from your use, modification, distribution,
+Redistribution, or misuse of the Software, except to the extent that
+such responsibility cannot legally be excluded.
+
+
+16. INDEMNIFICATION
+
+To the maximum extent permitted by applicable law, if you use the
+Software in violation of this License or applicable law, you are
+responsible for the consequences of your own actions.
+
+Nothing in this section requires indemnification of the Licensor for
+claims caused solely by unlawful conduct of the Licensor where such
+indemnification would be prohibited by applicable law.
+
+
+17. LICENSE TERMINATION
+
+Your rights under this License automatically terminate if you
+materially violate any term of this License.
+
+Upon termination, you must immediately cease exercising the rights
+granted by this License.
+
+You must cease Redistribution of the Software and Modified Versions
+unless and until you obtain a valid license or written permission
+from the Licensor.
+
+Termination does not affect licenses validly granted to other
+recipients before the termination of your rights, provided that such
+recipients continue to comply with this License.
+
+The Licensor may restore your rights if you completely remedy the
+violation within a reasonable period where applicable law permits
+such restoration.
+
+
+18. NO ADDITIONAL RESTRICTIONS
+
+You may not impose additional restrictions that contradict the
+express terms of this License.
+
+In particular, you may not prevent another recipient from exercising
+the rights granted by this License solely because that recipient
+received the Software from you rather than directly from the
+Licensor.
+
+
+19. COMPLIANCE WITH LAW
+
+Nothing in this License authorizes you to violate applicable law.
+
+You must comply with all applicable laws and regulations when using,
+modifying, publishing, or Redistributing the Software.
+
+If a provision of this License is prohibited or unenforceable in a
+particular jurisdiction, that provision shall be enforced to the
+maximum extent permitted by law, and the remaining provisions shall
+remain in effect to the fullest extent permitted by law.
+
+
+20. SEVERABILITY
+
+If any provision of this License is determined to be invalid,
+unenforceable, or unlawful, that provision shall be interpreted or
+modified to the minimum extent necessary to make it enforceable while
+preserving its original intent as closely as legally possible.
+
+The invalidity or unenforceability of one provision shall not affect
+the validity or enforceability of the remaining provisions.
+
+
+21. NO WAIVER
+
+Failure by the Licensor to enforce any provision of this License
+shall not constitute a waiver of that provision or of the Licensor's
+right to enforce that provision in the future.
+
+A waiver shall be effective only if expressly provided in writing by
+the Licensor.
+
+
+22. ENTIRE LICENSE
+
+This License constitutes the complete agreement governing the rights
+granted by the Licensor with respect to the Software, except for
+separate written agreements expressly authorized by the Licensor.
+
+No additional promise, representation, or condition shall modify this
+License unless expressly agreed to in writing by the Licensor.
+
+
+23. RESERVATION OF RIGHTS
+
+All rights not expressly granted by this License are reserved by the
+Licensor.
+
+Nothing in this License shall be interpreted as granting rights beyond
+those expressly stated herein.
+
+
+24. WRITTEN COMMERCIAL PERMISSION
+
+The Licensor may separately grant written permission for uses that
+are otherwise prohibited by this License.
+
+Such permission may be limited to a particular person, organization,
+version, product, distribution method, territory, duration, or other
+specified purpose.
+
+Unless expressly stated otherwise, written permission does not modify
+this License for any other person, organization, or use.
+
+
+25. LICENSE VERSION
+
+This License is identified as:
+
+    Unsent's Non-Commercial Share-Alike License 1.1
+
+Abbreviation:
+
+    UNCSAL-1.1
+
+The Licensor may publish later versions of this License.
+
+Unless explicitly stated otherwise by the Licensor, Software
+distributed under Version 1.1 shall remain governed by Version 1.1.
+
+Software previously distributed under Version 1.0 shall remain governed
+by Version 1.0 unless the applicable recipient obtains separate
+written permission from the Licensor to use a later version.
+
+
+26. COPYRIGHT NOTICE
+
+The copyright notice identifying the Original Author is:
+
+    Copyright (c) 2026 Unsent / 难寄期许
+    GitHub: zhou9468jc
+
+This copyright notice must be retained in copies and substantial
+portions of the Software where technically and legally applicable.
+
+
+27. ACCEPTANCE
+
+By copying, using, modifying, publishing, or Redistributing the
+Software, you indicate your acceptance of the terms and conditions
+of this License.
+
+If you do not agree to these terms, you may not exercise any rights
+granted by this License.
+
+
+28. CONTACT AND PERMISSION
+
+Requests for permissions that are not granted by this License,
+including requests for Commercial Use, should be directed to the
+Original Author through the official contact method associated with
+the project.
+
+Any permission granted by the Original Author should be documented
+in writing.
+
+Unless explicitly stated otherwise, permission applies only to the
+specific use described in the written authorization.
+
+
+END OF UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1
