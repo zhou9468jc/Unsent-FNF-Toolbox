@@ -147,6 +147,13 @@
         "options": ["Disable","Only Player","All"]
     },
     {
+		"save": "oneNote",
+		"name": "One Note(Beta)",
+		"type": "bool",
+		"description": "Merge the four player note lanes into one lane. Any direction key can hit notes, simultaneous notes are merged into one, and Sustain Notes are automatically completed.",
+		"value": false
+    }
+    {
         "save": "titleAdvanced",
         "name": "Advanced Settings",
         "type": "string",
