@@ -1,0 +1,12 @@
+注意 : 仅供开发使用，正常使用无需注意。
+Note: For development use only, no need to worry for regular use
+
+function useInterpreterToGetKeySetting(s)return({['None']='NONE',['A']='A',['B']='B',['C']='C',['D']='D',['E']='E',['F']='F',['G']='G',['H']='H',['I']='I',['J']='J',['K']='K',['L']='L',['M']='M',['N']='N',['O']='O',['P']='P',['Q']='Q',['R']='R',['S']='S',['T']='T',['U']='U',['V']='V',['W']='W',['X']='X',['Y']='Y',['Z']='Z',['1']='ONE',['2']='TWO',['3']='THREE',['4']='FOUR',['5']='FIVE',['6']='SIX',['7']='SEVEN',['8']='EIGHT',['9']='NINE',['0']='ZERO',['`~']='GRAVEACCENT',['-_']='MINUS',['=+']='PLUS',['[{']='LBRACKET',[']}']='RBRACKET',['\\|']='BACKSLASH',[';:']='SEMICOLON',['\'"']='QUOTE',[',<']='COMMA',['.>']='PERIOD',['/?']='SLASH',['Space']='SPACE',['Enter']='ENTER',['Backspace']='BACKSPACE',['Tab']='TAB',['Caps Lock']='CAPSLOCK',['Shift']='SHIFT',['Control']='CONTROL',['Alt']='ALT',['Escape']='ESCAPE',['Insert']='INSERT',['Delete']='DELETE',['Home']='HOME',['End']='END',['Page Up']='PAGEUP',['Page Down']='PAGEDOWN',['↑']='UP',['↓']='DOWN',['←']='LEFT',['→']='RIGHT',['F1']='F1',['F2']='F2',['F3']='F3',['F4']='F4',['F5']='F5',['F6']='F6',['F7']='F7',['F8']='F8',['F9']='F9',['F10']='F10',['F11']='F11',['F12']='F12',['NumLock']='NUMLOCK',['NumPad0']='NUMPADZERO',['NumPad1']='NUMPADONE',['NumPad2']='NUMPADTWO',['NumPad3']='NUMPADTHREE',['NumPad4']='NUMPADFOUR',['NumPad5']='NUMPADFIVE',['NumPad6']='NUMPADSIX',['NumPad7']='NUMPADSEVEN',['NumPad8']='NUMPADEIGHT',['NumPad9']='NUMPADNINE',['NumPad.']='NUMPADPERIOD',['NumPad+']='NUMPADPLUS',['NumPad-']='NUMPADMINUS',['NumPad*']='NUMPADMULTIPLY',['NumPad/']='NUMPADSLASH'})[s]or'NONE'end
+
+将上面这段粘贴至脚本开头，使用useInterpreterToGetKeySetting("save项名")函数即可获取键位并解释成可fixel识别的格式。
+Paste the above section at the beginning of your script, and you can use the "useInterpreterToGetKeySetting(Mod save item name)" function to get the key and translate it into a format that fixel can recognize.
+
+"options":["None","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","1","2","3","4","5","6","7","8","9","0","`~","-_","=+","[{","]}","\\|",";:","'\"",",<",".>","/?","Space","Enter","Backspace","Tab","Caps Lock","Shift","Control","Alt","Escape","Insert","Delete","Home","End","Page Up","Page Down","↑","↓","←","→","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","NumLock","NumPad0","NumPad1","NumPad2","NumPad3","NumPad4","NumPad5","NumPad6","NumPad7","NumPad8","NumPad9","NumPad.","NumPad+","NumPad-","NumPad*","NumPad/"]
+
+string设置项
+"string" options item
