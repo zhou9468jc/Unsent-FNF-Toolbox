@@ -10,7 +10,7 @@
 
 **NovaFlare Engine 1.2.x 调试工具箱模组**
 
-作者：**难寄期许**
+作者：**难寄期许 / Unsent**
 
 ## ⚠️ 重要提醒
 
@@ -45,9 +45,19 @@
 
 ## 📜 License
 
-本项目采用 **MIT License**。
+本项目采用自定义许可 **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)**。
 
-你可以自由学习、修改、复制和再发布本项目，但请保留原作者及许可证声明。
+本许可证允许任何人在非商业用途下自由使用、复制、修改和再发布本项目。
+
+再发布本项目或其修改版本时：
+
+- 必须保留原作者署名及版权声明
+- 必须明确说明修改情况
+- 修改版本必须继续采用 **UNCSAL-1.1**
+- 禁止商业使用、商业销售及商业分发
+- 如需进行商业使用，必须事先获得原作者的书面许可
+
+本项目使用的是自定义许可证，**不是 OSI（Open Source Initiative）批准的开源许可证**。
 
 作者：**难寄期许**
 
@@ -61,7 +71,7 @@
 
 **Developer Toolbox Mod for NovaFlare Engine 1.2.x**
 
-Author: **Unsent**(NanJi QiXu)
+Author: **Unsent / 难寄期许**
 
 ## ⚠️ Important Notice
 
@@ -96,10 +106,20 @@ Author: **Unsent**(NanJi QiXu)
 
 ## 📜 License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the custom **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)**.
 
-You are free to study, modify, copy, and redistribute this project, provided that the original author and license notice are retained.
+This license allows anyone to freely use, copy, modify, and redistribute this project for non-commercial purposes.
 
-Author: **Unsent**
+When redistributing this project or a Modified Version:
+
+- The original author's attribution and copyright notice must be retained.
+- Modifications must be clearly identified.
+- Modified Versions must continue to be distributed under **UNCSAL-1.1**.
+- Commercial use, commercial sale, and commercial distribution are prohibited.
+- Commercial use requires prior written permission from the Original Author.
+
+This project uses a custom license and is **not an OSI (Open Source Initiative) approved open source license**.
+
+Original Author: **Unsent / 难寄期许**
 
 [⬆ Back to top](#unsents-toolbox-nf-ver)
