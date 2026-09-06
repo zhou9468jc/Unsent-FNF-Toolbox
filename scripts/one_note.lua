@@ -25,6 +25,8 @@ local function setupOneNoteStrums()
 	runHaxeCode([[
 		if (game.playerStrums != null)
 		{
+			var pos:Float = ]]..tostring(getModSetting('arrowPosition') or 0.5)..[[;
+
 			for (i in 0...game.playerStrums.members.length)
 			{
 				var strum = game.playerStrums.members[i];
@@ -37,7 +39,11 @@ local function setupOneNoteStrums()
 					strum.visible = true;
 					strum.alpha = 1;
 					strum.active = true;
-					strum.x = (FlxG.width - strum.width) / 2;
+
+					// 0 = left
+					// 0.5 = center
+					// 1 = right
+					strum.x = (FlxG.width - strum.width) * pos;
 				}
 				else
 				{

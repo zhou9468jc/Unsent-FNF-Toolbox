@@ -158,12 +158,18 @@ local function resumeSoftPause()
 end
 
 local function updateSongSpeed()
-    local finalSpeed=playbackRateValue*scrollSpeedValue
+    state_playbackRateNoScrollSpeed=getModSetting("playbackRateNoScrollSpeed",false)
 
     setProperty('playbackRate',playbackRateValue)
-    setProperty('songSpeed',finalSpeed)
 
-    return finalSpeed
+    if state_playbackRateNoScrollSpeed==true then
+        setProperty('songSpeed',scrollSpeedValue)
+        return scrollSpeedValue
+    else
+        local finalSpeed=playbackRateValue*scrollSpeedValue
+        setProperty('songSpeed',finalSpeed)
+        return finalSpeed
+    end
 end
 
 local function initializeSpeed()
@@ -293,11 +299,16 @@ end
 
 function onCreate()
     developerMode = getSetting("developerMode",false)
+    showcaseMode = getSetting('showCaseMode',false)
     hideDevPrint = getSetting("hideDevPrint",false)
     hideDevError = getSetting("hideDevError",false)
     disableCheckVer = getSetting("disableCheckVer",false)
     softPauseEnabled = getSetting("softPause",false)
     disableBotplay = getSetting("disableBotplay",false)
+
+    if showcaseMode then
+        return
+    end
 
     if disableCheckVer then
         devWarn("WARNING: Engine Version Check Disabled!")
