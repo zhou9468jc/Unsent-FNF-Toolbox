@@ -33,7 +33,7 @@ function missLimitUpdate()
 	if getProperty('songMisses')>missLimit then
 		missLimitDying=true
 
-		makeLuaText('missLimitDieText','DIE!!!',0,0,0)
+		makeLuaText('missLimitDieText','  DIE!!!  ',0,0,0)
 		setTextSize('missLimitDieText',200)
 		setTextColor('missLimitDieText','FF0000')
 		setTextAlignment('missLimitDieText','center')
