@@ -158,7 +158,7 @@ local function resumeSoftPause()
 end
 
 local function updateSongSpeed()
-    state_playbackRateNoScrollSpeed=getModSetting("playbackRateNoScrollSpeed",false)
+    state_playbackRateNoScrollSpeed=getSetting("playbackRateNoScrollSpeed",false)
 
     setProperty('playbackRate',playbackRateValue)
 
