@@ -282,8 +282,8 @@ local function hitOneNote(direction)
 			if (note.blockHit || note.ignoreNote)
 				continue;
 
-			if (note.texture == ']]..blindNoteTexture..[[')
-				continue;
+			//if (note.texture == ']]..blindNoteTexture..[[')
+			//	continue;
 
 			var canBeHit:Bool =
 				note.strumTime >
