@@ -7,7 +7,6 @@ local showcaseTimer=0
 local blindTimer=0
 
 local oldPrefs={}
-local oldHitsound=nil
 local showcase=false
 
 
@@ -49,7 +48,6 @@ function onUpdate(elapsed)
 	hideRating()
 	hideCombo()
 
-	enableShowcaseHitsound()
 	forceBotplay()
 	lockCameraShake()
 
@@ -77,7 +75,6 @@ function updateShowcase()
 		showcase=false
 		restorePrefs()
 		restoreNormalUI()
-		disableShowcaseHitsound()
 
 	end
 
@@ -238,46 +235,6 @@ function lockCameraShake()
 			game.camHUD._fxShakeIntensity=0;
 		}
 	]])
-
-end
-
-
---================================================
--- Disable Hitsound
---================================================
-
-function enableShowcaseHitsound()
-
-	if oldHitsound~=nil then
-		return
-	end
-
-	runHaxeCode([[
-		game.variables.set(
-			"showcase_oldHitsound",
-			ClientPrefs.data.hitsoundVolume
-		);
-
-		ClientPrefs.data.hitsoundVolume=0;
-	]])
-
-	oldHitsound=true
-
-end
-
-
-function disableShowcaseHitsound()
-
-	if oldHitsound==nil then
-		return
-	end
-
-	runHaxeCode([[
-		ClientPrefs.data.hitsoundVolume =
-			game.variables.get("showcase_oldHitsound");
-	]])
-
-	oldHitsound=nil
 
 end
 
@@ -451,6 +408,5 @@ end
 function onDestroy()
 
 	restorePrefs()
-	disableShowcaseHitsound()
 
 end
