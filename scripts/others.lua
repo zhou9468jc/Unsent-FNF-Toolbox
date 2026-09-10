@@ -1,6 +1,7 @@
 --================================================
 --Disable Botplay
 --================================================
+
 function disableBotplayCreate()
 	if getModSetting('disableBotplay') then
 		setProperty('botplayTxt.text','NO Botplay Mode')
@@ -13,19 +14,23 @@ function disableBotplayUpdate()
 	if getModSetting('disableBotplay') then
 		setProperty('botplayTxt.text','NO Botplay Mode')
 		setProperty('botplayTxt.visible',true)
+
 		if getProperty('cpuControlled') then
 			setProperty('cpuControlled',false)
 		end
 	end
 end
 
+
 --================================================
 --Miss Limit
 --================================================
+
 local missLimitDying=false
 
 function missLimitUpdate()
 	local missLimit=getModSetting('missLimit')
+
 	if missLimit==-1 or missLimitDying then
 		return
 	end
@@ -49,24 +54,32 @@ function missLimitDeath()
 	setHealth(0)
 end
 
+
 function updateMissLimitText()
 	local missLimit=getModSetting('missLimit')
+
 	if missLimit==-1 or missLimitDying then
 		return
 	end
 
 	local misses=getProperty('songMisses')
 	local text=getProperty('scoreTxt.text')
-	local newText=text:gsub('Misses:%s*[^|]*','Misses: '..misses..'/'..missLimit..' ')
+
+	local newText=text:gsub(
+		'Misses:%s*[^|]*',
+		'Misses: '..misses..'/'..missLimit..' '
+	)
 
 	if newText~=text then
 		setProperty('scoreTxt.text',newText)
 	end
 end
 
+
 --================================================
 --Score Text Color
 --================================================
+
 local scoreColors={
 	White='FFFFFF',Black='000000',
 	Red='FF0000',DarkRed='8B0000',
@@ -83,6 +96,8 @@ local scoreColors={
 	Gray='808080',DarkGray='404040',
 	LightGray='D3D3D3',Silver='C0C0C0'
 }
+
+local rainbowTime=0
 
 local scoreColorList={
 	'FFFFFF','000000',
@@ -101,24 +116,35 @@ local scoreColorList={
 	'D3D3D3','C0C0C0'
 }
 
-local rainbowTime=0
 
 function hexToRGB(hex)
-	return tonumber(hex:sub(1,2),16),tonumber(hex:sub(3,4),16),tonumber(hex:sub(5,6),16)
+	return tonumber(hex:sub(1,2),16),
+	tonumber(hex:sub(3,4),16),
+	tonumber(hex:sub(5,6),16)
 end
+
 
 function rgbToHex(r,g,b)
-	return string.format('%02X%02X%02X',math.floor(r),math.floor(g),math.floor(b))
+	return string.format(
+		'%02X%02X%02X',
+		math.floor(r),
+		math.floor(g),
+		math.floor(b)
+	)
 end
 
+
 function getRainbowColor(elapsed)
-	local rainbowSpeed=getModSetting('rainbowSpeed')
-	rainbowTime=rainbowTime+elapsed*rainbowSpeed
+	local speed=getModSetting('rainbowSpeed')
+
+	rainbowTime=rainbowTime+elapsed*speed
 
 	local count=#scoreColorList
 	local pos=rainbowTime%count
+
 	local index=math.floor(pos)+1
 	local nextIndex=index%count+1
+
 	local t=pos-math.floor(pos)
 
 	local r1,g1,b1=hexToRGB(scoreColorList[index])
@@ -131,12 +157,16 @@ function getRainbowColor(elapsed)
 	)
 end
 
+
 function getScoreTextColor(elapsed)
+
 	local color=getModSetting('scoreTextColor')
 
 	if color=='Rainbow' then
 		return getRainbowColor(elapsed or 0)
+
 	elseif color=='Follow Player' then
+
 		local r=getProperty('boyfriend.healthColorArray[0]')
 		local g=getProperty('boyfriend.healthColorArray[1]')
 		local b=getProperty('boyfriend.healthColorArray[2]')
@@ -144,6 +174,7 @@ function getScoreTextColor(elapsed)
 		if r~=nil and g~=nil and b~=nil then
 			return string.format('%02X%02X%02X',r,g,b)
 		end
+
 	elseif color=='Follow Op.' then
 		local r=getProperty('dad.healthColorArray[0]')
 		local g=getProperty('dad.healthColorArray[1]')
@@ -152,7 +183,9 @@ function getScoreTextColor(elapsed)
 		if r~=nil and g~=nil and b~=nil then
 			return string.format('%02X%02X%02X',r,g,b)
 		end
+
 	elseif color=='Custom' then
+
 		local r=getModSetting('textColorR') or 255
 		local g=getModSetting('textColorG') or 255
 		local b=getModSetting('textColorB') or 255
@@ -163,12 +196,14 @@ function getScoreTextColor(elapsed)
 			math.max(0,math.min(255,g)),
 			math.max(0,math.min(255,b))
 		)
-	elseif color~='Disable' and scoreColors[color] then
+
+	elseif scoreColors[color] then
 		return scoreColors[color]
 	end
 
 	return nil
 end
+
 
 function scoreTextColorCreate()
 	local color=getScoreTextColor(0)
@@ -178,7 +213,9 @@ function scoreTextColorCreate()
 	end
 end
 
+
 function scoreTextColorUpdate(elapsed)
+
 	local color=getScoreTextColor(elapsed)
 
 	if color then
@@ -186,96 +223,88 @@ function scoreTextColorUpdate(elapsed)
 	end
 end
 
+
 --================================================
 --Blind Play
+--Apply When Note Spawn
 --================================================
-local blindPlayTimer=0
 
-function applyBlindPlay()
-	local mode=getModSetting('blindPlay')
+local blindPlayMode='Disable'
 
-	if mode=='Disable' then
+
+function onSpawnNote(index)
+
+	if blindPlayMode=='Disable' then
 		return
 	end
 
-	runHaxeCode([[
-		function hideBlindNote(note:games.objects.Note)
-		{
-			if (note == null || note.noteData < 0)
-				return;
+	local mustPress=getPropertyFromGroup(
+		'notes',
+		index,
+		'mustPress'
+	)
 
-			var mode = ']]..mode..[[';
+	if blindPlayMode=='All' or (blindPlayMode=='Only Player' and mustPress) then
 
-			if (mode == 'Only Player' && !note.mustPress)
-				return;
+		setPropertyFromGroup(
+			'notes',
+			index,
+			'texture',
+			'noteSkins/BlindNote'
+		)
 
-			if (mode == 'All' || (mode == 'Only Player' && note.mustPress))
-			{
-				note.texture = 'noteSkins/BlindNote';
+		setPropertyFromGroup(
+			'notes',
+			index,
+			'rgbShader.enabled',
+			false
+		)
 
-				if (note.rgbShader != null)
-					note.rgbShader.enabled = false;
+		setPropertyFromGroup(
+			'notes',
+			index,
+			'shader',
+			nil
+		)
 
-				note.shader = null;
-			}
-		}
-
-		if (game.unspawnNotes != null)
-		{
-			for (note in game.unspawnNotes)
-				hideBlindNote(note);
-		}
-
-		if (game.notes != null)
-		{
-			for (note in game.notes)
-				hideBlindNote(note);
-		}
-	]])
-end
-
-function blindPlayCreate()
-	applyBlindPlay()
-end
-
-function blindPlayUpdate(elapsed)
-	if getModSetting('blindPlay')=='Disable' then
-		return
-	end
-
-	blindPlayTimer=blindPlayTimer+elapsed
-
-	if blindPlayTimer>=0.1 then
-		blindPlayTimer=0
-		applyBlindPlay()
 	end
 end
+
 
 --================================================
 --Main
 --================================================
-function onCreatePost()
-	blindPlayCreate()
-end
 
 function onCreate()
+
+	blindPlayMode=getModSetting('blindPlay')
+
 	disableBotplayCreate()
 	scoreTextColorCreate()
+
 end
+
 
 function onUpdate(elapsed)
+
 	disableBotplayUpdate()
 	missLimitUpdate()
-	blindPlayUpdate(elapsed)
+
 end
+
 
 function onUpdatePost(elapsed)
+
 	updateMissLimitText()
 	scoreTextColorUpdate(elapsed)
+
 end
 
+
 function onTimerCompleted(tag)
+
 	if tag=='missLimitDeath' then
 		missLimitDeath()
 	end
+
 end
