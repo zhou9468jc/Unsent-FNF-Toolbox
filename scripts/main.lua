@@ -18,6 +18,7 @@ local scrollSpeedValue = 1
 local defaultScrollSpeed = 1
 local speedInitialized = false
 local disableBotplay = false
+local advancedDebugMode = false
 
 local function getSetting(key,default)
     if getModSetting then
@@ -42,7 +43,21 @@ local function getNoReset()
 end
 
 local function devPrint(text)
-    if disableCheckVer or not hideDevPrint then
+    if advancedDebugMode then
+        local message = "[Unsent's toolbox] " .. text
+
+        if debugPrint then
+            debugPrint(message, "WHITE")
+        end
+
+        pcall(function()
+            runHaxeCode(
+                "trace("
+                .. string.format("%q", message)
+                .. ");"
+            )
+        end)
+    elseif disableCheckVer or not hideDevPrint then
         if debugPrint then
             debugPrint("[Unsent's toolbox] "..text,"WHITE")
         else
@@ -52,7 +67,21 @@ local function devPrint(text)
 end
 
 local function devError(text)
-    if disableCheckVer or not hideDevError then
+    if advancedDebugMode then
+        local message = "[Unsent's toolbox] " .. text
+
+        if debugPrint then
+            debugPrint(message, "RED")
+        end
+
+        pcall(function()
+            runHaxeCode(
+                "trace("
+                .. string.format("%q", message)
+                .. ");"
+            )
+        end)
+    elseif disableCheckVer or not hideDevError then
         local message="[Unsent's toolbox] "..text
         if debugPrint then
             debugPrint(message,"RED")
@@ -63,7 +92,21 @@ local function devError(text)
 end
 
 local function devWarn(text)
-    if disableCheckVer or not hideDevError then
+    if advancedDebugMode then
+        local message = "[Unsent's toolbox] " .. text
+
+        if debugPrint then
+            debugPrint(message, "YELLOW")
+        end
+
+        pcall(function()
+            runHaxeCode(
+                "trace("
+                .. string.format("%q", message)
+                .. ");"
+            )
+        end)
+    elseif disableCheckVer or not hideDevError then
         local message="[Unsent's toolbox] "..text
         if debugPrint then
             debugPrint(message,"YELLOW")
@@ -298,10 +341,15 @@ local function changeHealth(amount)
 end
 
 function onCreate()
-    developerMode = getSetting("developerMode",false)
+    advancedDebugMode = getSetting("advancedDebugMode",false)
+developerMode = getSetting("developerMode",false)
     showcaseMode = getSetting('showCaseMode',false)
     hideDevPrint = getSetting("hideDevPrint",false)
     hideDevError = getSetting("hideDevError",false)
+    if advancedDebugMode then
+        hideDevPrint = false
+        hideDevError = false
+    end
     disableCheckVer = getSetting("disableCheckVer",false)
     softPauseEnabled = getSetting("softPause",false)
     disableBotplay = getSetting("disableBotplay",false)
@@ -605,7 +653,7 @@ function onUpdate(elapsed)
     -- P 输出开关
     if keyboardJustPressed('P')
     and not disableCheckVer
-    and keyCooldown <= 0 then
+    and keyCooldown <= 0 and not advancedDebugMode then
 
         hideDevPrint = not hideDevPrint
 

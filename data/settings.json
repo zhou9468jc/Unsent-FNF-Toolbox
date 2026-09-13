@@ -1,19 +1,13 @@
 [
-    // All types:
-    // Website : https://pastebin.com/raw/EMu20Fyx
-    // bool - Has a checkbox only, meaning it can only be 'true' or 'false'.
-    // int - Numbers with no decimals (ex. 1, 3, 9, -1)
-    // float - Similar to int, but numbers can have decimals (ex. 1.5, 2.75)
-    // percent - Similar to float, but the displayed value is multiplied by 100 (ex. 1.1 will be displayed as "110%")
-    // string - A text instead of numbers/false and true, you gotta set up "options" variable to it
-    // key - TO BE IMPLEMENTED
     {
         "save": "title1",
         "name": "Debug ToolBox Settings",
         "type": "string",
         "description": "Set your debug toolbox settings...",
         "value": " ",
-        "options":[" "]
+        "options": [
+            " "
+        ]
     },
     {
         "save": "developerMode",
@@ -58,11 +52,11 @@
         "value": true
     },
     {
-	"save": "showCaseMode",
-	"name": "Showcase Mode",
-	"type": "bool",
-	"description": "Enable recording showcase mode. Hide HUD, judgement information, strums and hide judgement notes.",
-	"value": false
+        "save": "showCaseMode",
+        "name": "Showcase Mode",
+        "type": "bool",
+        "description": "Enable recording showcase mode. Hide HUD, judgement information, strums and hide judgement notes.",
+        "value": false
     },
     {
         "save": "title2",
@@ -70,25 +64,127 @@
         "type": "string",
         "description": "Can taunt opponent...",
         "value": " ",
-        "options":[" "]
+        "options": [
+            " "
+        ]
     },
     {
-	"save": "taunt",
-	"name": "   Taunt Key  :",
-        "format":"   %v",
-	"type": "string",
-	"description": "Select the key used to taunt.",
-	"value": "Disable",
-	"options":["Disable","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","1","2","3","4","5","6","7","8","9","0","`~","-_","=+","[{","]}","\\|",";:","' \"",",<",".>","/?","Space","Enter","Backspace","Tab","Caps Lock","Shift","Control","Alt","Escape","Insert","Delete","Home","End","Page Up","Page Down","Up","Down","Left","Right","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","NumLock","NumPad0","NumPad1","NumPad2","NumPad3","NumPad4","NumPad5","NumPad6","NumPad7","NumPad8","NumPad9","NumPad.","NumPad+","NumPad-","NumPad*","NumPad/"]
+        "save": "taunt",
+        "name": "   Taunt Key  :",
+        "format": "   %v",
+        "type": "string",
+        "description": "Select the key used to taunt.",
+        "value": "Disable",
+        "options": [
+            "Disable",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "0",
+            "`~",
+            "-_",
+            "=+",
+            "[{",
+            "]}",
+            "\\|",
+            ";:",
+            "' \"",
+            ",<",
+            ".>",
+            "/?",
+            "Space",
+            "Enter",
+            "Backspace",
+            "Tab",
+            "Caps Lock",
+            "Shift",
+            "Control",
+            "Alt",
+            "Escape",
+            "Insert",
+            "Delete",
+            "Home",
+            "End",
+            "Page Up",
+            "Page Down",
+            "Up",
+            "Down",
+            "Left",
+            "Right",
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6",
+            "F7",
+            "F8",
+            "F9",
+            "F10",
+            "F11",
+            "F12",
+            "NumLock",
+            "NumPad0",
+            "NumPad1",
+            "NumPad2",
+            "NumPad3",
+            "NumPad4",
+            "NumPad5",
+            "NumPad6",
+            "NumPad7",
+            "NumPad8",
+            "NumPad9",
+            "NumPad.",
+            "NumPad+",
+            "NumPad-",
+            "NumPad*",
+            "NumPad/"
+        ]
     },
     {
         "save": "tauntCharacter",
         "name": "   Taunt Character  :",
-        "format":"   %v",
+        "format": "   %v",
         "type": "string",
         "description": "Select which character plays the \"Hey\" animation.",
         "value": "BF",
-        "options": ["BF","GF","Both"]
+        "options": [
+            "BF",
+            "GF",
+            "Both"
+        ]
     },
     {
         "save": "tauntDuration",
@@ -100,13 +196,13 @@
         "decimals": 1,
         "min": 0.1,
         "max": 5,
-       "step": 0.1,
-       "scroll": 5
+        "step": 0.1,
+        "scroll": 5
     },
     {
         "save": "tauntSoundVolume",
         "name": "   \"Hey\" Sound Volume  :",
-        "format":"   %v",
+        "format": "   %v",
         "type": "percent",
         "description": "Set the volume of the \"Hey\" sound effect when taunting.",
         "value": 0.6,
@@ -122,7 +218,9 @@
         "type": "string",
         "description": "Others...",
         "value": " ",
-        "options":[" "]
+        "options": [
+            " "
+        ]
     },
     {
         "save": "disableBotplay",
@@ -134,7 +232,7 @@
     {
         "save": "missLimit",
         "name": "   Miss Limit Count  :",
-        "format":"   %v",
+        "format": "   %v",
         "type": "int",
         "description": "If the number of misses exceeds this value, you will immediately fail (in all songs). Set it to -1 to disable.",
         "value": -1,
@@ -143,29 +241,66 @@
         "step": 1
     },
     {
-	"save":"scoreTextColor",
-	"name":"   Score Text Color :",
-        "format":"  %v",
-	"type":"string",
-	"description":"Set the score text color. Disable to allow other mods to modify it.\n(Have 28 Colors!)",
-	"value":"Disable",
-	"options":["Disable","Follow Player","Follow Op.","Rainbow","Custom","White","Black","Red","DarkRed","Green","DarkGreen","Blue","DarkBlue","SkyBlue","DodgerBlue","Cyan","Teal","Yellow","Gold","Orange","Coral","Purple","Violet","Pink","HotPink","Magenta","Brown","Chocolate","Gray","DarkGray","LightGray","Silver"]
+        "save": "scoreTextColor",
+        "name": "   Score Text Color :",
+        "format": "  %v",
+        "type": "string",
+        "description": "Set the score text color. Disable to allow other mods to modify it.\n(Have 28 Colors!)",
+        "value": "Disable",
+        "options": [
+            "Disable",
+            "Follow Player",
+            "Follow Op.",
+            "Rainbow",
+            "Custom",
+            "White",
+            "Black",
+            "Red",
+            "DarkRed",
+            "Green",
+            "DarkGreen",
+            "Blue",
+            "DarkBlue",
+            "SkyBlue",
+            "DodgerBlue",
+            "Cyan",
+            "Teal",
+            "Yellow",
+            "Gold",
+            "Orange",
+            "Coral",
+            "Purple",
+            "Violet",
+            "Pink",
+            "HotPink",
+            "Magenta",
+            "Brown",
+            "Chocolate",
+            "Gray",
+            "DarkGray",
+            "LightGray",
+            "Silver"
+        ]
     },
     {
         "save": "blindPlay",
         "name": "   Blind Play",
-        "format":"   %v",
+        "format": "   %v",
         "type": "string",
         "description": "If enabled, will hide all notes during gameplay.\nOnly Player: Just hiding the player's notes, it allows you to guess the player's notes through the opponent's notes.\nAll: Hiding all the notes (would be way too hard, good luck)",
         "value": "Disable",
-        "options": ["Disable","Only Player","All"]
+        "options": [
+            "Disable",
+            "Only Player",
+            "All"
+        ]
     },
     {
-	"save": "oneNote",
-	"name": "One Note(Beta)",
-	"type": "bool",
-	"description": "Merge the four player note lanes into one lane. Any direction key can hit notes, simultaneous notes are merged into one, and Sustain Notes are automatically completed.",
-		"value": false
+        "save": "oneNote",
+        "name": "One Note(Beta)",
+        "type": "bool",
+        "description": "Merge the four player note lanes into one lane. Any direction key can hit notes, simultaneous notes are merged into one, and Sustain Notes are automatically completed.",
+        "value": false
     },
     {
         "save": "titleAdvanced",
@@ -173,33 +308,35 @@
         "type": "string",
         "description": "If you don't know what the settings below are for, \nDON'T touch them!!!",
         "value": " ",
-        "options":[" "]
+        "options": [
+            " "
+        ]
     },
     {
-	"save":"arrowPosition",
-	"name":"   Arrow Position",
-	"format":"   %v",
-	"type":"float",
-	"description":"Set OneNote arrow position. 0 = Left, 0.5 = Center, 1 = Right.",
-	"value":0.5,
-	"decimals":2,
-	"min":0,
-	"max":1,
-	"scroll":0.5,
-	"step":0.01
+        "save": "arrowPosition",
+        "name": "   Arrow Position",
+        "format": "   %v",
+        "type": "float",
+        "description": "Set OneNote arrow position. 0 = Left, 0.5 = Center, 1 = Right.",
+        "value": 0.5,
+        "decimals": 2,
+        "min": 0,
+        "max": 1,
+        "scroll": 0.5,
+        "step": 0.01
     },
     {
-	"save":"rainbowSpeed",
-	"name":"   Rainbow Speed",
-	"type":"float",
-	"format":"   %vx",
-	"description":"Adjust the color transition speed multiplier.\n(only takes effect when the score text color is set to \"Rainbow\").",
-	"value":1,
-	"decimals":1,
-	"min":0.1,
-	"max":50,
-	"step":0.1,
-	"scroll":10
+        "save": "rainbowSpeed",
+        "name": "   Rainbow Speed",
+        "type": "float",
+        "format": "   %vx",
+        "description": "Adjust the color transition speed multiplier.\n(only takes effect when the score text color is set to \"Rainbow\").",
+        "value": 1,
+        "decimals": 1,
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1,
+        "scroll": 10
     },
     {
         "save": "titleCustomRGB",
@@ -207,43 +344,52 @@
         "type": "string",
         "description": "Set the RGB value of a custom score color.\n(only takes effect when the score text color is set to \"Custom\").",
         "value": " ",
-        "options":[" "]
+        "options": [
+            " "
+        ]
     },
     {
-	"save":"textColorR",
-	"name":"      R  :",
-        "format":"      %v",
-	"type":"int",
-	"description":"Set the R value of a custom score RGB color.",
-	"value":0,
-	"decimals":1,
-	"min":0,
-	"max":255,
-	"step":1
+        "save": "textColorR",
+        "name": "      R  :",
+        "format": "      %v",
+        "type": "int",
+        "description": "Set the R value of a custom score RGB color.",
+        "value": 0,
+        "decimals": 1,
+        "min": 0,
+        "max": 255,
+        "step": 1
     },
     {
-	"save":"textColorG",
-	"name":"      G  :",
-        "format":"      %v",
-	"type":"int",
-	"description":"Set the G value of a custom score RGB color.",
-	"value":0,
-	"decimals":1,
-	"min":0,
-	"max":255,
-	"step":1
+        "save": "textColorG",
+        "name": "      G  :",
+        "format": "      %v",
+        "type": "int",
+        "description": "Set the G value of a custom score RGB color.",
+        "value": 0,
+        "decimals": 1,
+        "min": 0,
+        "max": 255,
+        "step": 1
     },
     {
-	"save":"textColorB",
-	"name":"      B  :",
-        "format":"      %v",
-	"type":"int",
-	"description":"Set the B value of a custom score RGB color.",
-	"value":0,
-	"decimals":1,
-	"min":0,
-	"max":255,
-	"step":1
+        "save": "textColorB",
+        "name": "      B  :",
+        "format": "      %v",
+        "type": "int",
+        "description": "Set the B value of a custom score RGB color.",
+        "value": 0,
+        "decimals": 1,
+        "min": 0,
+        "max": 255,
+        "step": 1
+    },
+	{
+        "save": "advancedDebugMode",
+		"name": "Advanced Debug Mode",
+        "type": "bool",
+        "description": "Enable Advanced Debug Mode",
+        "value": false
     },
     {
         "save": "disableCheckVer",

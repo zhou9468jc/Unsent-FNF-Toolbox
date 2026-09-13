@@ -11,6 +11,9 @@ local showcase=false
 
 
 function onCreatePost()
+    if unsentAdvancedDebugLog then
+        unsentAdvancedDebugLog('Showcase script initialized')
+    end
 	updateShowcase()
 	if showcase == true then
 		runHaxeCode([[
