@@ -22,18 +22,18 @@
 
 | 快捷键 | 功能 |
 |---|---|
-| `C` | 切换 Botplay |
-| `Shift + C` | 切换 Fake Botplay |
-| `V` | 切换 Practice Mode |
-| `N / M` | 调整 Scroll Speed |
-| `Ctrl + N / M` | 调整 Playback Rate |
-| `Ctrl + R` | 重置 Playback Rate |
-| `Shift + R` | 重置 Scroll Speed |
-| `Alt + R` | 将 Health 重置为 50% |
-| `Alt + N / M` | 调整 Health |
-| `Space + H / G` | Soft Pause |
-| `Space` | 退出 Soft Pause |
-| `P` | 切换 Developer Output |
+| `C` | 开关BotPlay |
+| `Shift + C` | 开关假Botplay (BotPlay文字) |
+| `V` | 开关练习模式 |
+| `Shift + N/M / N/M` | 调整滚动速度 |
+| `Ctrl / Ctrl+Shift + N / M` | 调整播放速度 |
+| `Ctrl + R` | 重置播放速度 |
+| `Shift + R` | 重置滚动速度 |
+| `Alt + R` | 将血量重置为 50% |
+| `Alt / Alt+Shift + N / M` | 调整血量 |
+| `Space + H / G` | 进入软暂停 |
+| `Space` | 退出软暂停 |
+| `P` | 开关工具箱输出 |
 
 ## 📦 安装方法
 
@@ -41,11 +41,12 @@
 2. 解压 ZIP 压缩包。
 3. 将解压后的 `Unsent's Toolbox NF Ver` 文件夹放入 NovaFlare Engine 的 `mods` 文件夹。
 4. 启动游戏，在模组列表中启用本模组。
-5. 打开模组设置中的 `developerMode`。
+5. 进入模组设置**启用功能**。
 
 ## 📜 License
 
-本项目采用自定义许可 **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)**。
+本项目采用自定义许可
+>`“UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)”`
 
 本许可证允许任何人在非商业用途下自由使用、复制、修改和再发布本项目。
 
@@ -86,12 +87,12 @@ Author: **Unsent / 难寄期许**
 | `C` | Toggle Botplay |
 | `Shift + C` | Toggle Fake Botplay |
 | `V` | Toggle Practice Mode |
-| `N / M` | Adjust Scroll Speed |
-| `Ctrl + N / M` | Adjust Playback Rate |
+| `Shift + N/M / N/M` | Adjust Scroll Speed |
+| `Ctrl / Ctrl+Shift + N / M` | Adjust Playback Rate |
 | `Ctrl + R` | Reset Playback Rate |
 | `Shift + R` | Reset Scroll Speed |
 | `Alt + R` | Reset Health to 50% |
-| `Alt + N / M` | Adjust Health |
+| `Alt / Alt+Shift + N / M` | Adjust Health |
 | `Space + H / G` | Soft Pause |
 | `Space` | Exit Soft Pause |
 | `P` | Toggle Developer Output |
@@ -102,7 +103,7 @@ Author: **Unsent / 难寄期许**
 2. Extract the ZIP archive.
 3. Put the extracted `Unsent's Toolbox NF Ver` folder into the NovaFlare Engine `mods` folder.
 4. Launch the game and enable the mod from the mod list.
-5. Enable `developerMode` in the mod settings.
+5. Open the mod settings Page.
 
 ## 📜 License
 
