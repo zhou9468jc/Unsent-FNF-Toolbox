@@ -150,7 +150,6 @@ local function updateVSliceHealthBar()
 	--
 	-- normal scroll:
 	-- FlxG.height * 0.89
-	--
 	-- downscroll:
 	-- FlxG.height * 0.11
 	--
@@ -182,7 +181,7 @@ local function updateVSliceHealthBar()
 
 	setProperty(
 		originalScoreTag .. '.x',
-		(screenWidth / 2) + 200
+		(screenWidth / 2) + 150
 	)
 
 	setProperty(
@@ -236,12 +235,32 @@ function onUpdate(elapsed)
 
 		-- Detect an actual health change made by the engine
 		-- or another script.
-		--
-		-- We compare against lastWrittenHealth instead of
-		-- displayHealth so our own setProperty() call does not
-		-- create a fake health change.
 		if math.abs(realHealth - lastWrittenHealth) > 0.000001 then
 			targetHealth = realHealth
+
+			-- ==================================================
+			-- Instant Death / Health = 0
+			-- ==================================================
+			--
+			-- If another script or the engine directly sets
+			-- health to 0, do NOT smooth this transition.
+			--
+			-- Otherwise the actual game can already be dying
+			-- while the visual health bar is still animating
+			-- toward zero.
+			if realHealth <= 0 then
+				displayHealth = 0
+				targetHealth = 0
+
+				setProperty('health', 0)
+				lastWrittenHealth = 0
+
+				if originalHealthBar then
+					updateVSliceHealthBar()
+				end
+
+				return
+			end
 		end
 
 		-- Continuous exponential smoothing.
