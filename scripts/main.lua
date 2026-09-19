@@ -59,9 +59,23 @@ local function devPrint(text)
         end)
     elseif disableCheckVer or not hideDevPrint then
         if debugPrint then
-            debugPrint("[Unsent's toolbox] "..text,"WHITE")
+			local message = "[Unsent's toolbox] " .. text
+            debugPrint(message, "WHITE")
+			pcall(function()
+				runHaxeCode(
+					"trace("
+					.. string.format("%q", message)
+					.. ");"
+				)
+			end)
         else
-            print("[Unsent's toolbox] "..text)
+			pcall(function()
+				runHaxeCode(
+					"trace("
+					.. string.format("%q", message)
+					.. ");"
+				)
+			end)
         end
     end
 end

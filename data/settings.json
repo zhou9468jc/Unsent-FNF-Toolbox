@@ -202,7 +202,7 @@
     {
         "save": "tauntSoundVolume",
         "name": "   \"Hey\" Sound Volume  :",
-        "format": "   %v",
+        "format": "   %v%",
         "type": "percent",
         "description": "Set the volume of the \"Hey\" sound effect when taunting.",
         "value": 0.6,
@@ -211,6 +211,89 @@
         "step": 0.05,
         "decimals": 2,
         "scroll": 1
+    },
+    {
+        "save": "titleHealthSmooth",
+        "name": "HealthBar Settings",
+        "type": "string",
+        "description": "Configure health bar smoothing and V-Slice style settings.",
+        "value": " ",
+        "options": [
+            " "
+        ]
+    },
+    {
+        "save": "healthSmooth",
+        "name": "Health Bar Smoothing",
+        "type": "bool",
+        "description": "Smoothly interpolates health changes instead of applying them instantly.",
+        "value": true
+    },
+    {
+        "save": "healthSmoothSpeed",
+        "name": "   Health Smooth Speed  :",
+        "format": "   %v",
+        "type": "float",
+        "description": "Controls how quickly the displayed health follows the target health.",
+        "value": 12,
+        "decimals": 1,
+        "min": 1,
+        "max": 30,
+        "step": 0.5,
+        "scroll": true
+    },
+    {
+        "save": "healthSustainAmount",
+        "name": "   Sustain Health Amount  :",
+        "format": "   %v",
+        "type": "float",
+        "description": "Health gained or lost for each sustain note tick.",
+        "value": 0.01,
+        "decimals": 3,
+        "min": 0,
+        "max": 0.1,
+        "step": 0.001,
+        "scroll": true
+    },
+    {
+        "save": "healthOpponentPush",
+        "name": "Opponent Health Push",
+        "type": "bool",
+        "description": "Makes opponent notes push the health bar toward the opponent.",
+        "value": false
+    },
+    {
+        "save": "healthOpponentPushAmount",
+        "name": "   Opponent Push Amount  :",
+        "format": "   %v",
+        "type": "float",
+        "description": "Health change caused by a normal opponent note when Opponent Health Push is enabled.",
+        "value": 0.013,
+        "decimals": 3,
+        "min": 0,
+        "max": 0.1,
+        "step": 0.001,
+        "scroll": true
+    },
+    {
+        "save": "healthOpponentPushSustain",
+        "name": "   Opponent Push Sustain  :",
+        "format": "   %v",
+        "type": "float",
+        "description": "Health change caused by an opponent sustain note when Opponent Health Push is enabled.",
+        "value": 0.005,
+        "decimals": 3,
+        "min": 0,
+        "max": 0.1,
+        "step": 0.001,
+        "scroll": true
+    },
+    {
+        "save": "originalHealthBar",
+        "name": "V-Slice Score Text",
+        "type": "bool",
+        "description": "Changes the score text style to match V-Slice.",
+        "value": false
     },
     {
         "save": "title3",
@@ -384,9 +467,9 @@
         "max": 255,
         "step": 1
     },
-	{
+    {
         "save": "advancedDebugMode",
-		"name": "Advanced Debug Mode",
+        "name": "Advanced Debug Mode",
         "type": "bool",
         "description": "Enable Advanced Debug Mode",
         "value": false

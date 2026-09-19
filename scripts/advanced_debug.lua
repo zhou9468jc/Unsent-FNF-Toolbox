@@ -344,14 +344,41 @@ local function advUpdateHUD()
     local songPosition =
         advGetSongPosition()
 
-    local songLength =
-        tonumber(
-            advGetProperty(
-                "songLength",
-                0
-            )
-        )
-        or 0
+	local songLength =
+		tonumber(
+			advGetProperty(
+				"songLength",
+				0
+			)
+		)
+		or 0
+
+
+	local realSongLength = 0
+
+
+	pcall(function()
+		runHaxeCode([[
+			var len:Float = 0;
+
+			if(FlxG.sound.music != null)
+			{
+				len = FlxG.sound.music.length;
+			}
+
+			setOnScripts('advRealSongLength',len);
+		]])
+	end)
+
+
+	local realSongLength =
+		tonumber(
+			getPropertyFromClass(
+				'flixel.FlxG',
+				'sound.music.length'
+			)
+		)
+		or 0
 
     local health =
         tonumber(
@@ -455,15 +482,14 @@ local function advUpdateHUD()
             "Difficulty : "
                 .. advDifficulty(),
 
-            "Time       : "
-                .. advFormatTime(
-                    songPosition
-                )
-                .. " / "
-                .. advFormatTime(
-                    songLength
-                ),
-
+			"Time       : "
+				.. advFormatTime(songPosition)
+				.. " / "
+				.. advFormatTime(songLength)
+				.. " (Real: "
+				.. advFormatTime(realSongLength)
+				.. ")",
+			
             "Step       : "
                 .. step,
 
