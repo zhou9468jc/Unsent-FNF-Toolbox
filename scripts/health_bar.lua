@@ -1,6 +1,7 @@
 -- ============================================================
 -- Unsent's Health Bar
 -- Health Smoothing + V-Slice Health Bar
+-- Smooth Score Display
 -- ============================================================
 
 -- ============================================================
@@ -9,7 +10,6 @@
 
 local enable = getModSetting('healthSmooth')
 local smoothSpeed = getModSetting('healthSmoothSpeed')
-
 local sustainHealth = getModSetting('healthSustainAmount')
 
 local enableOpponentPush = getModSetting('healthOpponentPush')
@@ -17,6 +17,25 @@ local opponentPush = getModSetting('healthOpponentPushAmount')
 local opponentPushSustain = getModSetting('healthOpponentPushSustain')
 
 local originalHealthBar = getModSetting('originalHealthBar')
+local enableSustainReward = getModSetting('healthSustainReward')
+
+-- ============================================================
+-- Score Scroll Settings
+-- ============================================================
+-- 普通点击音符的分数滚动速度倍率
+-- 2 = 普通速度的 2 倍
+local normalScoreScrollRate = 2
+
+-- 长按音符的分数滚动速度倍率
+-- 1 = 普通速度
+local sustainScoreScrollRate = 1
+
+-- 基础分数滚动速度
+-- 数值越大，分数追赶目标越快
+local scoreScrollSpeed = 12
+
+-- 当前分数滚动倍率
+local currentScoreScrollRate = 1
 
 -- ============================================================
 -- Internal State
@@ -24,16 +43,15 @@ local originalHealthBar = getModSetting('originalHealthBar')
 
 local displayHealth = 1
 local targetHealth = 1
-
--- 上一帧由本脚本写入的 health。
--- 用它区分：
--- 1. NFE / 其他脚本真正修改了 health
--- 2. 本脚本自己把 health 写回去
 local lastWrittenHealth = 1
 
 local initialized = false
 
--- V-Slice style score
+-- Smooth score
+local displayScore = 0
+local targetScore = 0
+
+-- Original score replacement
 local originalScoreTag = 'unsentOriginalScore'
 local originalScoreCreated = false
 
@@ -64,7 +82,7 @@ local function readSetting(name, default)
 end
 
 -- ============================================================
--- V-Slice Health Bar
+-- V-Slice Health Bar Colors
 -- ============================================================
 
 local function applyVSliceHealthBarColors()
@@ -81,19 +99,22 @@ local function applyVSliceHealthBarColors()
 	]])
 end
 
+-- ============================================================
+-- V-Slice Health Bar Setup
+-- ============================================================
+
 local function setupVSliceHealthBar()
 	if not originalHealthBar then
 		return
 	end
 
-	-- Apply V-Slice colors using NFE's own health bar
-	-- color refresh system.
 	applyVSliceHealthBarColors()
 
-	-- Hide NFE's original score text.
-	setProperty('scoreTxt.visible', false)
+	setProperty(
+		'scoreTxt.visible',
+		false
+	)
 
-	-- Create our own single Score text.
 	if not originalScoreCreated then
 		makeLuaText(
 			originalScoreTag,
@@ -103,26 +124,51 @@ local function setupVSliceHealthBar()
 			0
 		)
 
-		-- Font files inside the mod's fonts directory are
-		-- referenced by filename only.
-		setTextFont(originalScoreTag, 'origin.ttf')
+		setTextFont(
+			originalScoreTag,
+			'origin.ttf'
+		)
 
-		setTextSize(originalScoreTag, 16)
-		setTextColor(originalScoreTag, 'FFFFFF')
+		setTextSize(
+			originalScoreTag,
+			16
+		)
 
-		-- No black outline.
-		setTextBorder(originalScoreTag, 0, '000000')
+		setTextColor(
+			originalScoreTag,
+			'FFFFFF'
+		)
 
-		setTextAlignment(originalScoreTag, 'left')
+		setTextBorder(
+			originalScoreTag,
+			0,
+			'000000'
+		)
 
-		setObjectCamera(originalScoreTag, 'hud')
-		addLuaText(originalScoreTag, true)
+		setTextAlignment(
+			originalScoreTag,
+			'left'
+		)
+
+		setObjectCamera(
+			originalScoreTag,
+			'hud'
+		)
+
+		addLuaText(
+			originalScoreTag,
+			true
+		)
 
 		originalScoreCreated = true
 	end
 end
 
-local function updateVSliceHealthBar()
+-- ============================================================
+-- V-Slice Health Bar + Smooth Score
+-- ============================================================
+
+local function updateVSliceHealthBar(elapsed)
 	if not originalHealthBar then
 		return
 	end
@@ -131,53 +177,63 @@ local function updateVSliceHealthBar()
 		return
 	end
 
-	-- Keep the original NFE Score hidden.
-	setProperty('scoreTxt.visible', false)
+	setProperty(
+		'scoreTxt.visible',
+		false
+	)
 
-	-- Only display one score.
-	local currentScore = getProperty('songScore')
+	-- ========================================================
+	-- Smooth Score
+	-- ========================================================
 
-	if currentScore == nil then
-		currentScore = 0
+	local realScore = getProperty('songScore')
+
+	if realScore == nil then
+		realScore = 0
 	end
+
+	targetScore = realScore
+
+	local scoreDifference =
+		targetScore - displayScore
+
+	if math.abs(scoreDifference) > 0.5 then
+		-- 根据当前音符类型使用不同的滚动速度
+		local effectiveSpeed =
+			scoreScrollSpeed * currentScoreScrollRate
+
+		local follow =
+			1 - math.exp(-effectiveSpeed * elapsed)
+
+		displayScore =
+			displayScore + scoreDifference * follow
+	else
+		displayScore = targetScore
+	end
+
+	-- 防止显示小数
+	local shownScore =
+		math.floor(displayScore + 0.5)
 
 	setTextString(
 		originalScoreTag,
-		'Score: ' .. tostring(currentScore)
+		'Score: ' .. tostring(shownScore)
 	)
 
-	-- NFE creates the health bar at:
-	--
-	-- normal scroll:
-	-- FlxG.height * 0.89
-	-- downscroll:
-	-- FlxG.height * 0.11
-	--
-	-- and centers it horizontally.
-	--
-	-- We intentionally calculate the position instead of reading
-	-- healthBar.x / healthBar.width because healthBar is a Haxe Bar.
+	-- ========================================================
+	-- Position
+	-- ========================================================
 
 	local healthBarY
 
-	if getPropertyFromClass('backend.ClientPrefs', 'data.downScroll') then
+	if getPropertyFromClass(
+		'backend.ClientPrefs',
+		'data.downScroll'
+	) then
 		healthBarY = screenHeight * 0.11
 	else
 		healthBarY = screenHeight * 0.89
 	end
-
-	-- ========================================================
-	-- Score Position
-	-- ========================================================
-	--
-	-- X:
-	-- screenWidth / 2 + 200
-	--
-	-- Y:
-	-- healthBarY + 35
-	--
-	-- Change these values directly if you want to adjust
-	-- the Score position.
 
 	setProperty(
 		originalScoreTag .. '.x',
@@ -195,22 +251,70 @@ end
 -- ============================================================
 
 function onCreate()
-	enable = readSetting('healthSmooth', true)
-	smoothSpeed = readSetting('healthSmoothSpeed', 12)
+	-- ========================================================
+	-- Load Settings
+	-- ========================================================
 
-	sustainHealth = readSetting('healthSustainAmount', 0.010)
+	enable = readSetting(
+		'healthSmooth',
+		true
+	)
 
-	enableOpponentPush = readSetting('healthOpponentPush', false)
-	opponentPush = readSetting('healthOpponentPushAmount', 0.018)
-	opponentPushSustain = readSetting('healthOpponentPushSustain', 0.006)
+	smoothSpeed = readSetting(
+		'healthSmoothSpeed',
+		12
+	)
 
-	originalHealthBar = readSetting('originalHealthBar', false)
+	sustainHealth = readSetting(
+		'healthSustainAmount',
+		0.010
+	)
 
-	displayHealth = clampHealth(getProperty('health'))
+	enableOpponentPush = readSetting(
+		'healthOpponentPush',
+		false
+	)
+
+	opponentPush = readSetting(
+		'healthOpponentPushAmount',
+		0.018
+	)
+
+	opponentPushSustain = readSetting(
+		'healthOpponentPushSustain',
+		0.006
+	)
+
+	originalHealthBar = readSetting(
+		'originalHealthBar',
+		false
+	)
+
+	-- ========================================================
+	-- Initialize Health
+	-- ========================================================
+
+	displayHealth = clampHealth(
+		getProperty('health')
+	)
+
 	targetHealth = displayHealth
 	lastWrittenHealth = displayHealth
 
+	-- ========================================================
+	-- Initialize Score
+	-- ========================================================
+
+	displayScore = getProperty('songScore') or 0
+	targetScore = displayScore
+
+	currentScoreScrollRate = 1
+
 	initialized = true
+
+	-- ========================================================
+	-- Setup V-Slice Health Bar
+	-- ========================================================
 
 	if originalHealthBar then
 		setupVSliceHealthBar()
@@ -231,61 +335,69 @@ function onUpdate(elapsed)
 	-- ========================================================
 
 	if enable then
-		local realHealth = clampHealth(getProperty('health'))
+		local realHealth = clampHealth(
+			getProperty('health')
+		)
 
-		-- Detect an actual health change made by the engine
-		-- or another script.
-		if math.abs(realHealth - lastWrittenHealth) > 0.000001 then
+		-- Detect external health changes
+		if math.abs(
+			realHealth - lastWrittenHealth
+		) > 0.000001 then
+
 			targetHealth = realHealth
 
-			-- ==================================================
-			-- Instant Death / Health = 0
-			-- ==================================================
-			--
-			-- If another script or the engine directly sets
-			-- health to 0, do NOT smooth this transition.
-			--
-			-- Otherwise the actual game can already be dying
-			-- while the visual health bar is still animating
-			-- toward zero.
+			-- =================================================
+			-- Immediate Death
+			-- =================================================
+
 			if realHealth <= 0 then
 				displayHealth = 0
 				targetHealth = 0
 
-				setProperty('health', 0)
+				setProperty(
+					'health',
+					0
+				)
+
 				lastWrittenHealth = 0
 
 				if originalHealthBar then
-					updateVSliceHealthBar()
+					updateVSliceHealthBar(elapsed)
 				end
 
 				return
 			end
 		end
 
-		-- Continuous exponential smoothing.
-		--
-		-- This does not restart a separate tween for every note.
-		-- A stream of notes therefore becomes one continuous
-		-- health movement.
-		local difference = targetHealth - displayHealth
+		-- Smooth health movement
+		local difference =
+			targetHealth - displayHealth
 
 		if math.abs(difference) > 0.000001 then
-			local follow = 1 - math.exp(-smoothSpeed * elapsed)
+			local follow =
+				1 - math.exp(-smoothSpeed * elapsed)
 
-			displayHealth = displayHealth + difference * follow
+			displayHealth =
+				displayHealth + difference * follow
 		else
 			displayHealth = targetHealth
 		end
 
-		displayHealth = clampHealth(displayHealth)
+		displayHealth = clampHealth(
+			displayHealth
+		)
 
-		setProperty('health', displayHealth)
+		setProperty(
+			'health',
+			displayHealth
+		)
+
 		lastWrittenHealth = displayHealth
 	else
-		-- Smoothing disabled:
-		-- completely follow the engine's actual health.
-		local realHealth = clampHealth(getProperty('health'))
+		-- Smoothing disabled
+		local realHealth = clampHealth(
+			getProperty('health')
+		)
 
 		displayHealth = realHealth
 		targetHealth = realHealth
@@ -293,36 +405,48 @@ function onUpdate(elapsed)
 	end
 
 	-- ========================================================
-	-- V-Slice Health Bar
+	-- V-Slice HUD
 	-- ========================================================
 
 	if originalHealthBar then
-		updateVSliceHealthBar()
+		updateVSliceHealthBar(elapsed)
 	end
 end
 
 -- ============================================================
--- Sustain Notes
+-- Good Note Hit
 -- ============================================================
 
-function goodNoteHit(id, direction, noteType, isSustainNote)
-	-- IMPORTANT:
-	--
-	-- Do NOT manually add health here.
-	--
-	-- NFE already handles the health gain for the note.
-	-- Adding sustainHealth here would stack another health gain
-	-- on top of the engine's own value.
-	--
-	-- The smoothing system above automatically detects the
-	-- actual health change made by NFE and smooths it.
+function goodNoteHit(
+	id,
+	direction,
+	noteType,
+	isSustainNote
+)
+	if isSustainNote then
+		-- 长按：使用普通分数滚动速度
+		currentScoreScrollRate = sustainScoreScrollRate
+
+		if enableSustainReward then
+			addHealth(sustainHealth)
+			addScore(30)
+		end
+	else
+		-- 普通点击：使用更快的分数滚动速度
+		currentScoreScrollRate = normalScoreScrollRate
+	end
 end
 
 -- ============================================================
 -- Opponent Notes
 -- ============================================================
 
-function opponentNoteHit(id, direction, noteType, isSustainNote)
+function opponentNoteHit(
+	id,
+	direction,
+	noteType,
+	isSustainNote
+)
 	if not enableOpponentPush then
 		return
 	end
@@ -335,29 +459,23 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 		amount = opponentPush
 	end
 
-	-- Opponent Push has a minimum target health of 0.1.
-	--
-	-- Once targetHealth reaches 0.1, further opponent notes
-	-- will no longer push the target health downward.
-
-	local newTarget = math.max(0.1, targetHealth - amount)
+	local newTarget =
+		math.max(
+			0.1,
+			targetHealth - amount
+		)
 
 	targetHealth = newTarget
 end
 
 -- ============================================================
--- Player Sustain Adjustment
+-- Update Post
 -- ============================================================
 
 function onUpdatePost(elapsed)
 	if not initialized then
 		return
 	end
-
-	-- Nothing is manually added here.
-	--
-	-- This callback is intentionally kept empty so the health
-	-- system does not fight NFE's own note judgement system.
 end
 
 -- ============================================================
@@ -366,7 +484,11 @@ end
 
 function onDestroy()
 	if originalScoreCreated then
-		removeLuaText(originalScoreTag, true)
+		removeLuaText(
+			originalScoreTag,
+			true
+		)
+
 		originalScoreCreated = false
 	end
 end

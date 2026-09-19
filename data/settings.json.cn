@@ -3,7 +3,7 @@
         "save": "title1",
         "name": "Debug ToolBox Settings",
         "type": "string",
-        "description": "Set your debug toolbox settings...",
+        "description": "设置你的调试工具箱设置...",
         "value": " ",
         "options": [
             " "
@@ -13,56 +13,56 @@
         "save": "developerMode",
         "name": "Enable Debug ToolBox",
         "type": "bool",
-        "description": "If enabled, debugging shortcut keys can be used.",
+        "description": "如果启用，可以使用调试快捷键。",
         "value": false
     },
     {
         "save": "softPause",
         "name": "Soft Pause",
         "type": "bool",
-        "description": "Enable Soft Pause. Hold SPACE and press H or G to Soft Pause the game without pausing scripts, then press SPACE to resume the game.",
+        "description": "启用软暂停。按住 SPACE 并按 H 或 G 可以软暂停游戏而不暂停脚本，然后按 SPACE 恢复游戏。",
         "value": false
     },
     {
         "save": "playbackRateNoScrollSpeed",
         "name": "Independent Scroll Speed",
         "type": "bool",
-        "description": "When enabled, changing the playback rate will not affect the note scroll speed.",
+        "description": "启用后，改变播放速度不会影响音符滚动速度。",
         "value": false
     },
     {
         "save": "hideDevPrint",
         "name": "Hide Tools Debug Print",
         "type": "bool",
-        "description": "If enabled, debug shortcut key prints will be hidden.",
+        "description": "如果启用，调试快捷键的打印信息将被隐藏。",
         "value": false
     },
     {
         "save": "hideDevError",
         "name": "Hide Tools Error/Warn Prints",
         "type": "bool",
-        "description": "If enabled, debug shortcut key error and warning prints will be hidden.",
+        "description": "如果启用，调试快捷键的错误和警告打印信息将被隐藏。",
         "value": false
     },
     {
         "save": "showBotText",
         "name": "Change Botplay Text",
         "type": "bool",
-        "description": "If disabled, using this tool to toggle the Botplay switch will not change the \"botplayTxt.visible\" state.",
+        "description": "如果禁用，使用此工具切换 Botplay 开关时将不会改变 \"botplayTxt.visible\" 状态。",
         "value": true
     },
     {
         "save": "showCaseMode",
         "name": "Showcase Mode",
         "type": "bool",
-        "description": "Enable recording showcase mode. Hide HUD, judgement information, strums and hide judgement notes.",
+        "description": "启用录制展示模式。隐藏 HUD、判定信息、音弦，并隐藏判定音符。",
         "value": false
     },
     {
         "save": "title2",
         "name": "Taunt Settings",
         "type": "string",
-        "description": "Can taunt opponent...",
+        "description": "可以嘲讽对手...",
         "value": " ",
         "options": [
             " "
@@ -73,7 +73,7 @@
         "name": "   Taunt Key  :",
         "format": "   %v",
         "type": "string",
-        "description": "Select the key used to taunt.",
+        "description": "选择用于嘲讽的按键。",
         "value": "Disable",
         "options": [
             "Disable",
@@ -178,7 +178,7 @@
         "name": "   Taunt Character  :",
         "format": "   %v",
         "type": "string",
-        "description": "Select which character plays the \"Hey\" animation.",
+        "description": "选择哪个角色播放 \"Hey\" 动画。",
         "value": "BF",
         "options": [
             "BF",
@@ -191,7 +191,7 @@
         "name": "   Taunt Duration  :",
         "type": "float",
         "format": "   %vs",
-        "description": "Set how long the \"Hey\" animation lasts.",
+        "description": "设置 \"Hey\" 动画持续多长时间。",
         "value": 0.6,
         "decimals": 1,
         "min": 0.1,
@@ -204,7 +204,7 @@
         "name": "   \"Hey\" Sound Volume  :",
         "format": "   %v%",
         "type": "percent",
-        "description": "Set the volume of the \"Hey\" sound effect when taunting.",
+        "description": "设置嘲讽时 \"Hey\" 音效的音量。",
         "value": 0.6,
         "min": 0,
         "max": 1,
@@ -216,7 +216,7 @@
         "save": "titleHealthSmooth",
         "name": "HealthBar And Score Settings",
         "type": "string",
-        "description": "Configure health bar smoothing and V-Slice style settings.",
+        "description": "配置生命条平滑和 V-Slice 风格设置。",
         "value": " ",
         "options": [
             " "
@@ -226,7 +226,7 @@
         "save": "healthSmooth",
         "name": "Health Bar Smoothing",
         "type": "bool",
-        "description": "Smoothly interpolates health changes instead of applying them instantly.",
+        "description": "平滑插值生命值变化，而不是立即应用。",
         "value": true
     },
     {
@@ -234,7 +234,7 @@
         "name": "   Health Smooth Speed  :",
         "format": "   %v",
         "type": "float",
-        "description": "Controls how quickly the displayed health follows the target health.",
+        "description": "控制显示的生命值跟随目标生命值的速度。",
         "value": 12,
         "decimals": 1,
         "min": 1,
@@ -247,7 +247,7 @@
         "name": "   Sustain Health Amount  :",
         "format": "   %v",
         "type": "float",
-        "description": "Health gained or lost for each sustain note tick.",
+        "description": "每个长按音符刻度获得或失去的生命值。",
         "value": 0.01,
         "decimals": 3,
         "min": 0,
@@ -259,7 +259,7 @@
         "save": "healthOpponentPush",
         "name": "Opponent Health Push",
         "type": "bool",
-        "description": "Makes opponent notes push the health bar toward the opponent.",
+        "description": "使对手音符将生命条推向对手一侧。",
         "value": false
     },
     {
@@ -267,7 +267,7 @@
         "name": "   Opponent Push Amount  :",
         "format": "   %v",
         "type": "float",
-        "description": "Health change caused by a normal opponent note when Opponent Health Push is enabled.",
+        "description": "启用对手生命值推动时，普通对手音符造成的生命值变化。",
         "value": 0.013,
         "decimals": 3,
         "min": 0,
@@ -280,7 +280,7 @@
         "name": "   Opponent Push Sustain  :",
         "format": "   %v",
         "type": "float",
-        "description": "Health change caused by an opponent sustain note when Opponent Health Push is enabled.",
+        "description": "启用对手生命值推动时，对手长按音符造成的生命值变化。",
         "value": 0.005,
         "decimals": 3,
         "min": 0,
@@ -292,21 +292,21 @@
         "save": "originalHealthBar",
         "name": "V-Slice Score Text",
         "type": "bool",
-        "description": "Changes the score text style to match V-Slice.",
+        "description": "将分数文本样式更改为 V-Slice 风格。",
         "value": false
     },
-	{
-		"save": "healthSustainReward",
-		"name": "Enable Sustain Note Reward",
-		"type": "bool",
-		"description": "If enabled, sustain notes can restore health and give score.",
-		"value": false
-	},
+    {
+        "save": "healthSustainReward",
+        "name": "Enable Sustain Note Reward",
+        "type": "bool",
+        "description": "如果启用，长按音符可以恢复生命值并给予分数。",
+        "value": false
+    },
     {
         "save": "title3",
         "name": "Other Settings",
         "type": "string",
-        "description": "Others...",
+        "description": "其他...",
         "value": " ",
         "options": [
             " "
@@ -316,7 +316,7 @@
         "save": "disableBotplay",
         "name": "Disable Botplay",
         "type": "bool",
-        "description": "If enabled, Botplay will be COMPLETELY disabled.",
+        "description": "如果启用，Botplay 将被完全禁用。",
         "value": false
     },
     {
@@ -324,7 +324,7 @@
         "name": "   Miss Limit Count  :",
         "format": "   %v",
         "type": "int",
-        "description": "If the number of misses exceeds this value, you will immediately fail (in all songs). Set it to -1 to disable.",
+        "description": "如果未命中次数超过此值，你将立即失败（在所有歌曲中）。将其设置为 -1 以禁用。",
         "value": -1,
         "min": -1,
         "max": 50,
@@ -335,7 +335,7 @@
         "name": "   Score Text Color :",
         "format": "  %v",
         "type": "string",
-        "description": "Set the score text color. Disable to allow other mods to modify it.\n(Have 28 Colors!)",
+        "description": "设置分数文本颜色。禁用此选项以允许其他模组修改它。\n（有 28 种颜色！）",
         "value": "Disable",
         "options": [
             "Disable",
@@ -377,7 +377,7 @@
         "name": "   Blind Play",
         "format": "   %v",
         "type": "string",
-        "description": "If enabled, will hide all notes during gameplay.\nOnly Player: Just hiding the player's notes, it allows you to guess the player's notes through the opponent's notes.\nAll: Hiding all the notes (would be way too hard, good luck)",
+        "description": "如果启用，将在游戏过程中隐藏所有音符。\n仅玩家：只隐藏玩家的音符，允许你通过对手的音符猜测玩家的音符。\n全部：隐藏所有音符（会太难了，祝你好运）",
         "value": "Disable",
         "options": [
             "Disable",
@@ -389,14 +389,14 @@
         "save": "oneNote",
         "name": "One Note(Beta)",
         "type": "bool",
-        "description": "Merge the four player note lanes into one lane. Any direction key can hit notes, simultaneous notes are merged into one, and Sustain Notes are automatically completed.",
+        "description": "将四个玩家音符轨道合并为一个轨道。任何方向键都可以击中音符，同时出现的音符会合并为一个，长按音符会自动完成。",
         "value": false
     },
     {
         "save": "titleAdvanced",
         "name": "Advanced Settings",
         "type": "string",
-        "description": "If you don't know what the settings below are for, \nDON'T touch them!!!",
+        "description": "如果你不知道下面的设置是做什么的，\n不要碰它们！！！",
         "value": " ",
         "options": [
             " "
@@ -407,7 +407,7 @@
         "name": "   Arrow Position",
         "format": "   %v",
         "type": "float",
-        "description": "Set OneNote arrow position. 0 = Left, 0.5 = Center, 1 = Right.",
+        "description": "设置 OneNote 箭头位置。0 = 左，0.5 = 中，1 = 右。",
         "value": 0.5,
         "decimals": 2,
         "min": 0,
@@ -420,7 +420,7 @@
         "name": "   Rainbow Speed",
         "type": "float",
         "format": "   %vx",
-        "description": "Adjust the color transition speed multiplier.\n(only takes effect when the score text color is set to \"Rainbow\").",
+        "description": "调整颜色过渡速度倍率。\n（仅在分数文本颜色设置为 \"Rainbow\" 时生效）。",
         "value": 1,
         "decimals": 1,
         "min": 0.1,
@@ -432,7 +432,7 @@
         "save": "titleCustomRGB",
         "name": "   Custom Score Text Color(RGB)",
         "type": "string",
-        "description": "Set the RGB value of a custom score color.\n(only takes effect when the score text color is set to \"Custom\").",
+        "description": "设置自定义分数颜色的 RGB 值。\n（仅在分数文本颜色设置为 \"Custom\" 时生效）。",
         "value": " ",
         "options": [
             " "
@@ -443,7 +443,7 @@
         "name": "      R  :",
         "format": "      %v",
         "type": "int",
-        "description": "Set the R value of a custom score RGB color.",
+        "description": "设置自定义分数 RGB 颜色的 R 值。",
         "value": 0,
         "decimals": 1,
         "min": 0,
@@ -455,7 +455,7 @@
         "name": "      G  :",
         "format": "      %v",
         "type": "int",
-        "description": "Set the G value of a custom score RGB color.",
+        "description": "设置自定义分数 RGB 颜色的 G 值。",
         "value": 0,
         "decimals": 1,
         "min": 0,
@@ -467,7 +467,7 @@
         "name": "      B  :",
         "format": "      %v",
         "type": "int",
-        "description": "Set the B value of a custom score RGB color.",
+        "description": "设置自定义分数 RGB 颜色的 B 值。",
         "value": 0,
         "decimals": 1,
         "min": 0,
@@ -478,14 +478,14 @@
         "save": "advancedDebugMode",
         "name": "Advanced Debug Mode",
         "type": "bool",
-        "description": "Enable Advanced Debug Mode",
+        "description": "启用高级调试模式",
         "value": false
     },
     {
         "save": "disableCheckVer",
         "name": "Disable Engine Version Check",
         "type": "bool",
-        "description": "If enabled, the script will no longer check whether the runtime environment is NovaFlare Engine. Under normal circumstances, \n*DO NOT* enable this option.",
+        "description": "如果启用，脚本将不再检查运行环境是否为 NovaFlare Engine。正常情况下，\n*不要* 启用此选项。",
         "value": false
     }
 ]
