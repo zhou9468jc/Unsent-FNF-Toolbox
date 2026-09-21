@@ -19,6 +19,8 @@ local opponentPushSustain = getModSetting('healthOpponentPushSustain')
 local originalHealthBar = getModSetting('originalHealthBar')
 local enableSustainReward = getModSetting('healthSustainReward')
 
+local isShowcase = getModSetting('showCaseMode')
+
 -- ============================================================
 -- Score Scroll Settings
 -- ============================================================
@@ -141,7 +143,7 @@ local function setupVSliceHealthBar()
 
 		setTextBorder(
 			originalScoreTag,
-			0,
+			1,
 			'000000'
 		)
 
@@ -214,11 +216,19 @@ local function updateVSliceHealthBar(elapsed)
 	-- 防止显示小数
 	local shownScore =
 		math.floor(displayScore + 0.5)
-
-	setTextString(
-		originalScoreTag,
-		'Score: ' .. tostring(shownScore)
-	)
+		local isBotplay = getProperty('cpuControlled') or false
+		local changeBotText = readSetting('showBotText',true)
+	if isBotplay == true and changeBotText == true then
+		setTextString(
+			originalScoreTag,
+			"Bot Play Enabled"
+		)
+	else
+		setTextString(
+			originalScoreTag,
+			'Score: ' .. tostring(shownScore)
+		)
+	end
 
 	-- ========================================================
 	-- Position
@@ -237,7 +247,7 @@ local function updateVSliceHealthBar(elapsed)
 
 	setProperty(
 		originalScoreTag .. '.x',
-		(screenWidth / 2) + 150
+		(screenWidth / 2) + 100
 	)
 
 	setProperty(
@@ -257,7 +267,7 @@ function onCreate()
 
 	enable = readSetting(
 		'healthSmooth',
-		true
+		false
 	)
 
 	smoothSpeed = readSetting(
@@ -267,7 +277,7 @@ function onCreate()
 
 	sustainHealth = readSetting(
 		'healthSustainAmount',
-		0.010
+		0.008
 	)
 
 	enableOpponentPush = readSetting(
@@ -277,19 +287,24 @@ function onCreate()
 
 	opponentPush = readSetting(
 		'healthOpponentPushAmount',
-		0.018
+		0.020
 	)
 
 	opponentPushSustain = readSetting(
 		'healthOpponentPushSustain',
-		0.006
+		0.007
 	)
 
 	originalHealthBar = readSetting(
 		'originalHealthBar',
 		false
 	)
-
+	isShowcase = readSetting(
+		'showCaseMode',
+		false
+	)
+	
+	
 	-- ========================================================
 	-- Initialize Health
 	-- ========================================================
@@ -329,7 +344,9 @@ function onUpdate(elapsed)
 	if not initialized then
 		return
 	end
-
+	if originalHealthBar == true then
+		setProperty('botplayTxt.visible',false)
+	end
 	-- ========================================================
 	-- Health Smoothing
 	-- ========================================================
@@ -425,11 +442,14 @@ function goodNoteHit(
 )
 	if isSustainNote then
 		-- 长按：使用普通分数滚动速度
+		local isBotplay = getProperty('cpuControlled') or false
 		currentScoreScrollRate = sustainScoreScrollRate
 
 		if enableSustainReward then
 			addHealth(sustainHealth)
-			addScore(30)
+			if isBotplay == false then
+				addScore(30)
+			end
 		end
 	else
 		-- 普通点击：使用更快的分数滚动速度
@@ -472,9 +492,21 @@ end
 -- Update Post
 -- ============================================================
 
-function onUpdatePost(elapsed)
+function onUpdatePost()
 	if not initialized then
 		return
+	end
+
+	if not originalHealthBar or not originalScoreCreated then
+		return
+	end
+
+	if getModSetting('showCaseMode') then
+		setProperty(originalScoreTag .. '.visible', false)
+		setProperty(originalScoreTag .. '.alpha', 0)
+	else
+		setProperty(originalScoreTag .. '.visible', true)
+		setProperty(originalScoreTag .. '.alpha', getProperty('scoreTxt.alpha'))
 	end
 end
 

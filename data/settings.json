@@ -1,7 +1,7 @@
 [
     {
         "save": "title1",
-        "name": "Debug ToolBox Settings",
+        "name": "--Debug ToolBox Settings--",
         "type": "string",
         "description": "Set your debug toolbox settings...",
         "value": " ",
@@ -58,9 +58,35 @@
         "description": "Enable recording showcase mode. Hide HUD, judgement information, strums and hide judgement notes.",
         "value": false
     },
+	{
+		"save": "showCaseStrumAlpha",
+		"name": "     Strum Alpha  :",
+		"format":"     %v%",
+		"type": "percent",
+		"description": "Set the transparency of strum arrows during Showcase Mode. 0% disables this feature.",
+		"value": 0,
+		"min": 0,
+		"max": 1,
+		"step": 0.01,
+		"decimals": 2,
+		"scroll": 0.5
+	},
+	{
+		"save": "showCaseHealthBarAlpha",
+		"name": "     Health Bar Alpha  :",
+		"format": "     %v%",
+		"type": "percent",
+		"description": "Set the transparency of the health bar and icons during Showcase Mode.\n0% disables this feature.",
+		"value": 0,
+		"min": 0,
+		"max": 1,
+		"step": 0.01,
+		"decimals": 2,
+		"scroll": 0.5
+	},
     {
         "save": "title2",
-        "name": "Taunt Settings",
+        "name": "--Taunt Settings--",
         "type": "string",
         "description": "Can taunt opponent...",
         "value": " ",
@@ -214,7 +240,7 @@
     },
     {
         "save": "titleHealthSmooth",
-        "name": "HealthBar And Score Settings",
+        "name": "-VSlice Style Settings-",
         "type": "string",
         "description": "Configure health bar smoothing and V-Slice style settings.",
         "value": " ",
@@ -227,7 +253,7 @@
         "name": "Health Bar Smoothing",
         "type": "bool",
         "description": "Smoothly interpolates health changes instead of applying them instantly.",
-        "value": true
+        "value": false
     },
     {
         "save": "healthSmoothSpeed",
@@ -248,47 +274,47 @@
         "format": "   %v",
         "type": "float",
         "description": "Health gained or lost for each sustain note tick.",
-        "value": 0.01,
+        "value": 0.008,
         "decimals": 3,
         "min": 0,
         "max": 0.1,
         "step": 0.001,
         "scroll": 1
     },
-    {
-        "save": "healthOpponentPush",
-        "name": "Opponent Health Push",
-        "type": "bool",
-        "description": "Makes opponent notes push the health bar toward the opponent.",
-        "value": false
-    },
-    {
-        "save": "healthOpponentPushAmount",
-        "name": "   Opponent Push Amount  :",
-        "format": "   %v",
-        "type": "float",
-        "description": "Health change caused by a normal opponent note when Opponent Health Push is enabled.",
-        "value": 0.013,
-        "decimals": 3,
-        "min": 0,
-        "max": 0.1,
-        "step": 0.001,
-        "scroll": 1
-    },
-    {
-        "save": "healthOpponentPushSustain",
-        "name": "   Opponent Push Sustain  :",
-        "format": "   %v",
-        "type": "float",
-        "description": "Health change caused by an opponent sustain note when Opponent Health Push is enabled.",
-        "value": 0.005,
-        "decimals": 3,
-        "min": 0,
-        "max": 0.1,
-        "step": 0.001,
-        "scroll": 1
-    },
-    {
+	{
+		"save": "healthOpponentPush",
+		"name": "Opponent Health Drain",
+		"type": "bool",
+		"description": "Makes opponent notes reduce player health.",
+		"value": false
+	},
+	{
+		"save": "healthOpponentPushAmount",
+		"name": "   Opponent Drain Amount :",
+		"format": "  %v",
+		"type": "float",
+		"description": "Health reduced by a normal opponent note when Opponent Health Drain is enabled.",
+		"value": 0.020,
+		"decimals": 3,
+		"min": 0,
+		"max": 0.1,
+		"step": 0.001,
+		"scroll": 1
+	},
+	{
+		"save": "healthOpponentPushSustain",
+		"name": "   Opponent Drain Sustain :",
+		"format": "  %v",
+		"type": "float",
+		"description": "Health reduced by an opponent sustain note when Opponent Health Drain is enabled.",
+		"value": 0.007,
+		"decimals": 3,
+		"min": 0,
+		"max": 0.1,
+		"step": 0.001,
+		"scroll": 1
+	},
+{
         "save": "originalHealthBar",
         "name": "V-Slice Score Text",
         "type": "bool",
@@ -302,9 +328,40 @@
 		"description": "If enabled, sustain notes can restore health and give score.",
 		"value": false
 	},
+	{
+		"save": "holdCover",
+		"name": "Hold Cover",
+		"type": "bool",
+		"description": "Enable the V-Slice-style hold cover effect.",
+		"value": true
+	},
+	{
+		"save": "holdCoverOffsetX",
+		"name": "     Hold Cover Offset X :",
+		"format": "    %v",
+		"type": "int",
+		"description": "Additional X offset applied to all Hold Covers.",
+		"value": 0,
+		"min": -500,
+		"max": 500,
+		"step": 1,
+		"scroll": 250
+	},
+	{
+		"save": "holdCoverOffsetY",
+		"name": "     Hold Cover Offset Y :",
+		"format": "    %v",
+		"type": "int",
+		"description": "Additional Y offset applied to all Hold Covers.",
+		"value": 0,
+		"min": -500,
+		"max": 500,
+		"step": 1,
+		"scroll": 250
+	},
     {
         "save": "title3",
-        "name": "Other Settings",
+        "name": "--Other Settings--",
         "type": "string",
         "description": "Others...",
         "value": " ",
@@ -394,7 +451,7 @@
     },
     {
         "save": "titleAdvanced",
-        "name": "Advanced Settings",
+        "name": "/!\\Advanced Settings/!\\",
         "type": "string",
         "description": "If you don't know what the settings below are for, \nDON'T touch them!!!",
         "value": " ",
@@ -404,8 +461,8 @@
     },
     {
         "save": "arrowPosition",
-        "name": "   Arrow Position",
-        "format": "   %v",
+        "name": "   OneNote Arrow Position :",
+        "format": "  %v",
         "type": "float",
         "description": "Set OneNote arrow position. 0 = Left, 0.5 = Center, 1 = Right.",
         "value": 0.5,
@@ -417,7 +474,7 @@
     },
     {
         "save": "rainbowSpeed",
-        "name": "   Rainbow Speed",
+        "name": "   Rainbow Speed  :",
         "type": "float",
         "format": "   %vx",
         "description": "Adjust the color transition speed multiplier.\n(only takes effect when the score text color is set to \"Rainbow\").",

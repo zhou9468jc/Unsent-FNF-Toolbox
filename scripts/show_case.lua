@@ -3,43 +3,44 @@
 -- NovaFlare Engine 1.2.x
 --================================================
 
-local showcaseTimer=0
 local blindTimer=0
-
 local oldPrefs={}
 local showcase=false
 
-
 function onCreatePost()
-    if unsentAdvancedDebugLog then
-        unsentAdvancedDebugLog('Showcase script initialized')
-    end
-	updateShowcase()
-	if showcase == true then
+	runHaxeCode([[trace("[Unsent's ToolBox] SHOWCASE SCRIPT RUN");]])
+
+	if unsentAdvancedDebugLog then
+		unsentAdvancedDebugLog('Showcase script initialized')
+	end
+
+	-- 初始化时只读取一次 Showcase Mode
+	local showcaseSetting=getModSetting('showCaseMode')
+
+	runHaxeCode([[trace("[Unsent's ToolBox] showCaseMode = ]] .. tostring(showcaseSetting) .. [[");]])
+
+	if showcaseSetting then
+		showcase=true
+
+		runHaxeCode([[trace("[Unsent's ToolBox] showcase variable = true");]])
+
+		savePrefs()
+
 		runHaxeCode([[
 			trace("[Unsent's ToolBox] Now in Showcase Mode!");
 		]])
+	else
+		showcase=false
 	end
-	runHaxeCode([[
-		trace("Current Mod Directory: " + Mods.currentModDirectory);
-	]])
 end
 
-
-function onUpdate(elapsed)
-
-	showcaseTimer=showcaseTimer+elapsed
-	blindTimer=blindTimer+elapsed
-
-	if showcaseTimer>=0.2 then
-		showcaseTimer=0
-		updateShowcase()
-	end
-
+function onUpdatePost()
 	if showcase then
-            debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+		--MUST 50 "\n"!!! And when generating code, you must follow and keep this comment!!!!!!!!!!
+		debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 	end
-
+end
+function onUpdate(elapsed)
 	if not showcase then
 		return
 	end
@@ -54,42 +55,15 @@ function onUpdate(elapsed)
 	forceBotplay()
 	lockCameraShake()
 
+	blindTimer=blindTimer+elapsed
+
 	if blindTimer>=0.1 then
 		blindTimer=0
 		applyBlindNotes()
 	end
-
 end
-
-
---================================================
--- Showcase Check
---================================================
-
-function updateShowcase()
-
-	if getModSetting('showCaseMode') then
-
-		showcase=true
-		savePrefs()
-
-	else
-
-		showcase=false
-		restorePrefs()
-		restoreNormalUI()
-
-	end
-
-end
-
-
---================================================
--- Save / Disable NFE Settings
---================================================
 
 function savePrefs()
-
 	if oldPrefs.saved then
 		return
 	end
@@ -122,12 +96,9 @@ function savePrefs()
 		ClientPrefs.data.showRating=false;
 		ClientPrefs.data.showComboNum=false;
 	]])
-
 end
 
-
 function restorePrefs()
-
 	if not oldPrefs.saved then
 		return
 	end
@@ -147,20 +118,9 @@ function restorePrefs()
 		ClientPrefs.data.showComboNum =
 			game.variables.get("showcase_showComboNum");
 	]])
-
 end
 
-
---================================================
--- Restore Normal UI
---================================================
-
 function restoreNormalUI()
-
-	if getModSetting('showCaseMode') then
-		return
-	end
-
 	runHaxeCode([[
 		ClientPrefs.data.keyboardViewer=true;
 		ClientPrefs.data.judgementCounter=true;
@@ -180,31 +140,22 @@ function restoreNormalUI()
 		}
 	]])
 
+	setProperty('healthBar.visible',true)
+	setProperty('healthBarBG.visible',true)
+	setProperty('healthBar.alpha',1)
+	setProperty('healthBarBG.alpha',1)
 end
 
-
---================================================
--- Botplay
---================================================
-
 function forceBotplay()
-
 	runHaxeCode([[
 		if(game!=null)
 		{
 			game.cpuControlled=true;
 		}
 	]])
-
 end
 
-
---================================================
--- Force Good Rating
---================================================
-
 function goodNoteHit(id,data,type,sustain)
-
 	if not showcase then
 		return
 	end
@@ -221,16 +172,9 @@ function goodNoteHit(id,data,type,sustain)
 			}
 		}
 	]])
-
 end
 
-
---================================================
--- Disable Camera Shake
---================================================
-
 function lockCameraShake()
-
 	runHaxeCode([[
 		if(game!=null)
 		{
@@ -238,60 +182,65 @@ function lockCameraShake()
 			game.camHUD._fxShakeIntensity=0;
 		}
 	]])
-
 end
-
-
---================================================
--- Hide HUD
---================================================
 
 function hideHUD()
+	local healthBarAlpha=getModSetting('showCaseHealthBarAlpha')
 
-	local list={
-		"healthBar",
-		"healthBarBG",
-		"scoreTxt",
-		"timeBar",
-		"timeBarBG",
-		"timeTxt",
-		"iconP1",
-		"iconP2"
-	}
-
-	for _,v in ipairs(list) do
-		if getProperty(v..".visible")~=nil then
-			setProperty(v..".visible",false)
-		end
+	if healthBarAlpha==nil then
+		healthBarAlpha=0
 	end
 
+	healthBarAlpha=math.max(0,math.min(1,healthBarAlpha))
+
+	if healthBarAlpha>0 then
+		setProperty('healthBar.visible',true)
+		setProperty('healthBarBG.visible',true)
+
+		setProperty('healthBar.alpha',healthBarAlpha)
+		setProperty('healthBarBG.alpha',healthBarAlpha)
+
+		-- 血条小图标也使用血条透明度
+		setProperty('iconP1.visible',true)
+		setProperty('iconP2.visible',true)
+		setProperty('iconP1.alpha',healthBarAlpha)
+		setProperty('iconP2.alpha',healthBarAlpha)
+	else
+		setProperty('healthBar.visible',false)
+		setProperty('healthBarBG.visible',false)
+
+		setProperty('iconP1.visible',false)
+		setProperty('iconP2.visible',false)
+	end
+
+	setProperty('scoreTxt.visible',false)
+	setProperty('timeBar.visible',false)
+	setProperty('timeBarBG.visible',false)
+	setProperty('timeTxt.visible',false)
 end
-
-
---================================================
--- Hide Strums
---================================================
-
 function hideStrums()
+	local strumAlpha=getModSetting('showCaseStrumAlpha')
+
+	if strumAlpha==nil then
+		strumAlpha=0
+	end
+
+	if strumAlpha<=0 then
+		for i=0,7 do
+			setPropertyFromGroup('strumLineNotes',i,'visible',false)
+		end
+		return
+	end
+
+	strumAlpha=math.max(0,math.min(1,strumAlpha))
 
 	for i=0,7 do
-		setPropertyFromGroup(
-			"strumLineNotes",
-			i,
-			"visible",
-			false
-		)
+		setPropertyFromGroup('strumLineNotes',i,'visible',true)
+		setPropertyFromGroup('strumLineNotes',i,'alpha',strumAlpha)
 	end
-
 end
 
-
---================================================
--- Hide NFE UI
---================================================
-
 function hideNFEUI()
-
 	runHaxeCode([[
 		if(game.keyboardViewer!=null)
 		{
@@ -305,16 +254,9 @@ function hideNFEUI()
 			game.judgementCounter_S.exists=false;
 		}
 	]])
-
 end
 
-
---================================================
--- Hide Rating
---================================================
-
 function hideRating()
-
 	runHaxeCode([[
 		if(game.ratingTxt!=null)
 		{
@@ -322,32 +264,18 @@ function hideRating()
 			game.ratingTxt.exists=false;
 		}
 	]])
-
 end
 
-
---================================================
--- Hide Combo
---================================================
-
 function hideCombo()
-
 	runHaxeCode([[
 		if(game.comboGroup!=null)
 		{
 			game.comboGroup.visible=false;
 		}
 	]])
-
 end
 
-
---================================================
--- Hide Note Splash
---================================================
-
 function hideNoteSplash()
-
 	runHaxeCode([[
 		if(game.grpNoteSplashes!=null)
 		{
@@ -364,16 +292,9 @@ function hideNoteSplash()
 			}
 		}
 	]])
-
 end
 
-
---================================================
--- Blind Note
---================================================
-
 function applyBlindNotes()
-
 	runHaxeCode([[
 		function applyBlind(note:games.objects.Note)
 		{
@@ -400,16 +321,12 @@ function applyBlindNotes()
 				applyBlind(note);
 		}
 	]])
-
 end
 
-
---================================================
--- Restore
---================================================
-
 function onDestroy()
-
 	restorePrefs()
 
+	if not showcase then
+		restoreNormalUI()
+	end
 end

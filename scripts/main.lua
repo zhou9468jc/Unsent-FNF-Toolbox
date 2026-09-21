@@ -609,6 +609,7 @@ function onUpdate(elapsed)
 
 
     -- C Botplay
+	originalHealthBar = getSetting('originalHealthBar',false)
     if keyboardJustPressed('C')
     and not disableBotplay
     and not keyboardPressed('SHIFT')
@@ -624,7 +625,7 @@ function onUpdate(elapsed)
 
             fakeBotActive = false
 
-            if changeBotText then
+            if changeBotText and not originalHealthBar then
                 setProperty('botplayTxt.visible',true)
             end
 
