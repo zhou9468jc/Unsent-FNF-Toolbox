@@ -27,19 +27,51 @@ end
 
 
 -- ============================================================
+-- Debug Mode
+--
+-- false = Normal Hold Cover behavior
+-- true  = Hold Cover offset adjustment mode
+--
+-- Q / E:
+-- Select arrow
+--
+-- Arrow Keys:
+-- Normal = 1 pixel
+-- Shift  = 4 pixels
+-- Ctrl   = 8 pixels
+-- Alt    = 32 pixels
+--
+-- Debug mode directly modifies baseOffset.
+-- ============================================================
+
+local debugMode = false
+
+local debugSelectedDirection = 0
+
+local debugDirectionNames = {
+	[0] = 'LEFT',
+	[1] = 'DOWN',
+	[2] = 'UP',
+	[3] = 'RIGHT'
+}
+
+
+-- ============================================================
 -- Base Offset
 --
--- 0 = Purple
--- 1 = Blue
--- 2 = Green
--- 3 = Red
+-- 0 = Purple / LEFT
+-- 1 = Blue   / DOWN
+-- 2 = Green  / UP
+-- 3 = Red    / RIGHT
+--
+-- These values are directly modified by Debug Mode.
 -- ============================================================
 
 local baseOffset = {
-	[0] = {-108, -98},
+	[0] = {-106, -98},
 	[1] = {-108, -98},
 	[2] = {-108, -98},
-	[3] = {-108, -98}
+	[3] = {-106, -98}
 }
 
 
@@ -50,6 +82,8 @@ local baseOffset = {
 local covers = {}
 local active = {}
 local endTimers = {}
+
+local debugTextTag = 'holdCoverDebugText'
 
 
 -- ============================================================
@@ -108,6 +142,169 @@ local function isDirectionPressed(direction)
 	end
 
 	return false
+end
+
+
+-- ============================================================
+-- Debug Keyboard Detection
+-- ============================================================
+
+local function getDebugMoveAmount()
+	if keyboardPressed('ALT') then
+		return 32
+	end
+
+	if keyboardPressed('CONTROL') then
+		return 8
+	end
+
+	if keyboardPressed('SHIFT') then
+		return 4
+	end
+
+	return 1
+end
+
+
+-- ============================================================
+-- Debug Text
+-- ============================================================
+
+local function updateDebugText()
+	if not debugMode then
+		return
+	end
+
+	local text =
+		'Hold Cover Offset Debug\n' ..
+		'Q / E : Select Arrow\n' ..
+		'Arrow : ±1    Shift : ±4    Ctrl : ±8    Alt : ±32\n\n'
+
+	for direction = 0, 3 do
+		local offset = baseOffset[direction]
+
+		local prefix = '  '
+
+		if direction == debugSelectedDirection then
+			prefix = '> '
+		end
+
+		text = text ..
+			prefix ..
+			debugDirectionNames[direction] ..
+			'   X: ' ..
+			tostring(offset[1]) ..
+			'   Y: ' ..
+			tostring(offset[2]) ..
+			'\n'
+	end
+
+	setTextString(
+		debugTextTag,
+		text
+	)
+end
+
+
+-- ============================================================
+-- Debug Text Creation
+-- ============================================================
+
+local function createDebugText()
+	if not debugMode then
+		return
+	end
+
+	makeLuaText(
+		debugTextTag,
+		'',
+		0,
+		20,
+		20
+	)
+
+	setTextSize(
+		debugTextTag,
+		18
+	)
+
+	setTextBorder(
+		debugTextTag,
+		2,
+		'000000'
+	)
+
+	setObjectCamera(
+		debugTextTag,
+		'hud'
+	)
+
+	addLuaText(
+		debugTextTag,
+		true
+	)
+
+	updateDebugText()
+end
+
+
+-- ============================================================
+-- Debug Keyboard
+-- ============================================================
+
+local function updateDebugKeyboard()
+	if not debugMode then
+		return
+	end
+
+	-- Select previous arrow
+	if keyboardJustPressed('Q') then
+		debugSelectedDirection =
+			debugSelectedDirection - 1
+
+		if debugSelectedDirection < 0 then
+			debugSelectedDirection = 3
+		end
+	end
+
+	-- Select next arrow
+	if keyboardJustPressed('E') then
+		debugSelectedDirection =
+			debugSelectedDirection + 1
+
+		if debugSelectedDirection > 3 then
+			debugSelectedDirection = 0
+		end
+	end
+
+	local amount = getDebugMoveAmount()
+	local offset = baseOffset[debugSelectedDirection]
+
+	-- Left
+	if keyboardJustPressed('LEFT') then
+		offset[1] =
+			offset[1] - amount
+	end
+
+	-- Right
+	if keyboardJustPressed('RIGHT') then
+		offset[1] =
+			offset[1] + amount
+	end
+
+	-- Up
+	if keyboardJustPressed('UP') then
+		offset[2] =
+			offset[2] - amount
+	end
+
+	-- Down
+	if keyboardJustPressed('DOWN') then
+		offset[2] =
+			offset[2] + amount
+	end
+
+	updateDebugText()
 end
 
 
@@ -249,6 +446,30 @@ function onCreatePost()
 		makeCover(direction)
 	end
 
+	-- Debug text
+	createDebugText()
+
+	-- Debug Mode:
+	-- Keep all four Hold Covers visible and looping.
+	if debugMode then
+		for direction = 0, 3 do
+			local tag = covers[direction]
+
+			if tag then
+				setProperty(
+					tag .. '.visible',
+					true
+				)
+
+				playAnim(
+					tag,
+					'hold',
+					true
+				)
+			end
+		end
+	end
+
 	updateAllShowcaseAlpha()
 end
 
@@ -289,6 +510,43 @@ local function updateCoverPosition(direction)
 			+ offset[2]
 			+ holdCoverOffsetY
 	)
+end
+
+
+-- ============================================================
+-- Update All Debug Covers
+-- ============================================================
+
+local function updateAllDebugCovers()
+	if not debugMode then
+		return
+	end
+
+	for direction = 0, 3 do
+		local tag = covers[direction]
+
+		if tag then
+			updateCoverPosition(direction)
+
+			setProperty(
+				tag .. '.visible',
+				true
+			)
+
+			local animName =
+				getProperty(
+					tag .. '.animation.curAnim.name'
+				)
+
+			if animName ~= 'hold' then
+				playAnim(
+					tag,
+					'hold',
+					true
+				)
+			end
+		end
+	end
 end
 
 
@@ -418,6 +676,10 @@ function goodNoteHit(
 		return
 	end
 
+	if debugMode then
+		return
+	end
+
 	if isSustainNote then
 		return
 	end
@@ -456,10 +718,25 @@ function onUpdate(elapsed)
 		return
 	end
 
-	-- Hold Cover 自己处理 Showcase 透明度
+	-- ========================================================
+	-- Debug Mode
+	-- ========================================================
+
+	if debugMode then
+		updateDebugKeyboard()
+		updateAllDebugCovers()
+		updateAllShowcaseAlpha()
+
+		-- 不执行正常 Hold Cover 的按键释放逻辑
+		return
+	end
+
+	-- ========================================================
+	-- Normal Mode
+	-- ========================================================
+
 	updateAllShowcaseAlpha()
 
-	-- Botplay 状态
 	local botplay =
 		getProperty('cpuControlled')
 
@@ -510,6 +787,10 @@ function onTimerCompleted(tag)
 		return
 	end
 
+	if debugMode then
+		return
+	end
+
 	for direction = 0, 3 do
 		if tag == endTimers[direction] then
 			endCover(direction)
@@ -530,6 +811,10 @@ function noteMiss(
 	isSustainNote
 )
 	if not enableHoldCover then
+		return
+	end
+
+	if debugMode then
 		return
 	end
 
@@ -554,6 +839,10 @@ end
 
 function onUpdatePost()
 	if not enableHoldCover then
+		return
+	end
+
+	if debugMode then
 		return
 	end
 

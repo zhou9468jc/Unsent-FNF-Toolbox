@@ -14,26 +14,26 @@
 
 ## ⚠️ 重要提醒
 
-- **仅支持 NovaFlare Engine 1.2.x，普通 Psych Engine 无法运行**
-- Reset Property 功能需要引擎开启 `No Reset` 选项
-- 启用模组后，需要打开模组设置中的 `developerMode` 总开关，快捷键才会生效
+* **仅支持 NovaFlare Engine 1.2.x，普通 Psych Engine 无法运行**
+* Reset Property 功能需要引擎开启 `No Reset` 选项
+* 启用模组后，需要打开模组设置中的 `developerMode` 总开关，快捷键才会生效
 
 ## ⌨️ 快捷键列表
 
-| 快捷键 | 功能 |
-|---|---|
-| `C` | 开关BotPlay |
-| `Shift + C` | 开关假Botplay (BotPlay文字) |
-| `V` | 开关练习模式 |
-| `Shift + N/M / N/M` | 调整滚动速度 |
-| `Ctrl / Ctrl+Shift + N / M` | 调整播放速度 |
-| `Ctrl + R` | 重置播放速度 |
-| `Shift + R` | 重置滚动速度 |
-| `Alt + R` | 将血量重置为 50% |
-| `Alt / Alt+Shift + N / M` | 调整血量 |
-| `Space + H / G` | 进入软暂停 |
-| `Space` | 退出软暂停 |
-| `P` | 开关工具箱输出 |
+| 快捷键                         | 功能                     |
+| --------------------------- | ---------------------- |
+| `C`                         | 开关BotPlay              |
+| `Shift + C`                 | 开关假Botplay (BotPlay文字) |
+| `V`                         | 开关练习模式                 |
+| `Shift + N/M / N/M`         | 调整滚动速度                 |
+| `Ctrl / Ctrl+Shift + N / M` | 调整播放速度                 |
+| `Ctrl + R`                  | 重置播放速度                 |
+| `Shift + R`                 | 重置滚动速度                 |
+| `Alt + R`                   | 将血量重置为 50%             |
+| `Alt / Alt+Shift + N / M`   | 调整血量                   |
+| `Space + H / G`             | 进入软暂停                  |
+| `Space`                     | 退出软暂停                  |
+| `P`                         | 开关工具箱输出                |
 
 ## 📦 安装方法
 
@@ -43,24 +43,41 @@
 4. 启动游戏，在模组列表中启用本模组。
 5. 进入模组设置**启用功能**。
 
-## 📜 License
+## 📜 License / 许可证
 
-本项目采用自定义许可
->`“UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)”`
+### 许可证变更说明
 
-本许可证允许任何人在非商业用途下自由使用、复制、修改和再发布本项目。
+自 **2026 年 9 月 24 日**起，本项目的许可证由 **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1（UNCSAL-1.1）** 更改为 **MIT License**。
 
-再发布本项目或其修改版本时：
+在 2026 年 9 月 24 日之前发布的所有版本此前均使用 UNCSAL-1.1 许可证进行发布。**自本声明发布起，UNCSAL-1.1 不再作为本项目使用的许可证。**
 
-- 必须保留原作者署名及版权声明
-- 必须明确说明修改情况
-- 修改版本必须继续采用 **UNCSAL-1.1**
-- 禁止商业使用、商业销售及商业分发
-- 如需进行商业使用，必须事先获得原作者的书面许可
+自 **2026 年 9 月 24 日**起，本项目正式采用 **MIT License** 进行授权。
 
-本项目使用的是自定义许可证，**不是 OSI（Open Source Initiative）批准的开源许可证**。
+本许可证变更说明仅用于说明项目许可证的变更历史。
 
-作者：**难寄期许**
+### MIT License
+
+Copyright (c) 2026 zhou9468jc
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+作者：**难寄期许 / Unsent**
 
 [⬆ 返回顶部](#unsents-toolbox-nf-ver)
 
@@ -76,26 +93,26 @@ Author: **Unsent / 难寄期许**
 
 ## ⚠️ Important Notice
 
-- **Only supports NovaFlare Engine 1.2.x. Normal Psych Engine is not supported.**
-- The Reset Property feature requires the `No Reset` option to be enabled in the engine.
-- After enabling the mod, the `developerMode` option in the mod settings must be enabled for the shortcuts to work.
+* **Only supports NovaFlare Engine 1.2.x. Normal Psych Engine is not supported.**
+* The Reset Property feature requires the `No Reset` option to be enabled in the engine.
+* After enabling the mod, the `developerMode` option in the mod settings must be enabled for the shortcuts to work.
 
 ## ⌨️ Keyboard Shortcuts
 
-| Key | Function |
-|---|---|
-| `C` | Toggle Botplay |
-| `Shift + C` | Toggle Fake Botplay |
-| `V` | Toggle Practice Mode |
-| `Shift + N/M / N/M` | Adjust Scroll Speed |
-| `Ctrl / Ctrl+Shift + N / M` | Adjust Playback Rate |
-| `Ctrl + R` | Reset Playback Rate |
-| `Shift + R` | Reset Scroll Speed |
-| `Alt + R` | Reset Health to 50% |
-| `Alt / Alt+Shift + N / M` | Adjust Health |
-| `Space + H / G` | Soft Pause |
-| `Space` | Exit Soft Pause |
-| `P` | Toggle Developer Output |
+| Key                         | Function                |
+| --------------------------- | ----------------------- |
+| `C`                         | Toggle Botplay          |
+| `Shift + C`                 | Toggle Fake Botplay     |
+| `V`                         | Toggle Practice Mode    |
+| `Shift + N/M / N/M`         | Adjust Scroll Speed     |
+| `Ctrl / Ctrl+Shift + N / M` | Adjust Playback Rate    |
+| `Ctrl + R`                  | Reset Playback Rate     |
+| `Shift + R`                 | Reset Scroll Speed      |
+| `Alt + R`                   | Reset Health to 50%     |
+| `Alt / Alt+Shift + N / M`   | Adjust Health           |
+| `Space + H / G`             | Soft Pause              |
+| `Space`                     | Exit Soft Pause         |
+| `P`                         | Toggle Developer Output |
 
 ## 📦 Installation
 
@@ -103,23 +120,41 @@ Author: **Unsent / 难寄期许**
 2. Extract the ZIP archive.
 3. Put the extracted `Unsent's Toolbox NF Ver` folder into the NovaFlare Engine `mods` folder.
 4. Launch the game and enable the mod from the mod list.
-5. Open the mod settings Page.
+5. Open the mod settings and **enable the desired features**.
 
 ## 📜 License
 
-This project is licensed under the custom **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)**.
+### License Change Notice
 
-This license allows anyone to freely use, copy, modify, and redistribute this project for non-commercial purposes.
+Effective **September 24, 2026**, this project has changed its license from the **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)** to the **MIT License**.
 
-When redistributing this project or a Modified Version:
+All versions released before September 24, 2026 were previously distributed under the UNCSAL-1.1 license. **UNCSAL-1.1 is hereby discontinued and is no longer used for this project.**
 
-- The original author's attribution and copyright notice must be retained.
-- Modifications must be clearly identified.
-- Modified Versions must continue to be distributed under **UNCSAL-1.1**.
-- Commercial use, commercial sale, and commercial distribution are prohibited.
-- Commercial use requires prior written permission from the Original Author.
+Starting from **September 24, 2026**, this project is distributed under the **MIT License**.
 
-This project uses a custom license and is **not an OSI (Open Source Initiative) approved open source license**.
+This notice is provided to document the project's license change history.
+
+### MIT License
+
+Copyright (c) 2026 zhou9468jc
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 Original Author: **Unsent / 难寄期许**
 
