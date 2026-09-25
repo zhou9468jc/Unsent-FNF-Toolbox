@@ -1,0 +1,20 @@
+Maintenance => 维护设置
+
+developerMode => 开发者模式
+deepDebug => 深度调试
+devConScale => 控制台大小
+luaErrorOverlay => Lua 语法错误提示
+hscriptErrorOverlay => HScript 语法错误提示
+
+oldHscriptVersion => 兼容旧模组
+
+
+APP => 应用程序
+
+discordRPC => Discord显示
+checkForUpdates => 版本检查
+screensaver => 休眠禁用
+filesCheck => 文件缺失检查
+filesCheckNew => 可疑文件检查
+storageFolder => 存储文件夹
+adjustMobileEditorKeys => 调整移动端各Editor键位

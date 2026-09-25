@@ -1,0 +1,20 @@
+General => General
+
+framerate => Change your FPS cap
+drawFramerate => Sets the maximum draw frame rate independently from the update rate
+language => Change engine language
+lockRender => Will update separate from the draw update, the effect is to increase the number of frames by about two to three times (depending on device performance)
+renderThread => Separating the rendering thread improves frame rates
+gameQuality => Change game quality for screen
+lowQuality => Turn off some object on stages
+resolution => The resolution of the game graphics
+colorblindMode => Colorblind filter more playable for colorblind people
+antialiasing => Toggle antialiasing, improving graphics quality at a slight performance penalty
+flashing => Toggle flashing lights that can cause epileptic seizures and strain
+shaders => Shaders used for some visual effects
+autoShaderConversion => Automatically converts desktop OpenFL shaders to the OpenGL ES version supported by this mobile device
+mouseTrailEffect => Enables pointer trails and click effects; both are hidden automatically in PlayState
+cacheOnGPU => Allows the GPU to be used for caching textures, decreasing RAM usage
+autoPause => Stops game, when its unfocused
+replayQuality => Records per-note hit data for more accurate replays. Uses more memory and disk space.
+gcFreeZone => Suspend most of the RAM cleaning to reduce sudden lag during gameplay and solve the problem of memory leakage crashes caused by excessive RAM usage.

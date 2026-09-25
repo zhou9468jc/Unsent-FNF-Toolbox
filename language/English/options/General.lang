@@ -1,0 +1,20 @@
+General => General
+
+framerate => Update Framerate Cap
+drawFramerate => Draw Framerate Cap
+lockRender => Independent Rendering
+language => Engine Language
+gameQuality => Game Quality
+lowQuality => Low Quality
+resolution => Resolution
+renderThread => Render Thread
+colorblindMode => Colorblind Filter
+antialiasing => Anti-Aliasing
+flashing => Flashing Lights
+shaders => Shaders
+autoShaderConversion => Automatic Shader Conversion
+mouseTrailEffect => Mouse Effects
+cacheOnGPU => GPU Caching
+autoPause => Auto Pause
+replayQuality => High Quality Replay
+gcFreeZone => GC Free Zone

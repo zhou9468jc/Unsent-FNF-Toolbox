@@ -1,0 +1,7 @@
+Audio => Audio
+
+mainMusic => Main Screen song type
+optionMusic => Option Screen song type
+pauseMusic => Pause Screen song type
+hitsoundType => Hitsound type
+hitsoundVolume => Hitsound volume

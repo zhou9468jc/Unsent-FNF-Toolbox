@@ -1,0 +1,17 @@
+Skin => Skin
+
+
+Note => Note
+
+noteSkin => Note Skin
+noteRGB => Note RGB
+noteColorSwap => Note HSV
+NotesSubState => Note Color Setup
+NotesSubStateLegacy => Legacy Color Setup
+
+Splash => Splash
+
+showSplash => Show Splash
+splashSkin => Splash Skin
+splashRGB => Splash RGB
+splashAlpha => Splash Alpha

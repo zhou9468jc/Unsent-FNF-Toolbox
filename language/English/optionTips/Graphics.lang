@@ -1,0 +1,17 @@
+Graphics => Graphics
+
+
+FPScounter => FPS counter
+
+showFPS => Show your FPS
+showExtra => Show more data
+rainbowFPS => Change color with FPS
+memoryType => Memory showcase data
+fpsScale => Size
+fpsDisplayMode => Switches the performance counter between TPS and FPS
+
+
+Watermark => Watermark
+
+showWatermark => Visible
+watermarkScale => Scale

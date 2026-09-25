@@ -1,0 +1,35 @@
+WoW, CodeName!!!
+local function getSetting(k,d)if getModSetting then local s,v=pcall(getModSetting,k)if s and v~=nil then return v end end return d end
+Did you know: there is a surprise in the data folder of the Toolbox's source code. (evil laugh)
+919191919191919191919191919191919191919191919191919191919191
+787878787878787878787878787878787878787878787878787878787878
+BeiHu, how did you make the engine you made?!
+Give me back my window borders!!!
+Congratulations to NovaFlare for getting updated again!
+It is known: NovaFlare has countless bugs.
+Did you know: the Toolbox's hotkeys can be changed by yourself. (provided that you can understand Lua)
+MVP of this round: ChatGPT.
+Notepad++ is so useful!!! (screaming)
+If you find Boyfriend constantly doing the "Hey" pose and unable to stop, it means your engine's mod settings are not working properly.
+Did you know: sometime after the year 9178, global mods will be able to modify NF's source code.
+Did you know: the predecessor of the Toolbox was actually a Lua script in my mod.
+Did you know: I have compiled NF's source code countless times. (because I failed every time)
+Haxe isn't something ordinary people can understand.
+debugPrint("[Unsent's Toolbox] Script Don't Running.")
+You must be a man, and if you're not, then you're a woman! (a philosophical question no one has been able to solve for 78 years)
+[Unwebt's Tolbox} Funk Myaekf
+AI：debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction onUpdate()
+Question: Which song in NF has the lowest Rate rating?
+deprintBug("[Unsent's Toolbox] Am I supposed to owe you? You made me run it?") (Crash)
+Microsoft Windows: NovaFlare Engine has stopped working
+com.NovaFlareEngineNew
+mj
+runHaxeCode("/tellraw ('§l§eWarning','yellow')")
+Breaking news: "Deleting NovaFlare Engine.exe will prevent you from starting the game."
+Did you know: editing funkin\chain.json in the NF engine directory allows you to quickly switch the engine's operating mode.
+Fire fax: Where u pak uaf uer foane, u peak up uer foam.
+tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:
+Question: Who are all the authors of the NovaFlare Engine?
+If you suspect someone is cheating with the Toolbox, have them open Trace.
+WW91IGZlbGwgZm9yIGl0OiB0aGVyZSdzIG5vdGhpbmcgaGVyZS4=
+596f752066656c6c20666f722069743a2074686572652773206e6f7468696e6720686572652e

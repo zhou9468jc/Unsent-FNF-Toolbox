@@ -1,0 +1,47 @@
+Game UI => Game UI
+
+
+GameUI => Game UI
+
+Visble => Visibility
+hideHud => Hide HUD
+showComboNum => Show Combo Num
+showRating => Show Rating
+opponentStrums => Opponent Strums
+judgementCounter => Judgement Counter
+keyboardViewer => Keyboard Display
+
+
+TimeBar => Time Bar
+
+timeBarType => Time Bar Type
+
+
+HealthBar => Health Bar
+
+healthBarAlpha => Health Bar Alpha
+oldHealthBarVersion => Old Health Bar
+Combo => Combo
+comboColor => Combo Color
+comboOffsetFix => Combo Offset Fix
+
+
+KeyBoard => Keyboard
+
+keyboardTimeDisplay => Keyboard Press Details
+keyboardAlpha => Keyboard Alpha
+keyboardTime => Keyboard Sustain Time
+keyboardBGColor => Keyboard BG Color
+keyboardTextColor => Keyboard Text Color
+
+
+Camera => Camera
+
+camZooms => Camera Zooms
+scoreZoom => Score Zoom
+
+
+pauseButton => Pause Button
+
+compulsionPause => Compulsion Pause
+compulsionPauseNumber => Compulsion Pause Count

@@ -1,7 +1,11 @@
 {
     "name": "Unsent's toolbox NF Ver",
-    "description": "Version: 2.4.3\n\nA developer and extra functions toolbox designed for NovaFlare Engine 1.2.x.\n\nGitHub Repository:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/\n\nUpdate Log:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/releases/tag/v2.4.3",
+    "description": "Version: 2.4.4\n\nA developer and extra functions toolbox designed for NovaFlare Engine 1.2.x.\n\nGitHub Repository:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/\n\nUpdate Log:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/releases/tag/v2.4.4",
     "restart": true,
     "runsGlobally": true,
-    "color":[243, 188, 144]
+    "color": [
+        243,
+        188,
+        144
+    ]
 }

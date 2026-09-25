@@ -1,0 +1,47 @@
+Game UI => Game UI
+
+
+GameUI => GameUI
+
+Visble => Visble
+hideHud => Hide hud
+showComboNum => Combo sprite appearance
+showRating => Rating sprite appearance
+opponentStrums => Shows opponent strums on screen
+judgementCounter => Show your judgements
+keyboardViewer => Feedback the key you pressed
+
+
+TimeBar => TimeBar
+
+timeBarType => Display type
+
+
+HealthBar => HealthBar
+
+healthBarAlpha => Alpha
+oldHealthBarVersion => Reduced version to psych 0.63h
+Combo => Combo
+comboColor => Allow to get and use rating color
+comboOffsetFix => Fix position offset
+
+
+KeyBoard => KeyBoard
+
+keyboardAlpha => Alpha
+keyboardTime => press sustain display time
+keyboardTimeDisplay => support display press details
+keyboardBGColor => keyboardBGColor
+keyboardTextColor => keyboardTextColor
+
+
+Camera => Camera
+
+camZooms => Toggle the camera zoom in-game
+scoreZoom => Score beat when you hit note
+
+
+pauseButton => Add pauseButton in game
+
+compulsionPause => You can force open pause menu
+compulsionPauseNumber => How many times to press the button to force a pause

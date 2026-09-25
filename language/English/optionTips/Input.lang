@@ -1,0 +1,19 @@
+Input => Input
+
+ControlsSubState => Controls setup
+
+
+TouchMain => Touch-Main
+
+needMobileControl => Touch control support
+controlsAlpha => Control alpha
+
+
+TouchGame => Touch-Game
+
+MobileControlSelectSubState => Controls type
+dynamicColors => dynamicColors
+hitboxLocation => Hitbox extra key location
+playControlsAlpha => Control alpha
+extraKey => ExtraKey for special input
+MobileExtraControl => ExtraKey input setup
