@@ -2,191 +2,198 @@ import flixel.text.FlxText;
 import general.backend.language.Language;
 
 var changed = false;
-var errorReported = false;
-var debugReported = false;
 
-function debug(message:String) {
-	trace("[Unsent's JustSay] " + message);
+var failCount = 0;
+var maxFail = 5;
+
+var lastRandomIndex = -1;
+
+
+function debug(msg)
+{
+	trace("[Unsent's JustSay] " + msg);
 }
 
-function reportError(message:String) {
-	if (errorReported) return;
 
-	errorReported = true;
-	trace("[Unsent's JustSay] ERROR: " + message);
-}
+function onUpdatePost(elapsed)
+{
+	if (changed)
+		return;
 
-function onUpdatePost(elapsed) {
-	if (changed) return;
-	if (FlxG.state == null) return;
-	if (!Std.isOfType(FlxG.state, LoadingState)) return;
+	if (FlxG.state == null)
+		return;
 
-	var state = cast(FlxG.state, LoadingState);
+	if (!Std.isOfType(FlxG.state, LoadingState))
+		return;
 
-	if (!debugReported) {
-		debugReported = true;
-		debug("LoadingState detected.");
-		debug("Members: " + state.members.length);
-	}
 
-	var justSayText:FlxText = null;
+	var state = FlxG.state;
 
-	for (obj in state.members) {
-		if (obj == null) continue;
-		if (!Std.isOfType(obj, FlxText)) continue;
+	var target = null;
 
-		var text = cast(obj, FlxText);
 
-		debug(
-			"FlxText found: " +
-			"x=" + text.x +
-			", y=" + text.y +
-			", width=" + text.width +
-			", text=\"" + text.text + "\""
-		);
+	// 查找 LoadingState 的 JustSay 文本
+	for (obj in state.members)
+	{
+		if (obj == null)
+			continue;
 
-		// LoadingState.hx 中 JustSay 的特征：
-		// x = 10
-		// width = FlxG.width
+		if (!Std.isOfType(obj, FlxText))
+			continue;
+
+
+		var text = obj;
+
+
 		if (Math.abs(text.x - 10) < 1 &&
-			Math.abs(text.width - FlxG.width) < 1) {
-
-			justSayText = text;
-			debug("Possible JustSay FlxText found.");
+			Math.abs(text.width - FlxG.width) < 1)
+		{
+			target = text;
 			break;
 		}
 	}
 
-	if (justSayText == null) {
-		reportError("JustSay FlxText not found by position.");
+
+	if (target == null)
+		return;
+
+
+
+	var lang = Language.get("justsayLang", "main");
+
+
+	if (lang == null || lang.length <= 0)
+	{
+		failCount++;
+
+		if (failCount >= maxFail)
+		{
+			debug("Language failed, keep original.");
+			changed = true;
+		}
+
 		return;
 	}
 
-	debug("Original JustSay text: \"" + justSayText.text + "\"");
-	debug("JustSay position: x=" + justSayText.x + ", y=" + justSayText.y);
-	debug("JustSay width: " + justSayText.width);
 
-	var justSayLang:String = null;
 
-	try {
-		debug("Calling Language.get(\"justsayLang\", \"main\")...");
+	// Lang-PT-BR -> PT-BR
+	if (StringTools.startsWith(lang, "Lang-"))
+	{
+		lang = lang.substr(5);
+	}
 
-		justSayLang = Language.get(
-			"justsayLang",
-			"main"
-		);
 
-		debug("Language.get result: " + justSayLang);
-	} catch (e:Dynamic) {
-		reportError("Failed to get justsayLang: " + e);
+
+	var filePath = "JustSay/JustSay-Lang-" + lang + ".txt";
+
+
+	var content = Paths.getTextFromFile(filePath);
+
+
+
+	if (content == null || content.length <= 0)
+	{
+		failCount++;
+
+		if (failCount >= maxFail)
+		{
+			debug("JustSay file missing: " + filePath);
+			debug("Keep original text.");
+
+			changed = true;
+		}
+
 		return;
 	}
 
-	if (justSayLang == null || justSayLang.length == 0) {
-		reportError("justsayLang is empty.");
-		return;
-	}
 
-	var filename =
-		"language/JustSay/JustSay-" +
-		justSayLang +
-		".txt";
 
-	debug("Target file: " + filename);
+	var lines = [];
 
-	var content:String = null;
 
-	try {
-		debug("Calling Paths.getTextFromFile...");
-
-		content = Paths.getTextFromFile(filename);
-	} catch (e:Dynamic) {
-		reportError(
-			"Failed to read " +
-			filename +
-			": " +
-			e
-		);
-		return;
-	}
-
-	if (content == null) {
-		reportError(
-			"Paths.getTextFromFile returned null: " +
-			filename
-		);
-		return;
-	}
-
-	if (content.length == 0) {
-		reportError(
-			"File is empty: " +
-			filename
-		);
-		return;
-	}
-
-	debug("File loaded successfully.");
-	debug("Raw content length: " + content.length);
-
-	var lines = content.split("\n");
-	var validLines:Array<String> = [];
-
-	for (line in lines) {
+	for (line in content.split("\n"))
+	{
 		line = StringTools.trim(line);
 
-		if (line.length > 0)
-			validLines.push(line);
+
+		// 删除空行和注释
+		if (line.length <= 0)
+			continue;
+
+		if (StringTools.startsWith(line, "#"))
+			continue;
+
+
+		lines.push(line);
 	}
 
-	debug("Total raw lines: " + lines.length);
-	debug("Valid lines: " + validLines.length);
 
-	if (validLines.length == 0) {
-		reportError(
-			"No valid lines found in: " +
-			filename
-		);
-		return;
-	}
 
-	var index:Int = 0;
-
-	try {
-		index = FlxG.random.int(
-			0,
-			validLines.length - 1
-		);
-
-		debug("Random index: " + index);
-		debug("Selected line: " + validLines[index]);
-	} catch (e:Dynamic) {
-		reportError(
-			"Failed to select JustSay line: " +
-			e
-		);
-		return;
-	}
-
-	try {
-		justSayText.text =
-			"Tags: " +
-			validLines[index];
-
+	if (lines.length <= 0)
+	{
+		debug("No valid JustSay lines.");
 		changed = true;
+		return;
+	}
 
-		debug("JustSay text replaced successfully.");
-		debug("Final text: " + justSayText.text);
-	} catch (e:Dynamic) {
-		reportError(
-			"Failed to replace JustSay text: " +
-			e
+
+
+	// ==========================
+	// Enhanced Random System
+	// ==========================
+
+	var randomIndex = lastRandomIndex;
+
+
+	// 防止连续重复
+	while (randomIndex == lastRandomIndex && lines.length > 1)
+	{
+		randomIndex = FlxG.random.int(
+			0,
+			lines.length - 1
 		);
 	}
+
+
+	lastRandomIndex = randomIndex;
+
+
+	// 加入时间扰动
+	var timeSeed = Std.int(Date.now().getTime() % lines.length);
+
+
+	randomIndex =
+		(randomIndex + timeSeed) % lines.length;
+
+
+
+	var result = lines[randomIndex];
+
+
+
+	target.text = "Tags: " + result;
+
+
+
+	debug("Language: " + lang);
+	debug("File: " + filePath);
+	debug("Line count: " + lines.length);
+	debug("Random index: " + randomIndex);
+	debug("Selected: " + result);
+
+
+
+	changed = true;
 }
 
-function onStateSwitch() {
+
+
+function onStateSwitch()
+{
 	changed = false;
-	errorReported = false;
-	debugReported = false;
+
+	failCount = 0;
+
+	lastRandomIndex = -1;
 }

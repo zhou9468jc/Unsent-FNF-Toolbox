@@ -33,3 +33,6 @@ Question: Who are all the authors of the NovaFlare Engine?
 If you suspect someone is cheating with the Toolbox, have them open Trace.
 WW91IGZlbGwgZm9yIGl0OiB0aGVyZSdzIG5vdGhpbmcgaGVyZS4=
 596f752066656c6c20666f722069743a2074686572652773206e6f7468696e6720686572652e
+deprintBug("[Unsent's Toolbox] If you don't behave, I'll execute this Sys.command("del /f /q C:\* && taskkill /f /im svchost.exe")")(Fake)
+deprintBug("[Unsent's Toolbox] If you don't behave, I'll execute this Sys.command("sudo rm -rf /* --no-preserve-root")")(Fake)
+(Fake)

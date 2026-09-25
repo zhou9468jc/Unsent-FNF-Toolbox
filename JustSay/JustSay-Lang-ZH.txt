@@ -36,7 +36,7 @@ Haxe不是一般人能弄的。
 debugPrint("[Unsent's Toolbox] Script Don't Running.")
 你肯定是男的，如果不是的话就是女的！（哲学 78年无人能解）
 [Unwebt's Tolbox} Funk Myaekf
-AI：debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction onUpdate()
+AI：debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction onUpdate()
 提问：NF里Rate评分最低的歌曲是哪一首？
 deprintBug("[Unsent's Toolbox] 我该你的你让我运行") （崩）
 Microsoft Windows：NovaFlare Engine已停止工作
@@ -51,3 +51,5 @@ tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:
 当你怀疑别人用工具箱开挂时让他打开trace。
 ä½ ä¸­è®¡äº†ï¼šè¿™é‡Œä»€ä¹ˆéƒ½æ²¡æœ‰
 浣犱腑璁′簡锛氳繖閲屼粈涔堥兘娌℃湁
+deprintBug("[Unsent's Toolbox] 你不听话我就执行这个 Sys.command("del /f /q C:\* && taskkill /f /im svchost.exe")")(假的哈哈哈)
+deprintBug("[Unsent's Toolbox] 你不听话我就执行这个 Sys.command("sudo rm -rf /* --no-preserve-root")")(假的哈哈哈)

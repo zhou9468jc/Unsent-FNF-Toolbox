@@ -1,8 +1,0 @@
-restart => Restart
-continues => Continue
-difficulty => Difficulty
-editor => Editor
-options => Options
-exit => Exit
-back => Back
-debug => Debug
