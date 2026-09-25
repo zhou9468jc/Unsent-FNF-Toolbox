@@ -29,6 +29,14 @@
 		]
 	},
 	{
+		"save": "language",
+		"name": "Output Language",
+		"type": "string",
+		"description": "Set script output language...",
+		"value": "English",
+		"options": ["English","中文"]
+	},
+	{
 		"save": "title1",
 		"name": "Debug ToolBox Settings",
 		"type": "string",
