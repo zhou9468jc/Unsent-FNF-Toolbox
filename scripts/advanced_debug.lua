@@ -319,7 +319,7 @@ local function advCreateHUD()
 
     setProperty(
         "unsentAdvancedDebug.alpha",
-        0.92
+        1
     )
 
     addLuaText(
@@ -534,13 +534,13 @@ local function advUpdateHUD()
 
             "Scroll     : "
                 .. string.format(
-                    "%.2fx",
+                    "%.2f",
                     songSpeed
                 ),
 
             "Song Speed : "
                 .. string.format(
-                    "%.2fx",
+                    "%.2f",
                     songSpeed
                 ),
 

@@ -319,36 +319,72 @@ end
 -- ============================================================
 
 local function updateShowcaseAlpha(direction)
+
 	local tag = covers[direction]
 
 	if not tag then
 		return
 	end
 
-	local showcase = getModSetting('showCaseMode')
 
-	if not showcase then
+	local showcase =
+		getModSetting('showCaseMode')
+
+
+	-- Showcase 模式
+	if showcase then
+
+		local alpha =
+			getModSetting('showCaseStrumAlpha')
+
+
+		if alpha == nil then
+			alpha = 0
+		end
+
+
+		alpha =
+			tonumber(alpha) or 0
+
+
+		alpha =
+			math.max(
+				0,
+				math.min(
+					1,
+					alpha
+				)
+			)
+
+
 		setProperty(
 			tag .. '.alpha',
-			1
+			alpha
 		)
 
 		return
 	end
 
-	local alpha = getModSetting('showCaseStrumAlpha')
 
-	if alpha == nil then
-		alpha = 0
+	-- 普通模式：跟随玩家箭头透明度
+	local strum =
+		'playerStrums.members[' .. direction .. ']'
+
+
+	local alpha = 1
+
+
+	if getProperty(strum .. '.alpha') ~= nil then
+		alpha =
+			getProperty(strum .. '.alpha')
 	end
 
-	alpha = tonumber(alpha) or 0
-	alpha = math.max(0, math.min(1, alpha))
 
 	setProperty(
 		tag .. '.alpha',
 		alpha
 	)
+
 end
 
 
