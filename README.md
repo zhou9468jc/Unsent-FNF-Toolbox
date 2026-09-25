@@ -16,6 +16,7 @@
 
 * **仅支持 NovaFlare Engine 1.2.x，普通 Psych Engine 无法运行**
 * 重置数值功能需要引擎开启 `No Reset` 选项
+
   >不然按了就死...
 * 启用模组后，需要打开模组设置中的 `Enable Debug ToolBox` 总开关，快捷键才会生效
 
