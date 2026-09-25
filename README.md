@@ -15,8 +15,9 @@
 ## ⚠️ 重要提醒
 
 * **仅支持 NovaFlare Engine 1.2.x，普通 Psych Engine 无法运行**
-* Reset Property 功能需要引擎开启 `No Reset` 选项
-* 启用模组后，需要打开模组设置中的 `developerMode` 总开关，快捷键才会生效
+* 重置数值功能需要引擎开启 `No Reset` 选项
+  >不然按了就死...
+* 启用模组后，需要打开模组设置中的 `Enable Debug ToolBox` 总开关，快捷键才会生效
 
 ## ⌨️ 快捷键列表
 
@@ -95,7 +96,7 @@ Author: **Unsent / 难寄期许**
 
 * **Only supports NovaFlare Engine 1.2.x. Normal Psych Engine is not supported.**
 * The Reset Property feature requires the `No Reset` option to be enabled in the engine.
-* After enabling the mod, the `developerMode` option in the mod settings must be enabled for the shortcuts to work.
+* After enabling the mod, the `Enable Debug ToolBox` option in the mod settings must be enabled for the shortcuts to work.
 
 ## ⌨️ Keyboard Shortcuts
 
