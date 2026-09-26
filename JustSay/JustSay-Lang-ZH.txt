@@ -53,3 +53,4 @@ tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:
 浣犱腑璁′簡锛氳繖閲屼粈涔堥兘娌℃湁
 deprintBug("[Unsent's Toolbox] 你不听话我就执行这个 Sys.command("del /f /q C:\* && taskkill /f /im svchost.exe")")(假的哈哈哈)
 deprintBug("[Unsent's Toolbox] 你不听话我就执行这个 Sys.command("sudo rm -rf /* --no-preserve-root")")(假的哈哈哈)
+有一个群禁止扣6......
