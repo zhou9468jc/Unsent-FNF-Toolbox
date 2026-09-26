@@ -15,27 +15,27 @@
 ## ⚠️ 重要提醒
 
 * **仅支持 NovaFlare Engine 1.2.x，普通 Psych Engine 无法运行**
-* 重置数值功能需要引擎开启 `No Reset` 选项
+* 重置数值功能需要引擎开启 `No Reset` 选项或更改重置键键位。
 
   >不然按了就死...
 * 启用模组后，需要打开模组设置中的 `Enable Debug ToolBox` 总开关，快捷键才会生效
 
-## ⌨️ 快捷键列表
+## ⌨️ 快捷键列表（可在`data\key.json`自定义）
 
-| 快捷键                         | 功能                     |
-| --------------------------- | ---------------------- |
-| `C`                         | 开关BotPlay              |
-| `Shift + C`                 | 开关假Botplay (BotPlay文字) |
-| `V`                         | 开关练习模式                 |
-| `Shift + N/M / N/M`         | 调整滚动速度                 |
-| `Ctrl / Ctrl+Shift + N / M` | 调整播放速度                 |
-| `Ctrl + R`                  | 重置播放速度                 |
-| `Shift + R`                 | 重置滚动速度                 |
-| `Alt + R`                   | 将血量重置为 50%             |
-| `Alt / Alt+Shift + N / M`   | 调整血量                   |
-| `Space + H / G`             | 进入软暂停                  |
-| `Space`                     | 退出软暂停                  |
-| `P`                         | 开关工具箱输出                |
+| 默认快捷键(新版2.5.1后)           | 快捷键(旧版2.5前)          | 功能                     |
+| ----------------------------- | --------------------------- | ---------------------- |
+|`主键盘1`                     | `C`                         | 开关BotPlay              |
+|`Shift` + `主键盘1`                     | `Shift + C`                 | 开关假Botplay (BotPlay文字) |
+|`主键盘2`                     | `V`                         | 开关练习模式                 |
+|`Shift` + `主键盘3/4` / `主键盘3/4`                     | `Shift + N/M / N/M`         | 调整滚动速度                 |
+|`Ctrl` / `Ctrl+Shift` + `主键盘3/4`                     | `Ctrl / Ctrl+Shift + N / M` | 调整播放速度                 |
+|`Ctrl` + `R`                     | `Ctrl + R`                  | 重置播放速度                 |
+|`Shift` + `R`                     | `Shift + R`                 | 重置滚动速度                 |
+|`Alt` + `R`                     | `Alt + R`                   | 将血量重置为 50%             |
+|`Alt` / `Alt+Shift` + `主键盘3/4`                     | `Alt / Alt+Shift + N / M`   | 调整血量                   |
+|`Space` + `主键盘6 `/` 无`                     | `Space + H / G`             | 进入软暂停                  |
+|`Space`                     | `Space`                     | 退出软暂停                  |
+|`主键盘6`                     | `P`                         | 开关工具箱输出                |
 
 ## 📦 安装方法
 
@@ -78,22 +78,24 @@ Author: **Unsent / 难寄期许**
 * The Reset Property feature requires the `No Reset` option to be enabled in the engine.
 * After enabling the mod, the `Enable Debug ToolBox` option in the mod settings must be enabled for the shortcuts to work.
 
-## ⌨️ Keyboard Shortcuts
+## ⌨️ Hotkey List (Customizable in `data\key.json`)
 
-| Key                         | Function                |
-| --------------------------- | ----------------------- |
-| `C`                         | Toggle Botplay          |
-| `Shift + C`                 | Toggle Fake Botplay     |
-| `V`                         | Toggle Practice Mode    |
-| `Shift + N/M / N/M`         | Adjust Scroll Speed     |
-| `Ctrl / Ctrl+Shift + N / M` | Adjust Playback Rate    |
-| `Ctrl + R`                  | Reset Playback Rate     |
-| `Shift + R`                 | Reset Scroll Speed      |
-| `Alt + R`                   | Reset Health to 50%     |
-| `Alt / Alt+Shift + N / M`   | Adjust Health           |
-| `Space + H / G`             | Soft Pause              |
-| `Space`                     | Exit Soft Pause         |
-| `P`                         | Toggle Developer Output |
+| Default Hotkey (2.5.1+)                | Hotkey (Before 2.5)           | Function                           |
+| -------------------------------------- | ----------------------------- | ---------------------------------- |
+| `Numpad 1`                             | `C`                           | Toggle BotPlay                     |
+| `Shift` + `Numpad 1`                   | `Shift + C`                   | Toggle Fake Botplay (BotPlay text) |
+| `Numpad 2`                             | `V`                           | Toggle Practice Mode               |
+| `Shift` + `Numpad 3/4` / `Numpad 3/4`  | `Shift + N/M / N/M`           | Adjust Scroll Speed                |
+| `Ctrl` / `Ctrl + Shift` + `Numpad 3/4` | `Ctrl / Ctrl + Shift + N / M` | Adjust Playback Rate               |
+| `Ctrl` + `R`                           | `Ctrl + R`                    | Reset Playback Rate                |
+| `Shift` + `R`                          | `Shift + R`                   | Reset Scroll Speed                 |
+| `Alt` + `R`                            | `Alt + R`                     | Reset Health to 50%                |
+| `Alt` / `Alt + Shift` + `Numpad 3/4`   | `Alt / Alt + Shift + N / M`   | Adjust Health                      |
+| `Space` + `Numpad 6` / `None`          | `Space + H / G`               | Enter Soft Pause                   |
+| `Space`                                | `Space`                       | Exit Soft Pause                    |
+| `Numpad 6`                             | `P`                           | Toggle Toolbox Output              |
+
+
 
 ## 📦 Installation
 
