@@ -1,14 +1,19 @@
 {
+	"comment":{
+		"1":"自定义键位一定要填Flixel键位名！",
+		"2":"Flixel键位名：https://chat.deepseek.com/share/h4p75bdyy7mwx7ptux",
+		"3":"禁用某个键时不要填\"NONE\"直接填容易导致脚本炸掉,填\"Disabled\"就行。"
+	},
 	"Toggle": {
-		"Botplay": "NUMPADONE",
-		"Practice": "NUMPADTWO",
+		"Botplay": "ONE",
+		"Practice": "TWO",
 		"FakeBotplayModifier": "SHIFT",
 		"Reset": "R",
-		"Increase": "NUMPADSLASH",
-		"Decrease": "NUMPADMULTIPLY",
-		"SoftPause1": "H",
-		"SoftPause2": "G",
-		"Print": "NUMPADTHREE"
+		"Increase": "THREE",
+		"Decrease": "FOUR",
+		"SoftPause1": "SIX",
+		"SoftPause2": "Disabled",
+		"Print": "FIVE"
 	},
 	"Modifier": {
 		"SoftPauseModifierAndExit": "SPACE",

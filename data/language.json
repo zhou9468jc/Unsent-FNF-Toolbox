@@ -54,7 +54,7 @@
 		"Warning_NoReset": "警告：No Reset 未开启或使用工具箱默认重置键位",
 		"Warning_EnableNoReset": "请开启 No Reset 或更改键位后再尝试使用重置功能",
 
-		"Botplay_TurnOff": "请先关闭 Botplay",
+		"Botplay_Disable": "请先关闭 Botplay！",
 
 		"Toolbox_Print_ON": "工具箱输出：开启"
 	},
@@ -111,7 +111,7 @@
 		"Warning_NoReset": "WARNING: No Reset is disabled!",
 		"Warning_EnableNoReset": "Please enable No Reset before using \"Reset Property\"!",
 
-		"Botplay_TurnOff": "Please turn OFF Botplay first!",
+		"Botplay_Disable": "Please turn OFF Botplay first!",
 
 		"Toolbox_Print_ON": "Toolbox Print: ON"
 	}
