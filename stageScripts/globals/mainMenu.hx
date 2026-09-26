@@ -37,7 +37,7 @@ function onUpdatePost(elapsed) {
 		12,
 		FlxG.height - 64,
 		400,
-		"Unsent's Toolbox v 2.5",
+		"Unsent's Toolbox v 2.5.1",
 		12
 	);
 
