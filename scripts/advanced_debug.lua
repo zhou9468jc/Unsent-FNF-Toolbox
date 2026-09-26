@@ -2,12 +2,6 @@
 -- Unsent's ToolBox - Advanced Debug Mode
 -- TEST BUILD
 --================================================
-
-local advancedDebugMode = false
-local advancedDebugTimer = 0
-local advancedDebugCreated = false
-local advancedDebugLastState = {}
-
 --================================================
 -- Safe Setting
 --================================================
@@ -27,6 +21,56 @@ local function advGetSetting(key, default)
 
     return default
 end
+
+local language = advGetSetting("language","English")
+
+
+local languages = readJson("data/language.json")
+
+local lang =
+	languages[language]
+	or languages["English"]
+	or {}
+
+local function getLang(key,...)
+	local text = lang[key] or key
+
+	for i,v in ipairs({...}) do
+		text = text:gsub(
+			"{"..i.."}",
+			tostring(v)
+		)
+	end
+
+	return text
+end
+
+local function loadLanguage()
+
+	language = getModSetting("language") or "English"
+
+	local languages = readJson(
+		"data/language.json"
+	)
+
+	if languages == nil then
+		return false
+	end
+
+	lang =
+		languages[language]
+		or languages["English"]
+		or {}
+
+	languageLoaded = true
+
+	return true
+end
+
+local advancedDebugMode = false
+local advancedDebugTimer = 0
+local advancedDebugCreated = false
+local advancedDebugLastState = {}
 
 --================================================
 -- Safe Property
@@ -366,7 +410,7 @@ local function advUpdateHUD()
 				len = FlxG.sound.music.length;
 			}
 
-			setOnScripts('advRealSongLength',len);
+			game.setOnScripts('advRealSongLength',len);
 		]])
 	end)
 
@@ -608,28 +652,9 @@ function onCreate()
     advUpdateHUD()
 
     unsentAdvancedDebugLog(
-        "Advanced Debug Mode : ON"
+        getLang("Advanced_Debug").." : "..getLang("ON")
     )
 
-    unsentAdvancedDebugLog(
-        "Debug HUD : Created"
-    )
-
-    unsentAdvancedDebugLog(
-        "Debug Output : debugPrint + trace"
-    )
-
-    unsentAdvancedDebugLog(
-        "HUD Position : Bottom Left"
-    )
-
-    unsentAdvancedDebugLog(
-        "HUD Font : consolab.ttf"
-    )
-
-    unsentAdvancedDebugLog(
-        "Downscroll Safe : ON"
-    )
 end
 
 --================================================
@@ -650,17 +675,17 @@ function onSongStart()
         )
 
     unsentAdvancedDebugLog(
-        "Song Start : "
+        getLang("AD_Song_Start").." : "
         .. songName
     )
 
     unsentAdvancedDebugLog(
-        "Difficulty : "
+        getLang("AD_Difficulty").." : "
         .. advDifficulty()
     )
 
     unsentAdvancedDebugLog(
-        "BPM : "
+        getLang("AD_BPM").." : "
         .. string.format(
             "%.2f",
             advGetBPM()
@@ -694,7 +719,7 @@ function onUpdate(elapsed)
     --================================================
 
     advTrackState(
-        "Botplay",
+        getLang("AD_Botplay"),
         advGetProperty(
             "cpuControlled",
             false
@@ -702,7 +727,7 @@ function onUpdate(elapsed)
     )
 
     advTrackState(
-        "Practice",
+        getLang("AD_Practice"),
         advGetProperty(
             "practiceMode",
             false
@@ -710,7 +735,7 @@ function onUpdate(elapsed)
     )
 
     advTrackState(
-        "Playback Rate",
+        getLang("AD_Playback_Rate"),
         advGetProperty(
             "playbackRate",
             1
@@ -718,7 +743,7 @@ function onUpdate(elapsed)
     )
 
     advTrackState(
-        "Song Speed",
+        getLang("AD_Scroll_Speed"),
         advGetProperty(
             "songSpeed",
             1
@@ -726,7 +751,7 @@ function onUpdate(elapsed)
     )
 
     advTrackState(
-        "BPM",
+        getLang("AD_BPM"),
         advGetBPM()
     )
 end
@@ -741,6 +766,6 @@ function onDestroy()
     end
 
     unsentAdvancedDebugLog(
-        "Advanced Debug Mode : OFF"
+        getLang("Advanced_Debug").." : "..getLang("OFF")
     )
 end

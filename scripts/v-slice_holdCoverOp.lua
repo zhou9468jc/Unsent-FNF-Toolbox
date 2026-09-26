@@ -214,6 +214,7 @@ local function makeOpponentCover(direction)
 		'hud'
 	)
 
+	setObjectOrder(tag,10001)
 
 	setProperty(
 		tag .. '.visible',

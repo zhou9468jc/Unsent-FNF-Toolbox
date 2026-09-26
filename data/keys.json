@@ -1,0 +1,19 @@
+{
+	"Toggle": {
+		"Botplay": "NUMPADONE",
+		"Practice": "NUMPADTWO",
+		"FakeBotplayModifier": "SHIFT",
+		"Reset": "R",
+		"Increase": "NUMPADSLASH",
+		"Decrease": "NUMPADMULTIPLY",
+		"SoftPause1": "H",
+		"SoftPause2": "G",
+		"Print": "NUMPADTHREE"
+	},
+	"Modifier": {
+		"SoftPauseModifierAndExit": "SPACE",
+		"Control": "CONTROL",
+		"Alt": "ALT",
+		"Shift": "SHIFT"
+	}
+}

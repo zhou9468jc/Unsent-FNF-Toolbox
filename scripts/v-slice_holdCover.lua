@@ -447,7 +447,9 @@ local function makeCover(direction)
 		tag,
 		'hud'
 	)
-
+	
+	setObjectOrder(tag,10001)
+	
 	setProperty(
 		tag .. '.visible',
 		false

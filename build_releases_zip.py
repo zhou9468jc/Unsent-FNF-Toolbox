@@ -12,6 +12,9 @@ SOURCE_DIR = Path(__file__).resolve().parent
 # Output directory
 OUTPUT_DIR = SOURCE_DIR / "releases"
 
+# Root folder inside the ZIP.
+ZIP_ROOT_DIR = "Unsent's Toolbox NF Ver"
+
 # ============================================================
 # Exclude Configuration
 # ============================================================
@@ -34,6 +37,7 @@ EXCLUDE_FILES = {
     "scripts/KeySettingInterpreter.txt",
     "build_releases_zip.py",
     "README.md",
+    "update_version.py",
 }
 
 # Exclude files by filename pattern.
@@ -162,6 +166,9 @@ def build_release(version):
         compresslevel=9
     ) as archive:
 
+        # Create the root folder inside the ZIP first.
+        archive.writestr(f"{ZIP_ROOT_DIR}/", "")
+
         for file_path in SOURCE_DIR.rglob("*"):
             if not file_path.is_file():
                 continue
@@ -188,11 +195,11 @@ def build_release(version):
 
             archive.write(
                 file_path,
-                arcname=relative_posix
+                arcname=f"{ZIP_ROOT_DIR}/{relative_posix}"
             )
 
             files_added += 1
-            print(f"[ADD] {relative_posix}")
+            print(f"[ADD] {ZIP_ROOT_DIR}/{relative_posix}")
 
     # ========================================================
     # Build Summary

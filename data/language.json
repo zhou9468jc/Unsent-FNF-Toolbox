@@ -1,0 +1,118 @@
+{
+	"中文": {
+		"Language_Name": "中文",
+		"Language_Current": "当前语言",
+		"ON":"开启",
+		"Off":"关闭",
+		"Enable":"启用",
+		"Disable":"禁用",
+		"Enabled":"已启用",
+		"Disabled":"已禁用",
+		
+		"FakeBotplay_ON": "Botplay文字：显示",
+		"FakeBotplay_OFF": "Botplay文字：隐藏",
+		"Botplay_ON": "Botplay：开启",
+		"Botplay_OFF": "Botplay：关闭",
+
+		"Practice_ON": "练习模式：开启",
+		"Practice_OFF": "练习模式：关闭",
+
+		"SoftPause_ON": "已进入软暂停",
+		"SoftPause_OFF": "已退出软暂停",
+		"SoftPause_Enable": "软暂停：已启用",
+		"SoftPause_Text": "当前处于软暂停\n按{1}退出软暂停",
+
+		"SoftResume_Error": "尝试退出软暂停错误：{1}",
+		"SoftPause_Timeout": "软暂停初始化超时（3秒）",
+	
+		"Advanced_Debug":"高级调试",
+		"AD_Playback_Rate":"播放速度",
+		"AD_Scroll_Speed":"滚动速度",
+		"AD_Practice":"练习模式",
+		"AD_Botplay":"Botplay",
+		"AD_BPM":"BPM",
+		"AD_Song_Start":"歌曲开始",
+		"AD_Difficulty":"难度",
+
+		"Playback_Info": "播放速度 {1} : {2} | 滚动速度 : {3} | 最终速度 : {4}",
+		"Scroll_Info": "滚动速度 {1} : {2} | 播放速度 : {3} | 最终速度 : {4}",
+
+		"Playback_Reset": "播放速度重置 : {1} | 滚动速度 : {2} | 最终速度 : {3}",
+		"Scroll_Reset": "滚动速度重置 : {1} | 播放速度 : {2} | 最终速度 : {3}",
+
+		"Health_Reset": "血量重置 : 50%",
+		"Health_Info": "血量{1} : {2}",
+
+		"Warning_Version": "警告：引擎版本检测已关闭",
+		"Warning_Debug": "此选项启用时无法关闭工具箱输出",
+
+		"Error_Engine": "错误：当前运行环境不是NovaFlare Engine！",
+		"Error_Stop": "Unsent's ToolBox 已停止",
+
+		"Developer_Loaded": "Unsent's ToolBox 已加载",
+
+		"Warning_NoReset": "警告：No Reset 未开启或使用工具箱默认重置键位",
+		"Warning_EnableNoReset": "请开启 No Reset 或更改键位后再尝试使用重置功能",
+
+		"Botplay_TurnOff": "请先关闭 Botplay",
+
+		"Toolbox_Print_ON": "工具箱输出：开启"
+	},
+	"English": {
+		"Language_Name": "English",
+		"Language_Current": "Current Language",
+		"Enable":"Enable",
+		"Disable":"Disable",
+		"Enabled":"Enabled",
+		"Disabled":"Disabled",
+
+		"FakeBotplay_ON": "Fake Botplay: ON",
+		"FakeBotplay_OFF": "Fake Botplay: OFF",
+		"Botplay_ON": "Botplay: ON",
+		"Botplay_OFF": "Botplay: OFF",
+
+		"Practice_ON": "Practice Mode: ON",
+		"Practice_OFF": "Practice Mode: OFF",
+
+		"SoftPause_ON": "Soft Pause: ON",
+		"SoftPause_OFF": "Soft Pause: OFF",
+		"SoftPause_Enable": "Soft Pause: Enabled",
+		"SoftPause_Text": "SOFT PAUSE\nPress {1} to Exit Soft Pause",
+
+		"SoftResume_Error": "Soft Resume Error: {1}",
+		"SoftPause_Timeout": "Soft Pause initialization timed out after 3 seconds!",
+
+		"Advanced_Debug":"Advanced Debug Mode",
+		"AD_Playback_Rate":"PlayBack Rate",
+		"AD_Scroll_Speed":"Scroll Speed",
+		"AD_Practice":"Practice Mode",
+		"AD_Botplay":"Botplay",
+		"AD_BPM":"BPM",
+		"AD_Song_Start":"Song Start",
+		"AD_Difficulty":"Difficulty",
+
+		"Playback_Info": "Playback Rate {1} : {2} | Scroll Speed : {3} | Song Speed : {4}",
+		"Scroll_Info": "Scroll Speed {1} : {2} | Playback Rate : {3} | Song Speed : {4}",
+
+		"Playback_Reset": "Playback Rate RESET : {1} | Scroll Speed : {2} | Song Speed : {3}",
+		"Scroll_Reset": "Scroll Speed RESET : {1} | Playback Rate : {2} | Song Speed : {3}",
+
+		"Health_Reset": "Health RESET : 50%",
+		"Health_Info": "Health {1} : {2}",
+
+		"Warning_Version": "WARNING: Engine Version Check Disabled!",
+		"Warning_Debug": "Debug output cannot be disabled while this option is enabled.",
+
+		"Error_Engine": "ERROR: NovaFlare Engine required!",
+		"Error_Stop": "Unsent's ToolBox stopped.",
+
+		"Developer_Loaded": "Unsent's ToolBox Loaded",
+
+		"Warning_NoReset": "WARNING: No Reset is disabled!",
+		"Warning_EnableNoReset": "Please enable No Reset before using \"Reset Property\"!",
+
+		"Botplay_TurnOff": "Please turn OFF Botplay first!",
+
+		"Toolbox_Print_ON": "Toolbox Print: ON"
+	}
+}

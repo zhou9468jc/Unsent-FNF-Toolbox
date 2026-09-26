@@ -386,7 +386,7 @@
 		"min": 0,
 		"max": 50,
 		"step": 1,
-		"scroll": 5
+		"scroll": 10
 	},
 	{
 		"save": "enableGhostTapColor",

@@ -3,58 +3,68 @@
 -- Main Script
 -- Language Support
 -- ============================================================
--- ============================================================
--- Key Settings
--- ============================================================
-
-local Key = {}
-
-Key.Toggle = {}
-Key.Modifier = {}
-
-Key.Toggle.Botplay = "NUMPADONE"
-Key.Toggle.Practice = "NUMPADTWO"
-Key.Toggle.FakeBotplayModifier = "SHIFT"
-
-Key.Toggle.Reset = "R"
-
-Key.Toggle.Increase = "NUMPADSLASH"
-Key.Toggle.Decrease = "NUMPADMULTIPLY"
-
-Key.Toggle.SoftPause1 = "H"
-Key.Toggle.SoftPause2 = "G"
-Key.Modifier.SoftPauseModifierAndExit = "SPACE"
-
-Key.Toggle.Print = "NUMPADTHREE"
-
-
-
-Key.Modifier.Control = "CONTROL"
-Key.Modifier.Alt = "ALT"
-Key.Modifier.Shift = "SHIFT"
-
-
-local lang = require("mods.Unsent's toolbox NF Ver.scripts.language")
-
-
-local function getLang(key,...)
-
-	local text = lang[key]
-
-	if text == nil then
-		return key
+local function getSetting(key,default)
+	if getModSetting then
+		local ok,val=pcall(getModSetting,key)
+		if ok and val~=nil then return val end
 	end
+	return default
+end
 
-	for i,v in ipairs({...}) do
-		text = text:gsub(
-			"{"..i.."}",
-			tostring(v)
-		)
+local Key = readJson("data/keys.json") or {}
+
+Key.Toggle = Key.Toggle or {}
+Key.Modifier = Key.Modifier or {}
+
+local language = getSetting("language","English")
+
+local languages = readJson("data/language.json")
+
+local lang =
+	languages[language]
+	or languages["English"]
+	or {}
+
+local function getLang(key, ...)
+	local text = lang[key] or key
+
+	for i, v in ipairs({...}) do
+		local value = tostring(v)
+		text = text:gsub("%{" .. i .. "%}", function()
+			return value
+		end)
 	end
 
 	return text
 end
 
+local function loadLanguage()
+
+	language = getModSetting("language") or "English"
+
+	local languages = readJson(
+		"data/language.json"
+	)
+
+	if languages == nil then
+		return false
+	end
+
+	lang =
+		languages[language]
+		or languages["English"]
+		or {}
+
+	languageLoaded = true
+
+	return true
+end
+local function onCreateTestCodes()
+	return
+end
+local function onUpdateTestCodes()
+	return
+end
 
 local botActive = false
 local practiceMode = false
@@ -85,28 +95,20 @@ local disableBotplay = false
 local advancedDebugMode = false
 local showcaseMode = false
 
+local function haxeTrace(text)
+    local message = tostring(text)
 
+    -- 注意：先转义反斜杠，再转义控制字符，最后转义引号
+    message = message
+        :gsub("\\", "\\\\")   -- 1. 反斜杠优先
+        :gsub("\r", "\\r")    -- 2. 回车
+        :gsub("\n", "\\n")    -- 3. 换行
+        :gsub("\t", "\\t")    -- 4. 制表
+        :gsub('"', '\\"')     -- 5. 双引号
 
-local function getSetting(key,default)
-
-	if getModSetting then
-
-		local success,val =
-			pcall(function()
-
-				return getModSetting(key)
-
-			end)
-
-
-		if success and val ~= nil then
-			return val
-		end
-	end
-
-	return default
+    local code = 'trace("' .. message .. '");'
+    pcall(runHaxeCode, code)
 end
-
 
 
 local function getNoReset()
@@ -122,12 +124,12 @@ local function getNoReset()
 		end)
 
 
-	if success and value ~= nil then
-		return value
+	if (success and value == true) or Key.Toggle.Reset ~= "R" then
+		return true
+	else
+		return false
 	end
 
-
-	return false
 end
 
 
@@ -148,15 +150,8 @@ local function devPrint(text)
 		end
 
 
-		pcall(function()
+		haxeTrace(message)
 
-			runHaxeCode(
-				"trace("
-				..string.format("%q",message)
-				..");"
-			)
-
-		end)
 
 
 	elseif disableCheckVer or not hideDevPrint then
@@ -170,15 +165,8 @@ local function devPrint(text)
 		end
 
 
-		pcall(function()
+		haxeTrace(message)
 
-			runHaxeCode(
-				"trace("
-				..string.format("%q",message)
-				..");"
-			)
-
-		end)
 
 	end
 end
@@ -198,15 +186,7 @@ local function devError(text)
 		end
 
 
-		pcall(function()
-
-			runHaxeCode(
-				"trace("
-				..string.format("%q",message)
-				..");"
-			)
-
-		end)
+		haxeTrace(message)
 
 
 	elseif disableCheckVer or not hideDevError then
@@ -220,7 +200,7 @@ local function devError(text)
 
 		else
 
-			print(message)
+			haxeTrace(message)
 
 		end
 
@@ -245,15 +225,7 @@ local function devWarn(text)
 		end
 
 
-		pcall(function()
-
-			runHaxeCode(
-				"trace("
-				..string.format("%q",message)
-				..");"
-			)
-
-		end)
+		haxeTrace(message)
 
 
 	elseif disableCheckVer or not hideDevError then
@@ -267,7 +239,7 @@ local function devWarn(text)
 
 		else
 
-			print(message)
+			haxeTrace(message)
 
 		end
 
@@ -593,6 +565,7 @@ local function changeHealth(amount)
 	else
 
 		changeText =
+			" "..
 			math.floor(
 				amount * 50
 			)
@@ -600,15 +573,13 @@ local function changeHealth(amount)
 
 	end
 
+	local text = math.floor(health * 50).."%"
 
 	devPrint(
 		getLang(
 			"Health_Info",
 			changeText,
-			math.floor(
-				health * 50
-			)
-			.."%"
+			text
 		)
 	)
 end
@@ -743,7 +714,10 @@ local function resumeSoftPause()
 	end
 end
 function onCreate()
-
+	onCreateTestCodes()
+	setObjectCamera('botplayTxt', 'hud')
+	setObjectOrder('botplayTxt',11000)
+	devPrint(getLang("Language_Current").." : "..getLang("Language_Name"))
 	advancedDebugMode =
 		getSetting(
 			"advancedDebugMode",
@@ -906,7 +880,16 @@ function onCreate()
 		'softPauseText',
 		true
 	)
+	
+	setObjectCamera(
+		'softPauseText',
+		'other'
+	)
 
+	setObjectOrder(
+		'softPauseText',
+		90001
+	)
 
 	setTextSize(
 		'softPauseText',
@@ -981,7 +964,7 @@ function onSongStart()
 end
 
 function onUpdate(elapsed)
-
+	onUpdateTestCodes()
     if not scriptEnabled then
         return
     end
