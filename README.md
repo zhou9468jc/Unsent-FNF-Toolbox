@@ -35,7 +35,7 @@
 |`Alt` / `Alt+Shift` + `主键盘3/4`                     | `Alt / Alt+Shift + N / M`   | 调整血量                   |
 |`Space` + `主键盘6 `/` 无`                     | `Space + H / G`             | 进入软暂停                  |
 |`Space`                     | `Space`                     | 退出软暂停                  |
-|`主键盘6`                     | `P`                         | 开关工具箱输出                |
+|`主键盘5`                     | `P`                         | 开关工具箱输出                |
 
 ## 📦 安装方法
 
@@ -80,20 +80,20 @@ Author: **Unsent / 难寄期许**
 
 ## ⌨️ Hotkey List (Customizable in `data\key.json`)
 
-| Default Hotkey (2.5.1+)                | Hotkey (Before 2.5)           | Function                           |
-| -------------------------------------- | ----------------------------- | ---------------------------------- |
-| `Numpad 1`                             | `C`                           | Toggle BotPlay                     |
-| `Shift` + `Numpad 1`                   | `Shift + C`                   | Toggle Fake Botplay (BotPlay text) |
-| `Numpad 2`                             | `V`                           | Toggle Practice Mode               |
-| `Shift` + `Numpad 3/4` / `Numpad 3/4`  | `Shift + N/M / N/M`           | Adjust Scroll Speed                |
-| `Ctrl` / `Ctrl + Shift` + `Numpad 3/4` | `Ctrl / Ctrl + Shift + N / M` | Adjust Playback Rate               |
-| `Ctrl` + `R`                           | `Ctrl + R`                    | Reset Playback Rate                |
-| `Shift` + `R`                          | `Shift + R`                   | Reset Scroll Speed                 |
-| `Alt` + `R`                            | `Alt + R`                     | Reset Health to 50%                |
-| `Alt` / `Alt + Shift` + `Numpad 3/4`   | `Alt / Alt + Shift + N / M`   | Adjust Health                      |
-| `Space` + `Numpad 6` / `None`          | `Space + H / G`               | Enter Soft Pause                   |
-| `Space`                                | `Space`                       | Exit Soft Pause                    |
-| `Numpad 6`                             | `P`                           | Toggle Toolbox Output              |
+| Default Hotkey (2.5.1+)         | Hotkey (Before 2.5)           | Function                           |
+| ------------------------------- | ----------------------------- | ---------------------------------- |
+| `1`                             | `C`                           | Toggle BotPlay                     |
+| `Shift` + `1`                   | `Shift + C`                   | Toggle Fake Botplay (BotPlay text) |
+| `2`                             | `V`                           | Toggle Practice Mode               |
+| `Shift` + `3/4` / `3/4`         | `Shift + N/M / N/M`           | Adjust Scroll Speed                |
+| `Ctrl` / `Ctrl + Shift` + `3/4` | `Ctrl / Ctrl + Shift + N / M` | Adjust Playback Rate               |
+| `Ctrl` + `R`                    | `Ctrl + R`                    | Reset Playback Rate                |
+| `Shift` + `R`                   | `Shift + R`                   | Reset Scroll Speed                 |
+| `Alt` + `R`                     | `Alt + R`                     | Reset Health to 50%                |
+| `Alt` / `Alt + Shift` + `3/4`   | `Alt / Alt + Shift + N / M`   | Adjust Health                      |
+| `Space` + `6` / `None`          | `Space + H / G`               | Enter Soft Pause                   |
+| `Space`                         | `Space`                       | Exit Soft Pause                    |
+| `5`                             | `P`                           | Toggle Toolbox Output              |
 
 
 
