@@ -6,40 +6,51 @@
 -- Safe Setting
 --================================================
 
-local function advGetSetting(key, default)
-    if not getModSetting then
-        return default
-    end
+local languages = readJson("data/language.json") or {}
+local language = getModSetting("language")
 
-    local ok, value = pcall(function()
-        return getModSetting(key)
-    end)
+if language == nil then
+	local text =
+		"[Unsent's ToolBox] Error : "..(languages["###GloBal_Language"] or {})["Language_ReadError"]
+		or "Language_ReadError"
+	debugPrint(text,"red")
+	local message = tostring(text)
+		:gsub("\\", "\\\\")
+		:gsub("\r", "\\r")
+		:gsub("\n", "\\n")
+		:gsub("\t", "\\t")
+		:gsub('"', '\\"')
 
-    if ok and value ~= nil then
-        return value
-    end
+	pcall(runHaxeCode, 'trace("' .. message .. '");')
 
-    return default
+	language = "English"
 end
 
-local language = advGetSetting("language","English")
-
-
-local languages = readJson("data/language.json")
+if language == "###GloBal_Language" then
+	language = "English"
+end
 
 local lang =
 	languages[language]
 	or languages["English"]
 	or {}
 
-local function getLang(key,...)
-	local text = lang[key] or key
+local Global_lang =
+	languages["###GloBal_Language"]
+	or {}
 
-	for i,v in ipairs({...}) do
-		text = text:gsub(
-			"{"..i.."}",
-			tostring(v)
-		)
+local function getLang(key, ...)
+	local source = isGlobal and Global_lang or lang
+	local text = source[key]
+
+	if text == nil then
+		text = isGlobal and ("Global_" .. key) or key
+	end
+
+	for i, v in ipairs({...}) do
+		text = text:gsub("%{" .. i .. "%}", function()
+			return tostring(v)
+		end)
 	end
 
 	return text
@@ -65,6 +76,24 @@ local function loadLanguage()
 	languageLoaded = true
 
 	return true
+end
+
+local function advGetSetting(isGlobal,key, default)
+	if getModSetting then
+		local ok, val = pcall(getModSetting, key)
+
+		if ok and val ~= nil then
+			return val
+		end
+	end
+
+	debugPrint(
+		"[Unsent's ToolBox] " ..
+		getLang(false, "ModSetting_ReadError", key, default),
+		"red"
+	)
+
+	return default
 end
 
 local advancedDebugMode = false
@@ -638,7 +667,7 @@ end
 
 function onCreate()
     advancedDebugMode =
-        advGetSetting(
+        advGetSetting(false,
             "advancedDebugMode",
             false
         )

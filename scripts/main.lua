@@ -3,35 +3,56 @@
 -- Main Script
 -- Language Support
 -- ============================================================
-local function getSetting(key,default)
-	if getModSetting then
-		local ok,val=pcall(getModSetting,key)
-		if ok and val~=nil then return val end
-	end
-	return default
-end
 
 local Key = readJson("data/keys.json") or {}
 
 Key.Toggle = Key.Toggle or {}
 Key.Modifier = Key.Modifier or {}
 
-local language = getSetting("language","English")
+local languages = readJson("data/language.json") or {}
+local language = getModSetting("language")
 
-local languages = readJson("data/language.json")
+if language == nil then
+	local text =
+		"[Unsent's ToolBox] Error : "..(languages["###GloBal_Language"] or {})["Language_ReadError"]
+		or "Language_ReadError"
+	debugPrint(text,"red")
+	local message = tostring(text)
+		:gsub("\\", "\\\\")
+		:gsub("\r", "\\r")
+		:gsub("\n", "\\n")
+		:gsub("\t", "\\t")
+		:gsub('"', '\\"')
+
+	pcall(runHaxeCode, 'trace("' .. message .. '");')
+
+	language = "English"
+end
+
+if language == "###GloBal_Language" then
+	language = "English"
+end
 
 local lang =
 	languages[language]
 	or languages["English"]
 	or {}
 
-local function getLang(key, ...)
-	local text = lang[key] or key
+local Global_lang =
+	languages["###GloBal_Language"]
+	or {}
+
+local function getLang(isGlobal, key, ...)
+	local source = isGlobal and Global_lang or lang
+	local text = source[key]
+
+	if text == nil then
+		text = isGlobal and ("Global_" .. key) or key
+	end
 
 	for i, v in ipairs({...}) do
-		local value = tostring(v)
 		text = text:gsub("%{" .. i .. "%}", function()
-			return value
+			return tostring(v)
 		end)
 	end
 
@@ -58,6 +79,22 @@ local function loadLanguage()
 	languageLoaded = true
 
 	return true
+end
+local function getSetting(key, default)
+	if getModSetting then
+		local ok, val = pcall(getModSetting, key)
+		if ok and val ~= nil then
+			return val
+		end
+	end
+
+	debugPrint(
+		"[Unsent's ToolBox] " ..
+		getLang(false, "ModSetting_ReadError", key, default),
+		"red"
+	)
+
+	return default
 end
 local function onCreateTestCodes()
 	return
@@ -407,7 +444,7 @@ local function changePlaybackRate(amount)
 
 
 	devPrint(
-		getLang(
+		getLang(false,
 			"Playback_Info",
 			text,
 			playbackRateValue,
@@ -451,7 +488,7 @@ local function changeScrollSpeed(amount)
 
 
 	devPrint(
-		getLang(
+		getLang(false,
 			"Scroll_Info",
 			text,
 			scrollSpeedValue,
@@ -472,7 +509,7 @@ local function resetPlaybackRate()
 
 
 	devPrint(
-		getLang(
+		getLang(false,
 			"Playback_Reset",
 			playbackRateValue,
 			scrollSpeedValue,
@@ -497,7 +534,7 @@ local function resetScrollSpeed()
 
 
 	devPrint(
-		getLang(
+		getLang(false,
 			"Scroll_Reset",
 			scrollSpeedValue,
 			playbackRateValue,
@@ -517,7 +554,7 @@ local function resetHealth()
 
 
 	devPrint(
-		getLang(
+		getLang(false,
 			"Health_Reset"
 		)
 	)
@@ -576,7 +613,7 @@ local function changeHealth(amount)
 	local text = math.floor(health * 50).."%"
 
 	devPrint(
-		getLang(
+		getLang(false,
 			"Health_Info",
 			changeText,
 			text
@@ -700,7 +737,7 @@ local function resumeSoftPause()
 		setSoftPauseText(false)
 
 		devPrint(
-			getLang(
+			getLang(false,
 				"SoftPause_OFF"
 			)
 		)
@@ -717,7 +754,7 @@ function onCreate()
 	onCreateTestCodes()
 	setObjectCamera('botplayTxt', 'hud')
 	setObjectOrder('botplayTxt',11000)
-	devPrint(getLang("Language_Current").." : "..getLang("Language_Name"))
+	devPrint(getLang(false,"Language_Current").." : "..getLang(false,"Language_Name"))
 	advancedDebugMode =
 		getSetting(
 			"advancedDebugMode",
@@ -777,7 +814,11 @@ function onCreate()
 			false
 		)
 
-
+    originalHealthBar =
+        getSetting(
+            'originalHealthBar',
+            false
+        )
 
 	if showcaseMode then
 		return
@@ -788,13 +829,13 @@ function onCreate()
 	if disableCheckVer then
 
 		devWarn(
-			getLang(
+			getLang(false,
 				"Warning_Version"
 			)
 		)
 
 		devWarn(
-			getLang(
+			getLang(false,
 				"Warning_Debug"
 			)
 		)
@@ -804,13 +845,13 @@ function onCreate()
 
 
 		devError(
-			getLang(
+			getLang(false,
 				"Error_Engine"
 			)
 		)
 
 		devError(
-			getLang(
+			getLang(false,
 				"Error_Stop"
 			)
 		)
@@ -869,7 +910,7 @@ function onCreate()
 
 	makeLuaText(
 		'softPauseText',
-		getLang("SoftPause_Text", Key.Modifier.SoftPauseModifierAndExit),
+		getLang(false,"SoftPause_Text", Key.Modifier.SoftPauseModifierAndExit),
 		1270,
 		0,
 		textY
@@ -911,7 +952,7 @@ function onCreate()
 
 
 	devPrint(
-		getLang(
+		getLang(false,
 			"Developer_Loaded"
 		)
 	)
@@ -921,7 +962,7 @@ function onCreate()
 	if softPauseEnabled then
 
 		devPrint(
-			getLang(
+			getLang(false,
 				"SoftPause_Enable"
 			)
 		)
@@ -947,14 +988,14 @@ function onSongStart()
 	if not noResetEnabled then
 
 		devWarn(
-			getLang(
+			getLang(false,
 				"Warning_NoReset"
 			)
 		)
 
 
 		devWarn(
-			getLang(
+			getLang(false,
 				"Warning_EnableNoReset"
 			)
 		)
@@ -1089,7 +1130,7 @@ function onUpdate(elapsed)
 
 
             devPrint(
-                getLang("SoftPause_ON")
+                getLang(false,"SoftPause_ON")
             )
 
 
@@ -1106,7 +1147,7 @@ function onUpdate(elapsed)
 
 
             devError(
-                getLang("SoftPause_Timeout")
+                getLang(false,"SoftPause_Timeout")
             )
 
         end
@@ -1249,7 +1290,7 @@ function onUpdate(elapsed)
         if botActive then
 
             devError(
-                getLang("Botplay_Disable")
+                getLang(false,"Botplay_Disable")
             )
 
 
@@ -1276,14 +1317,14 @@ function onUpdate(elapsed)
         if fakeBotActive then
 
             devPrint(
-                getLang("FakeBotplay_ON")
+                getLang(false,"FakeBotplay_ON")
             )
 
 
         else
 
             devPrint(
-                getLang("FakeBotplay_OFF")
+                getLang(false,"FakeBotplay_OFF")
             )
 
         end
@@ -1299,14 +1340,6 @@ function onUpdate(elapsed)
 
 
     -- C Botplay
-
-    originalHealthBar =
-        getSetting(
-            'originalHealthBar',
-            false
-        )
-
-
 
     if keyboardJustPressed(Key.Toggle.Botplay)
     and not disableBotplay
@@ -1354,7 +1387,7 @@ function onUpdate(elapsed)
 
 
             devPrint(
-                getLang("Botplay_ON")
+                getLang(false,"Botplay_ON")
             )
 
 
@@ -1378,7 +1411,7 @@ function onUpdate(elapsed)
 
 
             devPrint(
-                getLang("Botplay_OFF")
+                getLang(false,"Botplay_OFF")
             )
 
         end
@@ -1414,14 +1447,14 @@ function onUpdate(elapsed)
         if practiceMode then
 
             devPrint(
-                getLang("Practice_ON")
+                getLang(false,"Practice_ON")
             )
 
 
         else
 
             devPrint(
-                getLang("Practice_OFF")
+                getLang(false,"Practice_OFF")
             )
 
         end
@@ -1449,7 +1482,7 @@ function onUpdate(elapsed)
         if not hideDevPrint then
 
             devPrint(
-                getLang("Print_ON")
+                getLang(false,"Print_ON")
             )
 
 

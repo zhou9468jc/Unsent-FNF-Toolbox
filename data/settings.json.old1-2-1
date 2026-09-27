@@ -492,6 +492,13 @@
         "description": "Merge the four player note lanes into one lane. Any direction key can hit notes, simultaneous notes are merged into one, and Sustain Notes are automatically completed.",
         "value": false
     },
+	{
+		"save": "betterScreenBeat",
+		"name": "Better Screen Beat",
+		"type": "bool",
+		"description": "Add camera zoom on hit and screen shake on miss.",
+		"value": false
+	},
     {
         "save": "titleAdvanced",
         "name": "/!\\Advanced Settings/!\\",

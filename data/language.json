@@ -1,4 +1,7 @@
 {
+	"###GloBal_Language":{
+		"Language_ReadError":"Language Setting Read ERROR! 语言设置加载错误！"
+	},
 	"中文": {
 		"Language_Name": "中文",
 		"Language_Current": "当前语言",
@@ -8,6 +11,8 @@
 		"Disable":"禁用",
 		"Enabled":"已启用",
 		"Disabled":"已禁用",
+		
+		"ModSetting_ReadError": "模组设置\"{1}\"读取错误(值为空)，将使用默认值:\"{2}\"",
 		
 		"FakeBotplay_ON": "Botplay文字：显示",
 		"FakeBotplay_OFF": "Botplay文字：隐藏",
@@ -65,6 +70,7 @@
 		"Disable":"Disable",
 		"Enabled":"Enabled",
 		"Disabled":"Disabled",
+		"ModSetting_ReadError": "ERROR: Failed to read Toolbox Mod Setting: {1} (Value is Nil),Will Use Default Value : {2}",
 
 		"FakeBotplay_ON": "Fake Botplay: ON",
 		"FakeBotplay_OFF": "Fake Botplay: OFF",
@@ -125,13 +131,14 @@
 		"Disable":"禁用",
 		"Enabled":"已启用",
 		"Disabled":"已禁用",
+		"ModSetting_ReadError": "模组设置\"{1}\"读取错误(值为空)，将使用默认值:\"{2}\"",
 		
 		"FakeBotplay_ON": "十八码别装了",
 		"FakeBotplay_OFF": "Botplay文字：隐藏",
 		"Botplay_ON": "老牧师别开挂了",
 		"Botplay_OFF": "Botplay：关闭",
 
-		"Practice_ON": "练习模式：开启",
+		"Practice_ON": "老牧师玩不起",
 		"Practice_OFF": "练习模式：关闭",
 
 		"SoftPause_ON": "已进入软暂停",
