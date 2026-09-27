@@ -114,5 +114,65 @@
 		"Botplay_Disable": "Please turn OFF Botplay first!",
 
 		"Toolbox_Print_ON": "Toolbox Print: ON"
+	},
+	"老牧师？？？": {
+		"917813":"这是一个隐藏语言自己研究怎么装。",
+		"Language_Name": "中文...吗？",
+		"Language_Current": "当前语言",
+		"ON":"开启",
+		"Off":"关闭",
+		"Enable":"启用",
+		"Disable":"禁用",
+		"Enabled":"已启用",
+		"Disabled":"已禁用",
+		
+		"FakeBotplay_ON": "十八码别装了",
+		"FakeBotplay_OFF": "Botplay文字：隐藏",
+		"Botplay_ON": "老牧师别开挂了",
+		"Botplay_OFF": "Botplay：关闭",
+
+		"Practice_ON": "练习模式：开启",
+		"Practice_OFF": "练习模式：关闭",
+
+		"SoftPause_ON": "已进入软暂停",
+		"SoftPause_OFF": "已退出软暂停",
+		"SoftPause_Enable": "软暂停：已启用",
+		"SoftPause_Text": "当前处于软暂停\n按{1}退出软暂停",
+
+		"SoftResume_Error": "尝试退出软暂停错误：{1}",
+		"SoftPause_Timeout": "软暂停初始化超时（3秒）",
+	
+		"Advanced_Debug":"高级调试",
+		"AD_Playback_Rate":"播放速度",
+		"AD_Scroll_Speed":"滚动速度",
+		"AD_Practice":"练习模式",
+		"AD_Botplay":"Botplay",
+		"AD_BPM":"BPM",
+		"AD_Song_Start":"歌曲开始",
+		"AD_Difficulty":"难度",
+
+		"Playback_Info": "播放速度 {1} : {2} | 滚动速度 : {3} | 最终速度 : {4}",
+		"Scroll_Info": "滚动速度 {1} : {2} | 播放速度 : {3} | 最终速度 : {4}",
+
+		"Playback_Reset": "播放速度重置 : {1} | 滚动速度 : {2} | 最终速度 : {3}",
+		"Scroll_Reset": "滚动速度重置 : {1} | 播放速度 : {2} | 最终速度 : {3}",
+
+		"Health_Reset": "血量重置 : 50%",
+		"Health_Info": "血量{1} : {2}",
+
+		"Warning_Version": "老牧师快让我看看你在玩什么！",
+		"Warning_Debug": "艾斯贼不搭理我",
+
+		"Error_Engine": "老牧师的给我用NF！",
+		"Error_Stop": "你个艾斯贼我跑路了",
+
+		"Developer_Loaded": "哦吼吼吼~",
+
+		"Warning_NoReset": "你个老牧师的按R重开吧",
+		"Warning_EnableNoReset": "冰冰冰",
+
+		"Botplay_Disable": "老牧师别开挂了",
+
+		"Toolbox_Print_ON": "艾斯贼干什么"
 	}
 }
