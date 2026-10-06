@@ -16,6 +16,9 @@ local enableOpponentPush = getModSetting('healthOpponentPush')
 local opponentPush = getModSetting('healthOpponentPushAmount')
 local opponentPushSustain = getModSetting('healthOpponentPushSustain')
 
+-- 强制使用 Toolbox 推血，不检测其他脚本
+local forceOpponentPush = getModSetting('healthOpponentPushForce')
+
 local originalHealthBar = getModSetting('originalHealthBar')
 local enableSustainReward = getModSetting('healthSustainReward')
 
@@ -24,19 +27,10 @@ local isShowcase = getModSetting('showCaseMode')
 -- ============================================================
 -- Score Scroll Settings
 -- ============================================================
--- 普通点击音符的分数滚动速度倍率
--- 2 = 普通速度的 2 倍
+
 local normalScoreScrollRate = 2
-
--- 长按音符的分数滚动速度倍率
--- 1 = 普通速度
 local sustainScoreScrollRate = 1
-
--- 基础分数滚动速度
--- 数值越大，分数追赶目标越快
 local scoreScrollSpeed = 12
-
--- 当前分数滚动倍率
 local currentScoreScrollRate = 1
 
 -- ============================================================
@@ -56,6 +50,12 @@ local targetScore = 0
 -- Original score replacement
 local originalScoreTag = 'unsentOriginalScore'
 local originalScoreCreated = false
+
+-- ============================================================
+-- Opponent Push Detection
+-- ============================================================
+
+local pendingOpponentPushes = {}
 
 -- ============================================================
 -- Utility
@@ -162,6 +162,14 @@ local function setupVSliceHealthBar()
 			true
 		)
 
+		setObjectOrder(
+			originalScoreTag,
+			math.max(
+				getObjectOrder('iconP1'),
+				getObjectOrder('iconP2')
+			) + 10
+		)
+
 		originalScoreCreated = true
 	end
 end
@@ -200,7 +208,6 @@ local function updateVSliceHealthBar(elapsed)
 		targetScore - displayScore
 
 	if math.abs(scoreDifference) > 0.5 then
-		-- 根据当前音符类型使用不同的滚动速度
 		local effectiveSpeed =
 			scoreScrollSpeed * currentScoreScrollRate
 
@@ -213,15 +220,19 @@ local function updateVSliceHealthBar(elapsed)
 		displayScore = targetScore
 	end
 
-	-- 防止显示小数
 	local shownScore =
 		math.floor(displayScore + 0.5)
-		local isBotplay = getProperty('cpuControlled') or false
-		local changeBotText = readSetting('showBotText',true)
+
+	local isBotplay =
+		getProperty('cpuControlled') or false
+
+	local changeBotText =
+		readSetting('showBotText', true)
+
 	if isBotplay == true and changeBotText == true then
 		setTextString(
 			originalScoreTag,
-			"Bot Play Enabled"
+			'Bot Play Enabled'
 		)
 	else
 		setTextString(
@@ -252,7 +263,7 @@ local function updateVSliceHealthBar(elapsed)
 
 	setProperty(
 		originalScoreTag .. '.y',
-		healthBarY + 35
+		healthBarY + 40
 	)
 end
 
@@ -295,16 +306,21 @@ function onCreate()
 		0.007
 	)
 
+	forceOpponentPush = readSetting(
+		'healthOpponentPushForce',
+		false
+	)
+
 	originalHealthBar = readSetting(
 		'originalHealthBar',
 		false
 	)
+
 	isShowcase = readSetting(
 		'showCaseMode',
 		false
 	)
-	
-	
+
 	-- ========================================================
 	-- Initialize Health
 	-- ========================================================
@@ -320,7 +336,9 @@ function onCreate()
 	-- Initialize Score
 	-- ========================================================
 
-	displayScore = getProperty('songScore') or 0
+	displayScore =
+		getProperty('songScore') or 0
+
 	targetScore = displayScore
 
 	currentScoreScrollRate = 1
@@ -344,17 +362,23 @@ function onUpdate(elapsed)
 	if not initialized then
 		return
 	end
+
 	if originalHealthBar == true then
-		setProperty('botplayTxt.visible',false)
+		setProperty(
+			'botplayTxt.visible',
+			false
+		)
 	end
+
 	-- ========================================================
 	-- Health Smoothing
 	-- ========================================================
 
 	if enable then
-		local realHealth = clampHealth(
-			getProperty('health')
-		)
+		local realHealth =
+			clampHealth(
+				getProperty('health')
+			)
 
 		-- Detect external health changes
 		if math.abs(
@@ -392,7 +416,9 @@ function onUpdate(elapsed)
 
 		if math.abs(difference) > 0.000001 then
 			local follow =
-				1 - math.exp(-smoothSpeed * elapsed)
+				1 - math.exp(
+					-smoothSpeed * elapsed
+				)
 
 			displayHealth =
 				displayHealth + difference * follow
@@ -400,9 +426,8 @@ function onUpdate(elapsed)
 			displayHealth = targetHealth
 		end
 
-		displayHealth = clampHealth(
-			displayHealth
-		)
+		displayHealth =
+			clampHealth(displayHealth)
 
 		setProperty(
 			'health',
@@ -412,9 +437,10 @@ function onUpdate(elapsed)
 		lastWrittenHealth = displayHealth
 	else
 		-- Smoothing disabled
-		local realHealth = clampHealth(
-			getProperty('health')
-		)
+		local realHealth =
+			clampHealth(
+				getProperty('health')
+			)
 
 		displayHealth = realHealth
 		targetHealth = realHealth
@@ -441,19 +467,22 @@ function goodNoteHit(
 	isSustainNote
 )
 	if isSustainNote then
-		-- 长按：使用普通分数滚动速度
-		local isBotplay = getProperty('cpuControlled') or false
-		currentScoreScrollRate = sustainScoreScrollRate
+		local isBotplay =
+			getProperty('cpuControlled') or false
+
+		currentScoreScrollRate =
+			sustainScoreScrollRate
 
 		if enableSustainReward then
 			addHealth(sustainHealth)
+
 			if isBotplay == false then
 				addScore(30)
 			end
 		end
 	else
-		-- 普通点击：使用更快的分数滚动速度
-		currentScoreScrollRate = normalScoreScrollRate
+		currentScoreScrollRate =
+			normalScoreScrollRate
 	end
 end
 
@@ -471,6 +500,13 @@ function opponentNoteHit(
 		return
 	end
 
+	local currentHealth = getProperty('health')
+
+	-- 低于 Toolbox 血量阈值时不处理
+	if currentHealth ~= nil and currentHealth < 0.25 then
+		return
+	end
+
 	local amount
 
 	if isSustainNote then
@@ -479,13 +515,26 @@ function opponentNoteHit(
 		amount = opponentPush
 	end
 
-	local newTarget =
-		math.max(
-			0.1,
-			targetHealth - amount
-		)
+	-- 强制模式：不检测外部推血
+	if forceOpponentPush then
+		targetHealth =
+			math.max(
+				0.25,
+				targetHealth - amount
+			)
 
-	targetHealth = newTarget
+		return
+	end
+
+	-- 正常模式：等待 onUpdatePost 检测外部推血
+	table.insert(
+		pendingOpponentPushes,
+		{
+			amount = amount,
+			targetBefore = targetHealth,
+			healthBefore = currentHealth
+		}
+	)
 end
 
 -- ============================================================
@@ -497,16 +546,83 @@ function onUpdatePost()
 		return
 	end
 
+	-- ========================================================
+	-- External Opponent Push Detection
+	-- ========================================================
+
+	if enableOpponentPush and not forceOpponentPush then
+		if #pendingOpponentPushes > 0 then
+			local currentHealth =
+				clampHealth(
+					getProperty('health')
+				)
+
+			local currentTarget =
+				targetHealth
+
+			for i = 1, #pendingOpponentPushes do
+				local pending =
+					pendingOpponentPushes[i]
+
+				local externalChanged = false
+
+				-- 其他脚本已经让实际血量下降
+				if currentHealth <
+					pending.healthBefore - 0.000001 then
+
+					externalChanged = true
+				end
+
+				-- 其他脚本已经改变目标血量
+				if currentTarget <
+					pending.targetBefore - 0.000001 then
+
+					externalChanged = true
+				end
+
+				-- 没有发现外部推血才由 Toolbox 推
+				if not externalChanged then
+					--debugPrint("no other script","blue")
+					targetHealth =
+						math.max(
+							0.25,
+							targetHealth - pending.amount
+						)
+				end
+			end
+
+			pendingOpponentPushes = {}
+		end
+	end
+
+	-- ========================================================
+	-- V-Slice Score
+	-- ========================================================
+
 	if not originalHealthBar or not originalScoreCreated then
 		return
 	end
 
 	if getModSetting('showCaseMode') then
-		setProperty(originalScoreTag .. '.visible', false)
-		setProperty(originalScoreTag .. '.alpha', 0)
+		setProperty(
+			originalScoreTag .. '.visible',
+			false
+		)
+
+		setProperty(
+			originalScoreTag .. '.alpha',
+			0
+		)
 	else
-		setProperty(originalScoreTag .. '.visible', true)
-		setProperty(originalScoreTag .. '.alpha', getProperty('scoreTxt.alpha'))
+		setProperty(
+			originalScoreTag .. '.visible',
+			true
+		)
+
+		setProperty(
+			originalScoreTag .. '.alpha',
+			getProperty('scoreTxt.alpha')
+		)
 	end
 end
 
@@ -515,6 +631,8 @@ end
 -- ============================================================
 
 function onDestroy()
+	pendingOpponentPushes = {}
+
 	if originalScoreCreated then
 		removeLuaText(
 			originalScoreTag,

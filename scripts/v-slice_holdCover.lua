@@ -596,47 +596,42 @@ local function startCover(
 	direction,
 	sustainLength
 )
+	if not sustainLength or sustainLength <= 100 then
+		return
+	end
+
 	local tag = covers[direction]
 
 	if not tag then
 		return
 	end
 
-	local oldTimer =
-		endTimers[direction]
+	local oldTimer = endTimers[direction]
 
 	if oldTimer then
 		cancelTimer(oldTimer)
+		endTimers[direction] = nil
 	end
 
-	local timerName =
-		'holdCoverEnd' .. direction
-
-	endTimers[direction] =
-		timerName
+	local timerName = 'holdCoverEnd' .. direction
+	endTimers[direction] = timerName
 
 	updateCoverPosition(direction)
 	updateShowcaseAlpha(direction)
 
-	setProperty(
-		tag .. '.visible',
-		true
-	)
-
-	playAnim(
-		tag,
-		'start',
-		true
-	)
+	setProperty(tag .. '.visible', true)
+	playAnim(tag, 'start', true)
 
 	active[direction] = true
 
-	if sustainLength and sustainLength > 0 then
-		runTimer(
-			timerName,
-			sustainLength / 1000
-		)
+	local rate = getProperty('playbackRate')
+
+	if type(rate) ~= 'number' or rate <= 0 then
+		rate = 1
 	end
+
+	local duration = (sustainLength / 1000) * 0.9 / rate
+	runTimer(timerName, duration)
 end
 
 

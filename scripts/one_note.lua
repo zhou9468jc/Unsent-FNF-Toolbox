@@ -113,23 +113,19 @@ end
 -- Process Chart
 --================================================
 local function processChart()
-
 	runHaxeCode([[
 		if(game.unspawnNotes==null)
 			return;
 
-
-		var groups=new Map<Int,Array<games.objects.Note>>();
-
+		var times:Array<Float>=[];
+		var notes:Array<Array<games.objects.Note>>=[];
 
 		for(note in game.unspawnNotes)
 		{
 			if(note==null || !note.mustPress)
 				continue;
 
-
 			note.noteData=0;
-
 
 			if(note.isSustainNote)
 			{
@@ -137,49 +133,49 @@ local function processChart()
 				continue;
 			}
 
+			var time:Float=note.strumTime;
+			var index:Int=-1;
 
-			var key:Int=Std.int(Math.round(note.strumTime));
+			for(i in 0...times.length)
+			{
+				if(Math.round(times[i])==Math.round(time))
+				{
+					index=i;
+					break;
+				}
+			}
 
-
-			if(!groups.exists(key))
-				groups.set(key,[]);
-
-
-			groups.get(key).push(note);
+			if(index==-1)
+			{
+				times.push(time);
+				notes.push([note]);
+			}
+			else
+			{
+				notes[index].push(note);
+			}
 		}
 
-
-
-		for(key in groups.keys())
+		for(list in notes)
 		{
-			var list=groups.get(key);
-
-
 			if(list==null || list.length<=1)
 				continue;
-
 
 			for(i in 1...list.length)
 			{
 				var note=list[i];
 
-
 				if(note==null)
 					continue;
 
-
 				note.noteData=0;
-
 				note.blockHit=true;
 				note.ignoreNote=true;
-
 				note.visible=false;
 				note.alpha=0;
 			}
 		}
-
 	]])
-
 end
 
 --================================================

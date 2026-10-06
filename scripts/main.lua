@@ -1482,7 +1482,7 @@ function onUpdate(elapsed)
         if not hideDevPrint then
 
             devPrint(
-                getLang(false,"Print_ON")
+                getLang(false,"Toolbox_Print_ON")
             )
 
 

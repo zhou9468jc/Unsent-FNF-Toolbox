@@ -3,6 +3,12 @@ if enable == nil then
 	enable = false
 end
 
+function onCreate()
+	if enable then
+		setProperty('camZoomingMult',0)
+	end
+end
+
 function goodNoteHit(id, direction, noteType, isSustainNote)
 	if enable and not isSustainNote then
 		setProperty('camZooming', true)

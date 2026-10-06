@@ -314,7 +314,14 @@
 		"step": 0.001,
 		"scroll": 1
 	},
-{
+	{
+		"save":"healthOpponentPushForce",
+		"name": "Force Opponent Push",
+		"type": "bool",
+		"description": "Always use Toolbox opponent push without detecting external scripts.",
+		"value": false
+	},
+	{
         "save": "originalHealthBar",
         "name": "V-Slice Score Text",
         "type": "bool",
@@ -499,6 +506,20 @@
 		"description": "Add camera zoom on hit and screen shake on miss.",
 		"value": false
 	},
+	{
+		"name": "Character Ghost Trail",
+		"save": "characterGhostTrail",
+		"type": "bool",
+		"description": "Enable character afterimage effect.",
+		"value": false
+	},
+	{
+		"save": "fcApIndicator",
+		"name": "FC/AP Indicator",
+		"type": "bool",
+		"description": "Changes the player's strum line color based on FC/AP status.",
+		"value": true
+	},
     {
         "save": "titleAdvanced",
         "name": "/!\\Advanced Settings/!\\",
@@ -594,5 +615,12 @@
         "type": "bool",
         "description": "If enabled, the script will no longer check whether the runtime environment is NovaFlare Engine. Under normal circumstances, \n*DO NOT* enable this option.",
         "value": false
-    }
+    },
+	{
+		"save": "muse",
+		"name": "MuseDash",
+		"type": "bool",
+		"description": "Muse Dash???",
+		"value": false
+	}
 ]

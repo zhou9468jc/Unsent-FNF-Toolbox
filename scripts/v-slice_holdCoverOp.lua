@@ -20,13 +20,11 @@ if enableHoldCover == nil then
 	enableHoldCover = true
 end
 
-
 local holdCoverOffsetX = getModSetting('holdCoverOffsetX')
 
 if holdCoverOffsetX == nil then
 	holdCoverOffsetX = 0
 end
-
 
 local holdCoverOffsetY = getModSetting('holdCoverOffsetY')
 
@@ -66,100 +64,109 @@ local opponentEndTimers = {}
 -- ============================================================
 
 local coverData = {
-
 	[0] = {
 		image = 'holdCoverPurple',
 		hold = 'holdCoverPurple'
 	},
-
 	[1] = {
 		image = 'holdCoverBlue',
 		hold = 'holdCoverBlue'
 	},
-
 	[2] = {
 		image = 'holdCoverGreen',
 		hold = 'holdCoverGreen'
 	},
-
 	[3] = {
 		image = 'holdCoverRed',
 		hold = 'holdCoverRed'
 	}
-
 }
 
 
 -- ============================================================
 -- Update Opponent Hold Cover Alpha
 --
--- Cover Alpha:
+-- If opponent strum is hidden or alpha = 0:
+-- Cover is completely hidden.
 --
--- Opponent Strum Alpha
--- *
--- Showcase Alpha
+-- Otherwise:
 --
+-- Normal:
+-- Opponent Strum Alpha * 1.5
+--
+-- Showcase:
+-- Showcase Strum Alpha * 1.5
 -- ============================================================
 
 local function updateShowcaseAlpha(direction)
 
-	local tag =
-		opponentCovers[direction]
+	local tag = opponentCovers[direction]
 
 	if not tag then
 		return
 	end
 
+	local strum =
+		'opponentStrums.members[' .. direction .. ']'
+
+	local strumVisible = true
+	local strumAlpha = 1
+
+	local visibleValue =
+		getProperty(strum .. '.visible')
+
+	if visibleValue ~= nil then
+		strumVisible = visibleValue
+	end
+
+	local alphaValue =
+		getProperty(strum .. '.alpha')
+
+	if alphaValue ~= nil then
+		strumAlpha = tonumber(alphaValue) or 0
+	end
+
+	-- 对手箭头隐藏或透明度为 0
+	if not strumVisible or strumAlpha <= 0 then
+		setProperty(tag .. '.alpha', 0)
+		setProperty(tag .. '.visible', false)
+		return
+	end
 
 	local alpha = 1
-
 
 	local showcase =
 		getModSetting('showCaseMode')
 
-
 	-- Showcase模式
 	if showcase then
-
 		alpha =
 			getModSetting('showCaseStrumAlpha')
-
 
 		if alpha == nil then
 			alpha = 0
 		end
 
-
-		alpha =
-			tonumber(alpha) or 0
-
+		alpha = tonumber(alpha) or 0
 	else
-
 		-- 普通模式跟随对手箭头透明度
-		local strum =
-			'opponentStrums.members[' .. direction .. ']'
-
-
-		if getProperty(strum .. '.alpha') ~= nil then
-			alpha =
-				getProperty(strum .. '.alpha')
-		end
-
+		alpha = strumAlpha
 	end
 
-
-	-- 最终增强 1.5 倍
 	alpha =
 		math.min(
 			1,
 			alpha * 1.5
 		)
 
+	-- 最终 Alpha 为 0 时也完全隐藏
+	if alpha <= 0 then
+		setProperty(tag .. '.alpha', 0)
+		setProperty(tag .. '.visible', false)
+		return
+	end
 
-	setProperty(
-		tag .. '.alpha',
-		alpha
-	)
+	setProperty(tag .. '.alpha', alpha)
 
 end
 
@@ -182,15 +189,12 @@ local function makeOpponentCover(direction)
 	local data =
 		coverData[direction]
 
-
 	if not data then
 		return
 	end
 
-
 	local tag =
 		'opponentHoldCover' .. direction
-
 
 	makeAnimatedLuaSprite(
 		tag,
@@ -198,7 +202,6 @@ local function makeOpponentCover(direction)
 		0,
 		0
 	)
-
 
 	addAnimationByPrefix(
 		tag,
@@ -208,19 +211,20 @@ local function makeOpponentCover(direction)
 		true
 	)
 
-
 	setObjectCamera(
 		tag,
 		'hud'
 	)
 
-	setObjectOrder(tag,10001)
+	setObjectOrder(
+		tag,
+		10001
+	)
 
 	setProperty(
 		tag .. '.visible',
 		false
 	)
-
 
 	-- Avoid flashing when created
 	setProperty(
@@ -228,17 +232,13 @@ local function makeOpponentCover(direction)
 		0
 	)
 
-
 	addLuaSprite(
 		tag,
 		true
 	)
 
-
 	opponentCovers[direction] = tag
-
 	opponentActive[direction] = false
-
 	opponentEndTimers[direction] = nil
 
 end
@@ -254,13 +254,9 @@ function onCreatePost()
 		return
 	end
 
-
 	for direction = 0, 3 do
-
 		makeOpponentCover(direction)
-
 	end
-
 
 	updateAllShowcaseAlpha()
 
@@ -280,19 +276,15 @@ local function updateCoverPosition(direction)
 	local tag =
 		opponentCovers[direction]
 
-
 	if not tag then
 		return
 	end
 
-
 	local strum =
 		'opponentStrums.members[' .. direction .. ']'
 
-
 	local offset =
 		baseOffset[direction]
-
 
 	setProperty(
 		tag .. '.x',
@@ -300,7 +292,6 @@ local function updateCoverPosition(direction)
 		+ offset[1]
 		+ holdCoverOffsetX
 	)
-
 
 	setProperty(
 		tag .. '.y',
@@ -310,6 +301,8 @@ local function updateCoverPosition(direction)
 	)
 
 end
+
+
 -- ============================================================
 -- Start Opponent Hold
 --
@@ -322,42 +315,44 @@ local function startCover(
 	sustainLength
 )
 
+	if not sustainLength or sustainLength <= 100 then
+		return
+	end
+
 	local tag =
 		opponentCovers[direction]
-
 
 	if not tag then
 		return
 	end
 
-
 	local oldTimer =
 		opponentEndTimers[direction]
 
-
 	if oldTimer then
 		cancelTimer(oldTimer)
+		opponentEndTimers[direction] = nil
 	end
-
 
 	local timerName =
 		'opponentHoldCoverEnd' .. direction
 
-
 	opponentEndTimers[direction] =
 		timerName
 
-
 	updateCoverPosition(direction)
-
 	updateShowcaseAlpha(direction)
 
+	-- 如果箭头当前隐藏，则不启动 Cover
+	if getProperty(tag .. '.alpha') <= 0 then
+		setProperty(tag .. '.visible', false)
+		return
+	end
 
 	setProperty(
 		tag .. '.visible',
 		true
 	)
-
 
 	playAnim(
 		tag,
@@ -365,18 +360,22 @@ local function startCover(
 		true
 	)
 
-
 	opponentActive[direction] = true
 
+	local rate =
+		getProperty('playbackRate')
 
-	if sustainLength and sustainLength > 0 then
-
-		runTimer(
-			timerName,
-			sustainLength / 1000
-		)
-
+	if type(rate) ~= 'number' or rate <= 0 then
+		rate = 1
 	end
+
+	local duration =
+		(sustainLength / 1000) * 0.8 / rate
+
+	runTimer(
+		timerName,
+		duration
+	)
 
 end
 
@@ -390,21 +389,16 @@ local function endCover(direction)
 	local tag =
 		opponentCovers[direction]
 
-
 	if not tag then
 		return
 	end
-
 
 	if not opponentActive[direction] then
 		return
 	end
 
-
 	opponentActive[direction] = false
-
 	opponentEndTimers[direction] = nil
-
 
 	setProperty(
 		tag .. '.visible',
@@ -429,15 +423,12 @@ function opponentNoteHit(
 		return
 	end
 
-
 	-- Sustain ticks do not restart cover
 	if isSustainNote then
 		return
 	end
 
-
 	local sustainLength = 0
-
 
 	local value =
 		getPropertyFromGroup(
@@ -446,19 +437,14 @@ function opponentNoteHit(
 			'sustainLength'
 		)
 
-
 	if value ~= nil then
-
 		sustainLength =
 			tonumber(value) or 0
-
 	end
-
 
 	if sustainLength <= 0 then
 		return
 	end
-
 
 	startCover(
 		direction,
@@ -478,36 +464,42 @@ function onUpdate(elapsed)
 		return
 	end
 
-
 	-- Update alpha continuously
 	updateAllShowcaseAlpha()
-
 
 	for direction = 0, 3 do
 
 		local tag =
 			opponentCovers[direction]
 
-
 		if tag and opponentActive[direction] then
 
 			updateCoverPosition(direction)
 
-
-			local animName =
-				getProperty(
-					tag .. '.animation.curAnim.name'
+			-- 对手箭头隐藏时，立即停止显示 Cover
+			if getProperty(tag .. '.alpha') <= 0 then
+				setProperty(
+					tag .. '.visible',
+					false
 				)
-
-
-			if animName ~= 'hold' then
-
-				playAnim(
-					tag,
-					'hold',
+			else
+				setProperty(
+					tag .. '.visible',
 					true
 				)
 
+				local animName =
+					getProperty(
+						tag .. '.animation.curAnim.name'
+					)
+
+				if animName ~= 'hold' then
+					playAnim(
+						tag,
+						'hold',
+						true
+					)
+				end
 			end
 
 		end
@@ -527,15 +519,11 @@ function onTimerCompleted(tag)
 		return
 	end
 
-
 	for direction = 0, 3 do
 
 		if tag == opponentEndTimers[direction] then
-
 			endCover(direction)
-
 			return
-
 		end
 
 	end
@@ -558,21 +546,16 @@ function opponentNoteMiss(
 		return
 	end
 
-
 	if opponentActive[direction] then
-
 
 		local oldTimer =
 			opponentEndTimers[direction]
-
 
 		if oldTimer then
 			cancelTimer(oldTimer)
 		end
 
-
 		opponentEndTimers[direction] = nil
-
 
 		endCover(direction)
 
@@ -591,21 +574,17 @@ function onDestroy()
 		return
 	end
 
-
 	for direction = 0, 3 do
 
 		local timerName =
 			opponentEndTimers[direction]
 
-
 		if timerName then
 			cancelTimer(timerName)
 		end
 
-
 		local tag =
 			opponentCovers[direction]
-
 
 		if tag then
 
@@ -613,7 +592,6 @@ function onDestroy()
 				tag .. '.alpha',
 				0
 			)
-
 
 			setProperty(
 				tag .. '.visible',

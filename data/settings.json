@@ -334,6 +334,13 @@
 		"scroll": 1
 	},
 	{
+		"save":"healthOpponentPushForce",
+		"name": "Force Opponent Push",
+		"type": "bool",
+		"description": "Always use Toolbox opponent push without detecting external scripts.\n开启后工具箱将强制推条而不再检测其他脚本。",
+		"value": false
+	},
+	{
 		"save": "originalHealthBar",
 		"name": "V-Slice Score Text",
 		"type": "bool",
@@ -526,6 +533,20 @@
 		"value": false
 	},
 	{
+		"name": "Character Ghost Trail",
+		"save": "characterGhostTrail",
+		"type": "bool",
+		"description": "Enable character afterimage effect.\n打开之后双押时角色会留下残影。",
+		"value": false
+	},
+	{
+		"save": "fcApIndicator",
+		"name": "FC/AP Indicator",
+		"type": "bool",
+		"description": "Changes the player's strum line color based on FC/AP status.\n当100%准确率或全连时更改判定线的颜色。",
+		"value": true
+	},
+	{
 		"save": "titleAdvanced",
 		"name": "!Advanced Settings!",
 		"type": "string",
@@ -618,6 +639,13 @@
 		"name": "Disable Engine\n    Version Check",
 		"type": "bool",
 		"description": "If enabled, the script will no longer check whether the runtime environment is NovaFlare Engine. Under normal circumstances, \n*DO NOT* enable this option.\n如果启用将不再检查运行环境是否为NF引擎。在正常情况下，*请勿*开启此选项。",
+		"value": false
+	},
+	{
+		"save": "muse",
+		"name": "MuseDash",
+		"type": "bool",
+		"description": "Muse Dash???",
 		"value": false
 	}
 ]
