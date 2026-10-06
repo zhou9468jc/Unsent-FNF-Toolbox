@@ -14,7 +14,7 @@
 
 ## ⚠️ 重要提醒
 
-* **仅支持 NovaFlare Engine 1.2.x，普通 Psych Engine 无法运行**
+* **仅支持 NovaFlare Engine 1.2.x，普通 Psych Engine 无法运行(想运行也可以试试awa)**
 * 重置数值功能需要引擎开启 `No Reset` 选项或更改重置键键位。
 
   >不然按了就死...
@@ -47,16 +47,7 @@
 
 ## 📜 License / 许可证
 
-### 许可证变更说明
-
-自 **2026 年 9 月 24 日**起，本项目的许可证由 **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1（UNCSAL-1.1）** 更改为 **MIT License**。
-
-在 2026 年 9 月 24 日之前发布的所有版本此前均使用 UNCSAL-1.1 许可证进行发布。**自本声明发布起，UNCSAL-1.1 不再作为本项目使用的许可证。**
-
 自 **2026 年 9 月 24 日**起，本项目正式采用 **MIT License** 进行授权。
-
-本许可证变更说明仅用于说明项目许可证的变更历史。
-
 
 作者：**难寄期许 / Unsent**
 
@@ -107,16 +98,7 @@ Author: **Unsent / 难寄期许**
 
 ## 📜 License
 
-### License Change Notice
-
-Effective **September 24, 2026**, this project has changed its license from the **UNSENT'S NON-COMMERCIAL SHARE-ALIKE LICENSE 1.1 (UNCSAL-1.1)** to the **MIT License**.
-
-All versions released before September 24, 2026 were previously distributed under the UNCSAL-1.1 license. **UNCSAL-1.1 is hereby discontinued and is no longer used for this project.**
-
 Starting from **September 24, 2026**, this project is distributed under the **MIT License**.
-
-This notice is provided to document the project's license change history.
-
 
 Original Author: **Unsent / 难寄期许**
 
