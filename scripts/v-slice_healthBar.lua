@@ -16,7 +16,6 @@ local enableOpponentPush = getModSetting('healthOpponentPush')
 local opponentPush = getModSetting('healthOpponentPushAmount')
 local opponentPushSustain = getModSetting('healthOpponentPushSustain')
 
--- 强制使用 Toolbox 推血，不检测其他脚本
 local forceOpponentPush = getModSetting('healthOpponentPushForce')
 
 local originalHealthBar = getModSetting('originalHealthBar')
@@ -43,13 +42,14 @@ local lastWrittenHealth = 1
 
 local initialized = false
 
--- Smooth score
 local displayScore = 0
 local targetScore = 0
 
--- Original score replacement
 local originalScoreTag = 'unsentOriginalScore'
 local originalScoreCreated = false
+
+-- Score layer only needs to be fixed once.
+local scoreLayerFixed = false
 
 -- ============================================================
 -- Opponent Push Detection
@@ -99,6 +99,71 @@ local function applyVSliceHealthBarColors()
 			game.healthBar.rightBar.color = FlxColor.GREEN;
 		}
 	]])
+end
+
+-- ============================================================
+-- Score Layer
+--
+-- Score stays on camHUD.
+--
+-- It is placed immediately before noteGroup:
+--
+-- HUD Elements
+--      ↓
+-- Score
+--      ↓
+-- noteGroup
+--      ↓
+-- Strums / Notes / Sustain
+--
+-- This is done only once.
+-- ============================================================
+
+local function updateScoreLayer()
+	if not originalScoreCreated then
+		return
+	end
+
+	if scoreLayerFixed then
+		return
+	end
+
+	runHaxeCode([[
+		var scoreObj = game.getLuaObject('unsentOriginalScore');
+
+		if (scoreObj != null && game.noteGroup != null)
+		{
+			scoreObj.cameras = [game.camHUD];
+
+			var noteIndex = game.members.indexOf(game.noteGroup);
+			var scoreIndex = game.members.indexOf(scoreObj);
+
+			if (noteIndex >= 0 && scoreIndex >= 0)
+			{
+				// We want the score directly before noteGroup.
+				var desiredIndex = noteIndex - 1;
+
+				if (scoreIndex != desiredIndex)
+				{
+					// IMPORTANT:
+					// false = remove from display list WITHOUT destroying
+					// the Lua text object.
+					game.remove(scoreObj, false);
+
+					// Recalculate the noteGroup index because removing
+					// the score may have shifted the array.
+					noteIndex = game.members.indexOf(game.noteGroup);
+
+					if (noteIndex >= 0)
+					{
+						game.insert(noteIndex, scoreObj);
+					}
+				}
+			}
+		}
+	]])
+
+	scoreLayerFixed = true
 end
 
 -- ============================================================
@@ -162,16 +227,39 @@ local function setupVSliceHealthBar()
 			true
 		)
 
-		setObjectOrder(
-			originalScoreTag,
-			math.max(
-				getObjectOrder('iconP1'),
-				getObjectOrder('iconP2')
-			) + 10
+		setProperty(
+			originalScoreTag .. '.letterSpacing',
+			1.2
 		)
 
 		originalScoreCreated = true
+		scoreLayerFixed = false
 	end
+end
+
+-- ============================================================
+-- Number Format
+-- ============================================================
+
+local function formatNumber(num)
+	local str = tostring(num)
+	local formatted = str
+
+	while true do
+		local count
+
+		formatted, count = string.gsub(
+			formatted,
+			"^(-?%d+)(%d%d%d)",
+			"%1,%2"
+		)
+
+		if count == 0 then
+			break
+		end
+	end
+
+	return formatted
 end
 
 -- ============================================================
@@ -212,7 +300,9 @@ local function updateVSliceHealthBar(elapsed)
 			scoreScrollSpeed * currentScoreScrollRate
 
 		local follow =
-			1 - math.exp(-effectiveSpeed * elapsed)
+			1 - math.exp(
+				-effectiveSpeed * elapsed
+			)
 
 		displayScore =
 			displayScore + scoreDifference * follow
@@ -237,7 +327,7 @@ local function updateVSliceHealthBar(elapsed)
 	else
 		setTextString(
 			originalScoreTag,
-			'Score: ' .. tostring(shownScore)
+			'Score: ' .. formatNumber(shownScore)
 		)
 	end
 
@@ -263,7 +353,7 @@ local function updateVSliceHealthBar(elapsed)
 
 	setProperty(
 		originalScoreTag .. '.y',
-		healthBarY + 40
+		healthBarY + 38
 	)
 end
 
@@ -272,10 +362,6 @@ end
 -- ============================================================
 
 function onCreate()
-	-- ========================================================
-	-- Load Settings
-	-- ========================================================
-
 	enable = readSetting(
 		'healthSmooth',
 		false
@@ -325,9 +411,10 @@ function onCreate()
 	-- Initialize Health
 	-- ========================================================
 
-	displayHealth = clampHealth(
-		getProperty('health')
-	)
+	displayHealth =
+		clampHealth(
+			getProperty('health')
+		)
 
 	targetHealth = displayHealth
 	lastWrittenHealth = displayHealth
@@ -340,18 +427,40 @@ function onCreate()
 		getProperty('songScore') or 0
 
 	targetScore = displayScore
-
 	currentScoreScrollRate = 1
 
 	initialized = true
 
 	-- ========================================================
-	-- Setup V-Slice Health Bar
+	-- Setup
 	-- ========================================================
 
 	if originalHealthBar then
 		setupVSliceHealthBar()
 	end
+end
+
+-- ============================================================
+-- Create Post
+--
+-- The noteGroup already exists here, so the score can be
+-- placed in its correct layer without doing it every frame.
+-- ============================================================
+
+function onCreatePost()
+	if not initialized then
+		return
+	end
+
+	if not originalHealthBar then
+		return
+	end
+
+	if not originalScoreCreated then
+		return
+	end
+
+	updateScoreLayer()
 end
 
 -- ============================================================
@@ -380,16 +489,11 @@ function onUpdate(elapsed)
 				getProperty('health')
 			)
 
-		-- Detect external health changes
 		if math.abs(
 			realHealth - lastWrittenHealth
 		) > 0.000001 then
 
 			targetHealth = realHealth
-
-			-- =================================================
-			-- Immediate Death
-			-- =================================================
 
 			if realHealth <= 0 then
 				displayHealth = 0
@@ -410,7 +514,6 @@ function onUpdate(elapsed)
 			end
 		end
 
-		-- Smooth health movement
 		local difference =
 			targetHealth - displayHealth
 
@@ -436,7 +539,6 @@ function onUpdate(elapsed)
 
 		lastWrittenHealth = displayHealth
 	else
-		-- Smoothing disabled
 		local realHealth =
 			clampHealth(
 				getProperty('health')
@@ -500,10 +602,11 @@ function opponentNoteHit(
 		return
 	end
 
-	local currentHealth = getProperty('health')
+	local currentHealth =
+		getProperty('health')
 
-	-- 低于 Toolbox 血量阈值时不处理
-	if currentHealth ~= nil and currentHealth < 0.25 then
+	if currentHealth ~= nil
+		and currentHealth < 0.25 then
 		return
 	end
 
@@ -515,7 +618,6 @@ function opponentNoteHit(
 		amount = opponentPush
 	end
 
-	-- 强制模式：不检测外部推血
 	if forceOpponentPush then
 		targetHealth =
 			math.max(
@@ -526,7 +628,6 @@ function opponentNoteHit(
 		return
 	end
 
-	-- 正常模式：等待 onUpdatePost 检测外部推血
 	table.insert(
 		pendingOpponentPushes,
 		{
@@ -550,7 +651,9 @@ function onUpdatePost()
 	-- External Opponent Push Detection
 	-- ========================================================
 
-	if enableOpponentPush and not forceOpponentPush then
+	if enableOpponentPush
+		and not forceOpponentPush then
+
 		if #pendingOpponentPushes > 0 then
 			local currentHealth =
 				clampHealth(
@@ -566,23 +669,19 @@ function onUpdatePost()
 
 				local externalChanged = false
 
-				-- 其他脚本已经让实际血量下降
 				if currentHealth <
 					pending.healthBefore - 0.000001 then
 
 					externalChanged = true
 				end
 
-				-- 其他脚本已经改变目标血量
 				if currentTarget <
 					pending.targetBefore - 0.000001 then
 
 					externalChanged = true
 				end
 
-				-- 没有发现外部推血才由 Toolbox 推
 				if not externalChanged then
-					--debugPrint("no other script","blue")
 					targetHealth =
 						math.max(
 							0.25,
@@ -599,9 +698,17 @@ function onUpdatePost()
 	-- V-Slice Score
 	-- ========================================================
 
-	if not originalHealthBar or not originalScoreCreated then
+	if not originalHealthBar
+		or not originalScoreCreated then
 		return
 	end
+
+	-- Keep the camera on HUD.
+	-- DO NOT reorder the object here.
+	setObjectCamera(
+		originalScoreTag,
+		'hud'
+	)
 
 	if getModSetting('showCaseMode') then
 		setProperty(

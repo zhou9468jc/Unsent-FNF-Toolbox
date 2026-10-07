@@ -520,6 +520,13 @@
 		"description": "Changes the player's strum line color based on FC/AP status.",
 		"value": true
 	},
+	{
+		"save": "betterRank",
+		"name": "Better Rank",
+		"type": "bool",
+		"description": "Enable better final rating.",
+		"value": true
+	},
     {
         "save": "titleAdvanced",
         "name": "/!\\Advanced Settings/!\\",

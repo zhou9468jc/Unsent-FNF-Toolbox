@@ -872,7 +872,6 @@ function onUpdatePost()
 	if not enableIndicator then
 		return
 	end
-
 	-- ========================================================
 	-- BotPlay Detection
 	-- ========================================================
@@ -928,6 +927,15 @@ function onUpdatePost()
 	end
 end
 
+function onCountdownTick()
+	if not enableIndicator then
+		return
+	end
+
+	currentIndicatorState = 1
+	setIndicatorTarget(1)
+	indicatorTransitionActive = true
+end
 
 -- ============================================================
 -- Destroy

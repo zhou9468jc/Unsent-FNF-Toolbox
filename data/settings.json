@@ -547,6 +547,13 @@
 		"value": true
 	},
 	{
+		"save": "betterRank",
+		"name": "Better Rank",
+		"type": "bool",
+		"description": "Enable better final rating.\n打开后获得更好的评级。",
+		"value": true
+	},
+	{
 		"save": "titleAdvanced",
 		"name": "!Advanced Settings!",
 		"type": "string",
