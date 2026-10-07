@@ -1,0 +1,335 @@
+Japanese (Japan)
+//MOD: Unsent's Mod
+//作成者: Unsent
+//この注釈は変更しないでください！
+
+// 難易度
+difficulty_: ""
+difficulty_easy: "Easy"
+difficulty_normal: "Normal"
+difficulty_hard: "Hard"
+
+//toolbox
+unsent_toolbox_loaded: "ツールボックスを読み込みました"
+unsent_toolbox_version: "Psych Engine 1.0.4で実行中"
+
+unsent_toolbox_botplay_on: "Botplay: ON"
+unsent_toolbox_botplay_off: "Botplay: OFF"
+
+unsent_toolbox_practice_on: "練習モード: ON"
+unsent_toolbox_practice_off: "練習モード: OFF"
+
+unsent_toolbox_speed_add_small: "スクロール速度 +0.1:"
+unsent_toolbox_speed_add_big: "スクロール速度 +0.5:"
+
+unsent_toolbox_speed_remove_small: "スクロール速度 -0.1:"
+unsent_toolbox_speed_remove_big: "スクロール速度 -0.5:"
+
+// 実績
+achievement_: ""
+description_: ""
+
+achievement_friday_night_play: "金曜の夜の変態"
+description_friday_night_play: "金曜の……夜にプレイ。"
+achievement_week1_nomiss: "彼女も俺をパパと呼ぶ"
+description_week1_nomiss: "ハード難易度で第1週をノーミスクリア"
+achievement_week2_nomiss: "もうトリックはしない"
+description_week2_nomiss: "ハード難易度で第2週をノーミスクリア"
+achievement_week3_nomiss: "俺をキラーと呼べ"
+description_week3_nomiss: "ハード難易度で第3週をノーミスクリア"
+achievement_week4_nomiss: "レディキラー"
+description_week4_nomiss: "ハード難易度で第4週をノーミスクリア"
+achievement_week5_nomiss: "ノーミスクリスマス"
+description_week5_nomiss: "ハード難易度で第5週をノーミスクリア"
+achievement_week6_nomiss: "最高得点！！"
+description_week6_nomiss: "ハード難易度で第6週をノーミスクリア"
+achievement_week7_nomiss: "なんてこった！"
+description_week7_nomiss: "ハード難易度で第7週をノーミスクリア"
+achievement_weekend1_nomiss: "喧嘩しても友情は失わない"
+description_weekend1_nomiss: "ハード難易度で第1週末をノーミスクリア"
+achievement_ur_bad: "まさに災難！"
+description_ur_bad: "20%未満の評価で楽曲をクリア"
+achievement_ur_good: "完璧主義者"
+description_ur_good: "100%の評価で楽曲をクリア"
+achievement_roadkill_enthusiast: "ロードキル愛好家"
+description_roadkill_enthusiast: "追随者の死亡を50回観察"
+achievement_oversinging: "歌いすぎだろ……？"
+description_oversinging: "アイドル状態に戻らず10秒間歌い続ける"
+achievement_hype: "過剰活性"
+description_hype: "アイドル状態に戻らずに楽曲をクリア"
+achievement_two_keys: "俺たちだけ"
+description_two_keys: "2つのキーだけで楽曲をクリア"
+achievement_toastie: "トースタープレイヤー"
+description_toastie: "トースターでゲームを動かそうとしたことある？"
+achievement_debugger: "デバッガー"
+description_debugger: "譜面エディターから「テスト」ステージをクリア"
+// MODコンテンツ
+achievement_the_end: "終わった"
+description_the_end: "フィナーレをクリア"
+achievement_hardcore: "人間の限界"
+description_hardcore: "「montagem-alquimia」の「impossible」難易度をフルコンボクリア"
+achievement_youarecheating: "お前チートだろ！！！"
+description_youarecheating: "「nasa-tracked-aliens」ステージをスコア付きでクリア"
+achievement_lucks_come: "幸運が来る！"
+description_lucks_come: "「lucks-come」の「impossible」難易度をフルコンボクリア"
+achievement_luotianyi: "華夏の音"
+description_luotianyi: "「dystopia-pieced-regret-remix」と「montagem-pitty」をクリア"
+achievement_ysstart: "原神、起動！"
+description_ysstart: "「song-to-the-mirrored-moon」をクリア"
+achievement_pvzwin: "クリアした？"
+description_pvzwin: "「pvz-win-music」をパーフェクトクリア"
+achievement_musedash: "MuseDashが大好き！"
+description_musedash: "「muse-dash-legend」をフルコンボクリア"
+
+// フリープレイ
+musicplayer_playing: "再生中：{1}"
+musicplayer_paused: "再生中：{1}（一時停止）"
+musicplayer_tip: "スペースキー で一時停止 / ESC で終了 / R で楽曲をリセット"
+
+// ============================================================
+//  ★★★ 設定メニュー - 大項目は全て英語 ★★★
+// ============================================================
+gameplay_menu: "Gameplay"
+graphics_menu: "Graphics"
+visuals_menu: "Visuals"
+options_note_colors: "Note Colors"
+options_controls: "Controls"
+options_adjust_delay_and_combo: "Adjust Delay and Combo"
+options_graphics: "Graphics"
+options_visuals: "Visuals"
+options_gameplay: "Gameplay"
+options_language: "Language"
+
+// オプション名（英語）+ 説明（日本語）
+setting_scroll_type: "Scroll Type"
+description_scroll_type: "ノートのスクロール方向を選択します。"
+
+setting_scroll_speed: "Scroll Speed"
+description_scroll_speed: "ノートのスクロール速度を調整します。"
+
+setting_playback_rate: "Playback Rate"
+description_playback_rate: "楽曲の再生速度を調整します。"
+
+setting_health_gain_multiplier: "Health Gain Multiplier"
+description_health_gain_multiplier: "ノートヒット時のHP獲得倍率を調整します。"
+
+setting_health_loss_multiplier: "Health Loss Multiplier"
+description_health_loss_multiplier: "ミス時のHP損失倍率を調整します。"
+
+setting_instakill_on_miss: "Instakill on Miss"
+description_instakill_on_miss: "有効にすると、任何のミスで即座に死亡します。"
+
+setting_practice_mode: "Practice Mode"
+description_practice_mode: "有効にすると、ミスで死亡しなくなります。練習に最適です。"
+
+setting_botplay: "Botplay"
+description_botplay: "有効にすると、PCが自動的にパーフェクト演奏を行います。"
+
+setting_low_quality: "Low Quality"
+description_low_quality: "有効にすると、一部の背景詳細を無効にして、読み込み時間を短縮しパフォーマンスを向上させます。"
+
+setting_anti-aliasing: "Anti-Aliasing"
+description_anti-aliasing: "無効にすると、アンチエイリアスを無効にしてパフォーマンスを向上させますが、画質はシャープになります。"
+
+setting_shaders: "Shaders"
+description_shaders: "無効にすると、シェーダーを無効にします。一部の視覚効果に使用され、低スペックPCではCPUを消費します。"
+
+setting_gpu_caching: "GPU Caching"
+description_gpu_caching: "有効にすると、GPUがテクスチャのキャッシュに使用され、メモリ使用量を削減します。ビデオカードが貧弱な場合は有効にしないでください。"
+
+setting_framerate: "Framerate"
+description_framerate: "ゲームの最大フレームレートを設定します。"
+
+setting_note_skins: "Note Skins"
+description_note_skins: "お好みのノートスキンを選択します。"
+
+setting_note_splashes: "Note Splashes"
+description_note_splashes: "お好みのノートスプラッシュバリエーションを選択するか、オフにします。"
+
+setting_note_splash_opacity: "Note Splash Opacity"
+description_note_splash_opacity: "ノートスプラッシュの透明度を調整します。"
+
+setting_hide_hud: "Hide HUD"
+description_hide_hud: "有効にすると、ほとんどのHUD要素を非表示にします。"
+
+setting_time_bar: "Time Bar"
+description_time_bar: "タイムバーの表示内容を選択します。"
+
+setting_flashing_lights: "Flashing Lights"
+description_flashing_lights: "フラッシュライトに敏感な場合は、このオプションをオフにしてください！"
+
+setting_camera_zooms: "Camera Zooms"
+description_camera_zooms: "無効にすると、ビートヒット時にカメラがズームしなくなります。"
+
+setting_score_text_grow_on_hit: "Score Text Grow on Hit"
+description_score_text_grow_on_hit: "無効にすると、ノートヒット時のスコアテキスト拡大効果が無効になります。"
+
+setting_health_bar_opacity: "Health Bar Opacity"
+description_health_bar_opacity: "HPバーとアイコンの透明度を調整します。"
+
+setting_fps_counter: "FPS Counter"
+description_fps_counter: "無効にすると、FPSカウンターを非表示にします。"
+
+setting_pause_music: "Pause Screen Song"
+description_pause_music: "一時停止画面で再生する楽曲を選択します。"
+
+setting_discord_rich_presence: "Discord Rich Presence"
+description_discord_rich_presence: "オフにすると、意図しない漏洩を防ぎ、Discordの「プレイ中」ステータスを非表示にします。"
+
+setting_combo_stacking: "Combo Stacking"
+description_combo_stacking: "無効にすると、評価とコンボが積み重ならず、システムメモリを節約し読みやすくなります。"
+
+setting_downscroll: "Downscroll"
+description_downscroll: "有効にすると、ノートが上から下にスクロールします。"
+
+setting_middlescroll: "Middlescroll"
+description_middlescroll: "有効にすると、自分のノートが中央に表示されます。"
+
+setting_opponent_notes: "Opponent Notes"
+description_opponent_notes: "無効にすると、相手のノートが非表示になります。"
+
+setting_ghost_tapping: "Ghost Tapping"
+description_ghost_tapping: "有効にすると、ヒット可能なノートがない時にキーを押し間違えてもミスになりません。"
+
+setting_auto_pause: "Auto Pause"
+description_auto_pause: "有効にすると、画面のフォーカスが失われた時にゲームが自動的に一時停止します。"
+
+setting_disable_reset_button: "Disable Reset Button"
+description_disable_reset_button: "有効にすると、リセットキーを押しても何も反応しなくなります。"
+
+setting_hitsound_volume: "Hitsound Volume"
+description_hitsound_volume: "ノートヒット時のヒットサウンド音量を調整します。"
+
+setting_rating_offset: "Rating Offset"
+description_rating_offset: "Sick!を取得するための押すタイミングの遅さ/早さを調整します。値が高いほど遅く押す必要があります。"
+
+setting_sick_hit_window: "Sick! Hit Window"
+description_sick_hit_window: "Sick!を取得する判定時間をミリ秒単位で調整します。"
+
+setting_good_hit_window: "Good Hit Window"
+description_good_hit_window: "Goodを取得する判定時間をミリ秒単位で調整します。"
+
+setting_bad_hit_window: "Bad Hit Window"
+description_bad_hit_window: "Badを取得する判定時間をミリ秒単位で調整します。"
+
+setting_safe_frames: "Safe Frames"
+description_safe_frames: "ノートヒットの早さまたは遅さの許容フレーム数を調整します。"
+
+setting_sustains_as_one_note: "Sustains as One Note"
+description_sustains_as_one_note: "有効にすると、ロングノートが1回のヒット/ミスとしてカウントされます。旧システムが好きな場合はオフにしてください。"
+
+// キーバインド（英語）
+controls_rebinding: "Rebinding {1}"
+controls_rebinding2: "Hold ESC to Cancel\nHold Backspace to Delete"
+
+keygroup_NOTES: "NOTES"
+key_note_left: "Left"
+key_note_down: "Down"
+key_note_up: "Up"
+key_note_right: "Right"
+
+keygroup_UI: "UI"
+key_ui_left: "Left"
+key_ui_down: "Down"
+key_ui_up: "Up"
+key_ui_right: "Right"
+key_reset: "Reset"
+key_accept: "Accept"
+key_back: "Back"
+key_pause: "Pause"
+
+keygroup_VOLUME: "VOLUME"
+key_volume_mute: "Mute"
+key_volume_up: "Up"
+key_volume_down: "Down"
+
+keygroup_DEBUG: "DEBUG"
+key_debug_1: "Key 1"
+key_debug_2: "Key 2"
+
+// 遅延とコンボ（英語）
+delay_beat_hit: "Beat Hit!"
+combo_rating_offset: "Rating Offset:"
+combo_numbers_offset: "Numbers Offset:"
+delay_current_offset: "Current offset: {1} ms"
+combo_offset: "Combo Offset"
+note_delay: "Note/Beat Delay"
+switch_on_accept: "(Press Accept to Switch)"
+switch_on_start: "(Press Start to Switch)"
+
+// ノートカラー
+note_colors_tip: "リセットキー を押して、選択中のノート部分をリセットします。"
+note_colors_shift: "Shift"
+note_colors_lb: "Left Shoulder Button"
+note_colors_hold_tip: "{1} を押しながら + リセットキー を押すと、選択中のノートを完全にリセットします。"
+
+// ============================================================
+//  ★★★ 一時停止メニュー ★★★
+// ============================================================
+pause_resume: "Resume"
+pause_restart_song: "Restart Song"
+pause_change_difficulty: "Change Difficulty"
+pause_options: "Options"
+pause_exit_to_menu: "Exit to Menu"
+
+// 共通
+reset_achievement: "Reset Achievement:"
+
+yes: "Yes"
+no: "No"
+
+freeplay_tip: "スペースキー で楽曲試聴 / CTRLキー でゲームModメニューを開く / リセットキー でスコアと精度をリセット"
+personal_best: "PERSONAL BEST: {1} ({2}%)"
+
+now_loading: "Now Loading{1}"
+
+reload_button: "RELOAD"
+enable_all_button: "ENABLE ALL"
+disable_all_button: "DISABLE ALL"
+no_mods_installed: "NO MODS INSTALLED\nPRESS BACK TO EXIT OR INSTALL A MOD"
+no_mods_found: "No Mods found."
+mod_restart: "* Moving or Toggling On/Off this Mod will restart the game."
+
+botplay: "自動プレイ"
+
+// ============================================================
+//  ★★★ 評価（英語を維持） ★★★
+// ============================================================
+rating_you_suck: "お前はダメだ！友よ！"
+rating_shit: "クソ"
+rating_bad: "悪い"
+rating_bruh: "マジかよ"
+rating_meh: "まあまあ"
+rating_nice: "良いね"
+rating_good: "良い"
+rating_great: "素晴らしい"
+rating_sick: "神ってる！"
+rating_perfect: "完璧！！"
+
+clear: "普通"
+sdcb: "（もう少し粘れるだろ？）"
+fc: "フルコンボ"
+gfc: "優秀フルコンボ"
+sfc: "パーフェクトフルコンボ"
+
+score_text: "スコア: {1} | ミス: {2} | 評価: {3}"
+score_text_instakill: "スコア: {1} | ミス？（あるはずがない……） | 評価: {2}"
+
+week_score: "WEEK SCORE: {1}"
+
+blueballed: "死亡回数: {1}"
+practice_mode: "練習モード"
+charting_mode: "編集モード"
+
+reset_score: "Reset the score of"
+
+// 週名（日本語）
+storyname_tutorial: "チュートリアル"
+storyname_week1: "愛しきパパ"
+storyname_week2: "ハロウィンの月"
+storyname_week3: "Pico"
+storyname_week4: "ママは殺さなければならない"
+storyname_week5: "赤い雪"
+storyname_week6: "ヘイトシミュレーター ft. ニャンニャン"
+storyname_week7: "戦車兵"
+storyname_weekend1: "借金"

@@ -1,0 +1,335 @@
+Russian (Russia)
+//MOD: Unsent's Mod
+//Автор: Unsent
+//Не изменяйте эти аннотации!
+
+// Сложность
+difficulty_: ""
+difficulty_easy: "Easy"
+difficulty_normal: "Normal"
+difficulty_hard: "Hard"
+
+//toolbox
+unsent_toolbox_loaded: "Инструменты загружены"
+unsent_toolbox_version: "Работает на Psych Engine 1.0.4"
+
+unsent_toolbox_botplay_on: "Botplay: ВКЛ"
+unsent_toolbox_botplay_off: "Botplay: ВЫКЛ"
+
+unsent_toolbox_practice_on: "Режим тренировки: ВКЛ"
+unsent_toolbox_practice_off: "Режим тренировки: ВЫКЛ"
+
+unsent_toolbox_speed_add_small: "Скорость прокрутки +0.1:"
+unsent_toolbox_speed_add_big: "Скорость прокрутки +0.5:"
+
+unsent_toolbox_speed_remove_small: "Скорость прокрутки -0.1:"
+unsent_toolbox_speed_remove_big: "Скорость прокрутки -0.5:"
+
+// Достижения
+achievement_: ""
+description_: ""
+
+achievement_friday_night_play: "Странный парень в пятницу вечером"
+description_friday_night_play: "Играть в пятницу... вечером."
+achievement_week1_nomiss: "Она тоже называет меня папой"
+description_week1_nomiss: "Пройти первую неделю на сложности Hard без промахов"
+achievement_week2_nomiss: "Больше никаких фокусов"
+description_week2_nomiss: "Пройти вторую неделю на сложности Hard без промахов"
+achievement_week3_nomiss: "Называй меня убийцей"
+description_week3_nomiss: "Пройти третью неделю на сложности Hard без промахов"
+achievement_week4_nomiss: "Убийца леди"
+description_week4_nomiss: "Пройти четвёртую неделю на сложности Hard без промахов"
+achievement_week5_nomiss: "Рождество без промахов"
+description_week5_nomiss: "Пройти пятую неделю на сложности Hard без промахов"
+achievement_week6_nomiss: "Максимальный счёт!!"
+description_week6_nomiss: "Пройти шестую неделю на сложности Hard без промахов"
+achievement_week7_nomiss: "Боже мой!"
+description_week7_nomiss: "Пройти седьмую неделю на сложности Hard без промахов"
+achievement_weekend1_nomiss: "Драка без потери друзей"
+description_weekend1_nomiss: "Пройти первые выходные на сложности Hard без промахов"
+achievement_ur_bad: "Настоящая катастрофа!"
+description_ur_bad: "Завершить песню с рейтингом ниже 20%"
+achievement_ur_good: "Перфекционист"
+description_ur_good: "Завершить песню с рейтингом 100%"
+achievement_roadkill_enthusiast: "Любитель дорожных убийств"
+description_roadkill_enthusiast: "Наблюдать за смертью приспешников 50 раз"
+achievement_oversinging: "Слишком много поёшь...?"
+description_oversinging: "Петь непрерывно 10 секунд, не возвращаясь в состояние покоя"
+achievement_hype: "Чрезмерная активность"
+description_hype: "Завершить песню, не возвращаясь в состояние покоя"
+achievement_two_keys: "Только мы двое"
+description_two_keys: "Завершить песню, используя только две клавиши"
+achievement_toastie: "Тостерный игрок"
+description_toastie: "Ты пробовал запускать игру на тостере?"
+achievement_debugger: "Отладчик"
+description_debugger: "Пройти «тестовый» уровень из редактора карт"
+// Контент мода
+achievement_the_end: "Конец"
+description_the_end: "Пройти финал"
+achievement_hardcore: "Предел человека"
+description_hardcore: "Пройти на полном комбо «montagem-alquimia» на сложности «impossible»"
+achievement_youarecheating: "Брат, ты читеришь!!!"
+description_youarecheating: "Пройти уровень «nasa-tracked-aliens» с результатом"
+achievement_lucks_come: "Удача пришла!"
+description_lucks_come: "Пройти на полном комбо «lucks-come» на сложности «impossible»"
+achievement_luotianyi: "Звуки Китая"
+description_luotianyi: "Пройти «dystopia-pieced-regret-remix» и «montagem-pitty»"
+achievement_ysstart: "Genshin, запуск!"
+description_ysstart: "Пройти «song-to-the-mirrored-moon»"
+achievement_pvzwin: "Прошёл?"
+description_pvzwin: "Идеально пройти «pvz-win-music»"
+achievement_musedash: "Я люблю MuseDash!"
+description_musedash: "Пройти на полном комбо «muse-dash-legend»"
+
+// Свободная игра
+musicplayer_playing: "Сейчас играет: {1}"
+musicplayer_paused: "Сейчас играет: {1} (на паузе)"
+musicplayer_tip: "Нажмите Пробел для паузы / ESC для выхода / R для сброса песни"
+
+// ============================================================
+//  ★★★ Меню настроек - основные пункты на английском ★★★
+// ============================================================
+gameplay_menu: "Gameplay"
+graphics_menu: "Graphics"
+visuals_menu: "Visuals"
+options_note_colors: "Note Colors"
+options_controls: "Controls"
+options_adjust_delay_and_combo: "Adjust Delay and Combo"
+options_graphics: "Graphics"
+options_visuals: "Visuals"
+options_gameplay: "Gameplay"
+options_language: "Language"
+
+// Названия опций (английский) + описание (русский)
+setting_scroll_type: "Scroll Type"
+description_scroll_type: "Выберите направление прокрутки нот."
+
+setting_scroll_speed: "Scroll Speed"
+description_scroll_speed: "Настройте скорость прокрутки нот."
+
+setting_playback_rate: "Playback Rate"
+description_playback_rate: "Настройте скорость воспроизведения песни."
+
+setting_health_gain_multiplier: "Health Gain Multiplier"
+description_health_gain_multiplier: "Настройте множитель получения HP при попадании по нотам."
+
+setting_health_loss_multiplier: "Health Loss Multiplier"
+description_health_loss_multiplier: "Настройте множитель потери HP при промахе."
+
+setting_instakill_on_miss: "Instakill on Miss"
+description_instakill_on_miss: "Если включено, любой промах приводит к мгновенной смерти."
+
+setting_practice_mode: "Practice Mode"
+description_practice_mode: "Если включено, промахи не приводят к смерти. Подходит для тренировок."
+
+setting_botplay: "Botplay"
+description_botplay: "Если включено, компьютер автоматически играет идеально."
+
+setting_low_quality: "Low Quality"
+description_low_quality: "Если включено, отключает часть фоновых деталей, сокращает время загрузки и повышает производительность."
+
+setting_anti-aliasing: "Anti-Aliasing"
+description_anti-aliasing: "Если выключено, отключает сглаживание, повышает производительность, но изображение становится более резким."
+
+setting_shaders: "Shaders"
+description_shaders: "Если выключено, отключает шейдеры, используемые для некоторых визуальных эффектов. Нагружает CPU на слабых ПК."
+
+setting_gpu_caching: "GPU Caching"
+description_gpu_caching: "Если включено, позволяет GPU использовать кэширование текстур, уменьшая использование памяти. Не включайте, если у вас слабая видеокарта."
+
+setting_framerate: "Framerate"
+description_framerate: "Установите максимальную частоту кадров игры."
+
+setting_note_skins: "Note Skins"
+description_note_skins: "Выберите понравившийся скин нот."
+
+setting_note_splashes: "Note Splashes"
+description_note_splashes: "Выберите понравившийся вариант всплесков нот или отключите их."
+
+setting_note_splash_opacity: "Note Splash Opacity"
+description_note_splash_opacity: "Настройте прозрачность всплесков нот."
+
+setting_hide_hud: "Hide HUD"
+description_hide_hud: "Если включено, скрывает большинство элементов HUD."
+
+setting_time_bar: "Time Bar"
+description_time_bar: "Выберите содержимое временной шкалы."
+
+setting_flashing_lights: "Flashing Lights"
+description_flashing_lights: "Если вы чувствительны к вспышкам, отключите эту опцию!"
+
+setting_camera_zooms: "Camera Zooms"
+description_camera_zooms: "Если выключено, камера не масштабируется при попадании в такт."
+
+setting_score_text_grow_on_hit: "Score Text Grow on Hit"
+description_score_text_grow_on_hit: "Если выключено, отключает эффект увеличения текста счёта при попадании по нотам."
+
+setting_health_bar_opacity: "Health Bar Opacity"
+description_health_bar_opacity: "Настройте прозрачность полосы HP и иконок."
+
+setting_fps_counter: "FPS Counter"
+description_fps_counter: "Если выключено, скрывает счётчик FPS."
+
+setting_pause_music: "Pause Screen Song"
+description_pause_music: "Выберите песню, которая будет играть на экране паузы."
+
+setting_discord_rich_presence: "Discord Rich Presence"
+description_discord_rich_presence: "Отключите, чтобы предотвратить случайную утечку и скрыть статус «Играет» в Discord."
+
+setting_combo_stacking: "Combo Stacking"
+description_combo_stacking: "Если выключено, рейтинг и комбо не накапливаются, экономит память системы и упрощает чтение."
+
+setting_downscroll: "Downscroll"
+description_downscroll: "Если включено, ноты прокручиваются сверху вниз."
+
+setting_middlescroll: "Middlescroll"
+description_middlescroll: "Если включено, ваши ноты отображаются по центру."
+
+setting_opponent_notes: "Opponent Notes"
+description_opponent_notes: "Если выключено, ноты противника скрыты."
+
+setting_ghost_tapping: "Ghost Tapping"
+description_ghost_tapping: "Если включено, нажатие не на те клавиши, когда нет доступных нот, не засчитывается как промах."
+
+setting_auto_pause: "Auto Pause"
+description_auto_pause: "Если включено, игра автоматически ставится на паузу при потере фокуса экрана."
+
+setting_disable_reset_button: "Disable Reset Button"
+description_disable_reset_button: "Если включено, нажатие клавиши сброса не даёт никакого эффекта."
+
+setting_hitsound_volume: "Hitsound Volume"
+description_hitsound_volume: "Настройте громкость звука удара при попадании по нотам."
+
+setting_rating_offset: "Rating Offset"
+description_rating_offset: "Настройте, насколько поздно/рано нужно нажимать для получения Sick!. Более высокое значение означает, что нажимать нужно позже."
+
+setting_sick_hit_window: "Sick! Hit Window"
+description_sick_hit_window: "Настройте время определения для получения Sick! в миллисекундах."
+
+setting_good_hit_window: "Good Hit Window"
+description_good_hit_window: "Настройте время определения для получения Good в миллисекундах."
+
+setting_bad_hit_window: "Bad Hit Window"
+description_bad_hit_window: "Настройте время определения для получения Bad в миллисекундах."
+
+setting_safe_frames: "Safe Frames"
+description_safe_frames: "Настройте количество кадров, на которое вы можете опередить или задержать попадание по нотам."
+
+setting_sustains_as_one_note: "Sustains as One Note"
+description_sustains_as_one_note: "Если включено, длинные ноты считаются за одно попадание/промах. Отключите, если предпочитаете старую систему."
+
+// Привязка клавиш (английский)
+controls_rebinding: "Rebinding {1}"
+controls_rebinding2: "Hold ESC to Cancel\nHold Backspace to Delete"
+
+keygroup_NOTES: "NOTES"
+key_note_left: "Left"
+key_note_down: "Down"
+key_note_up: "Up"
+key_note_right: "Right"
+
+keygroup_UI: "UI"
+key_ui_left: "Left"
+key_ui_down: "Down"
+key_ui_up: "Up"
+key_ui_right: "Right"
+key_reset: "Reset"
+key_accept: "Accept"
+key_back: "Back"
+key_pause: "Pause"
+
+keygroup_VOLUME: "VOLUME"
+key_volume_mute: "Mute"
+key_volume_up: "Up"
+key_volume_down: "Down"
+
+keygroup_DEBUG: "DEBUG"
+key_debug_1: "Key 1"
+key_debug_2: "Key 2"
+
+// Задержка и комбо (английский)
+delay_beat_hit: "Beat Hit!"
+combo_rating_offset: "Rating Offset:"
+combo_numbers_offset: "Numbers Offset:"
+delay_current_offset: "Current offset: {1} ms"
+combo_offset: "Combo Offset"
+note_delay: "Note/Beat Delay"
+switch_on_accept: "(Press Accept to Switch)"
+switch_on_start: "(Press Start to Switch)"
+
+// Цвета нот
+note_colors_tip: "Нажмите Клавишу сброса, чтобы сбросить выбранную часть нот."
+note_colors_shift: "Shift"
+note_colors_lb: "Left Shoulder Button"
+note_colors_hold_tip: "Удерживайте {1} + нажмите Клавишу сброса, чтобы полностью сбросить выбранные ноты."
+
+// ============================================================
+//  ★★★ Меню паузы ★★★
+// ============================================================
+pause_resume: "Resume"
+pause_restart_song: "Restart Song"
+pause_change_difficulty: "Change Difficulty"
+pause_options: "Options"
+pause_exit_to_menu: "Exit to Menu"
+
+// Общее
+reset_achievement: "Reset Achievement:"
+
+yes: "Yes"
+no: "No"
+
+freeplay_tip: "Нажмите Пробел для предпрослушивания песни / CTRL для открытия меню модов / Клавишу сброса для сброса счёта и точности."
+personal_best: "PERSONAL BEST: {1} ({2}%)"
+
+now_loading: "Now Loading{1}"
+
+reload_button: "RELOAD"
+enable_all_button: "ENABLE ALL"
+disable_all_button: "DISABLE ALL"
+no_mods_installed: "NO MODS INSTALLED\nPRESS BACK TO EXIT OR INSTALL A MOD"
+no_mods_found: "No Mods found."
+mod_restart: "* Moving or Toggling On/Off this Mod will restart the game."
+
+botplay: "Автоигра"
+
+// ============================================================
+//  ★★★ Рейтинги (оставлены на английском) ★★★
+// ============================================================
+rating_you_suck: "Ты отстой! Чувак!"
+rating_shit: "Дерьмо"
+rating_bad: "Плохо"
+rating_bruh: "Да ладно"
+rating_meh: "Так себе"
+rating_nice: "Неплохо"
+rating_good: "Хорошо"
+rating_great: "Отлично"
+rating_sick: "Божественно!"
+rating_perfect: "Идеально!!"
+
+clear: "Обычно"
+sdcb: "(Можешь продержаться подольше?)"
+fc: "Полное комбо"
+gfc: "Отличное полное комбо"
+sfc: "Идеальное полное комбо"
+
+score_text: "Счёт: {1} | Промахи: {2} | Рейтинг: {3}"
+score_text_instakill: "Счёт: {1} | Промахи? (их не должно быть...) | Рейтинг: {2}"
+
+week_score: "WEEK SCORE: {1}"
+
+blueballed: "Количество смертей: {1}"
+practice_mode: "Режим тренировки"
+charting_mode: "Режим редактирования"
+
+reset_score: "Reset the score of"
+
+// Названия недель (русский)
+storyname_tutorial: "Обучение"
+storyname_week1: "Дорогой папа"
+storyname_week2: "Хэллоуинская луна"
+storyname_week3: "Pico"
+storyname_week4: "Мама должна убить"
+storyname_week5: "Красный снег"
+storyname_week6: "Симулятор ненависти ft. Мяу-Мяу"
+storyname_week7: "Танкист"
+storyname_weekend1: "Долг"

@@ -1,0 +1,335 @@
+Korean (Korea)
+//MOD: Unsent's Mod
+//작성자: Unsent
+//이 주석은 수정하지 마세요!
+
+// 난이도
+difficulty_: ""
+difficulty_easy: "Easy"
+difficulty_normal: "Normal"
+difficulty_hard: "Hard"
+
+//toolbox
+unsent_toolbox_loaded: "툴박스가 로드되었습니다"
+unsent_toolbox_version: "Psych Engine 1.0.4에서 실행 중"
+
+unsent_toolbox_botplay_on: "Botplay: ON"
+unsent_toolbox_botplay_off: "Botplay: OFF"
+
+unsent_toolbox_practice_on: "연습 모드: ON"
+unsent_toolbox_practice_off: "연습 모드: OFF"
+
+unsent_toolbox_speed_add_small: "스크롤 속도 +0.1:"
+unsent_toolbox_speed_add_big: "스크롤 속도 +0.5:"
+
+unsent_toolbox_speed_remove_small: "스크롤 속도 -0.1:"
+unsent_toolbox_speed_remove_big: "스크롤 속도 -0.5:"
+
+// 업적
+achievement_: ""
+description_: ""
+
+achievement_friday_night_play: "금요일 밤의 괴짜"
+description_friday_night_play: "금요일... 밤에 플레이."
+achievement_week1_nomiss: "그녀도 나를 아빠라고 불러"
+description_week1_nomiss: "Hard 난이도에서 1주차 노미스 클리어"
+achievement_week2_nomiss: "더 이상 속임수는 없어"
+description_week2_nomiss: "Hard 난이도에서 2주차 노미스 클리어"
+achievement_week3_nomiss: "나를 킬러라고 불러"
+description_week3_nomiss: "Hard 난이도에서 3주차 노미스 클리어"
+achievement_week4_nomiss: "레이디 킬러"
+description_week4_nomiss: "Hard 난이도에서 4주차 노미스 클리어"
+achievement_week5_nomiss: "노미스 크리스마스"
+description_week5_nomiss: "Hard 난이도에서 5주차 노미스 클리어"
+achievement_week6_nomiss: "최고 점수!!"
+description_week6_nomiss: "Hard 난이도에서 6주차 노미스 클리어"
+achievement_week7_nomiss: "세상에!"
+description_week7_nomiss: "Hard 난이도에서 7주차 노미스 클리어"
+achievement_weekend1_nomiss: "싸워도 우정은 잃지 않아"
+description_weekend1_nomiss: "Hard 난이도에서 1주차 주말 노미스 클리어"
+achievement_ur_bad: "진짜 재앙이야!"
+description_ur_bad: "20% 미만의 평가로 곡 클리어"
+achievement_ur_good: "완벽주의자"
+description_ur_good: "100%의 평가로 곡 클리어"
+achievement_roadkill_enthusiast: "로드킬 애호가"
+description_roadkill_enthusiast: "추종자의 죽음을 50회 관찰"
+achievement_oversinging: "너무 많이 부르는 거 아니야...?"
+description_oversinging: "유휴 상태로 돌아가지 않고 10초 연속 노래 부르기"
+achievement_hype: "과잉 활동"
+description_hype: "유휴 상태로 돌아가지 않고 곡 클리어"
+achievement_two_keys: "우리 둘 뿐이야"
+description_two_keys: "두 개의 키만으로 곡 클리어"
+achievement_toastie: "토스터 플레이어"
+description_toastie: "토스터에서 게임을 실행해 본 적 있어?"
+achievement_debugger: "디버거"
+description_debugger: "채보 에디터에서 '테스트' 스테이지 클리어"
+// 모드 콘텐츠
+achievement_the_end: "끝났다"
+description_the_end: "피날레 클리어"
+achievement_hardcore: "인간의 한계"
+description_hardcore: "'montagem-alquimia'의 'impossible' 난이도를 풀콤보 클리어"
+achievement_youarecheating: "형님 핵 쓰셨네!!!"
+description_youarecheating: "'nasa-tracked-aliens' 스테이지를 점수 포함 클리어"
+achievement_lucks_come: "행운이 왔다!"
+description_lucks_come: "'lucks-come'의 'impossible' 난이도를 풀콤보 클리어"
+achievement_luotianyi: "화하의 소리"
+description_luotianyi: "'dystopia-pieced-regret-remix'와 'montagem-pitty' 클리어"
+achievement_ysstart: "원신, 기동!"
+description_ysstart: "'song-to-the-mirrored-moon' 클리어"
+achievement_pvzwin: "클리어했어?"
+description_pvzwin: "'pvz-win-music' 퍼펙트 클리어"
+achievement_musedash: "MuseDash가 너무 좋아!"
+description_musedash: "'muse-dash-legend' 풀콤보 클리어"
+
+// 자유 플레이
+musicplayer_playing: "재생 중: {1}"
+musicplayer_paused: "재생 중: {1} (일시 정지)"
+musicplayer_tip: "스페이스바 일시 정지 / ESC 종료 / R 곡 리셋"
+
+// ============================================================
+//  ★★★ 설정 메뉴 - 큰 항목은 모두 영어 ★★★
+// ============================================================
+gameplay_menu: "Gameplay"
+graphics_menu: "Graphics"
+visuals_menu: "Visuals"
+options_note_colors: "Note Colors"
+options_controls: "Controls"
+options_adjust_delay_and_combo: "Adjust Delay and Combo"
+options_graphics: "Graphics"
+options_visuals: "Visuals"
+options_gameplay: "Gameplay"
+options_language: "Language"
+
+// 옵션 이름 (영어) + 설명 (한국어)
+setting_scroll_type: "Scroll Type"
+description_scroll_type: "노트의 스크롤 방향을 선택합니다."
+
+setting_scroll_speed: "Scroll Speed"
+description_scroll_speed: "노트 스크롤 속도를 조정합니다."
+
+setting_playback_rate: "Playback Rate"
+description_playback_rate: "곡 재생 속도를 조정합니다."
+
+setting_health_gain_multiplier: "Health Gain Multiplier"
+description_health_gain_multiplier: "노트 히트 시 HP 획득 배율을 조정합니다."
+
+setting_health_loss_multiplier: "Health Loss Multiplier"
+description_health_loss_multiplier: "미스 시 HP 손실 배율을 조정합니다."
+
+setting_instakill_on_miss: "Instakill on Miss"
+description_instakill_on_miss: "켜져 있으면, 어떤 미스라도 즉시 사망합니다."
+
+setting_practice_mode: "Practice Mode"
+description_practice_mode: "켜져 있으면, 미스가 죽음으로 이어지지 않습니다. 연습에 적합합니다."
+
+setting_botplay: "Botplay"
+description_botplay: "켜져 있으면, 컴퓨터가 자동으로 완벽하게 연주합니다."
+
+setting_low_quality: "Low Quality"
+description_low_quality: "켜져 있으면, 일부 배경 디테일을 비활성화하여 로딩 시간을 줄이고 성능을 향상시킵니다."
+
+setting_anti-aliasing: "Anti-Aliasing"
+description_anti-aliasing: "꺼져 있으면, 안티앨리어싱을 비활성화하여 성능은 향상되지만 화면이 더 선명해집니다."
+
+setting_shaders: "Shaders"
+description_shaders: "꺼져 있으면, 셰이더를 비활성화합니다. 일부 시각 효과에 사용되며 저사양 PC에서는 CPU를 소모합니다."
+
+setting_gpu_caching: "GPU Caching"
+description_gpu_caching: "켜져 있으면, GPU가 텍스처 캐싱에 사용되어 메모리 사용량을 줄입니다. 그래픽 카드가 좋지 않으면 켜지 마세요."
+
+setting_framerate: "Framerate"
+description_framerate: "게임의 최대 프레임률을 설정합니다."
+
+setting_note_skins: "Note Skins"
+description_note_skins: "마음에 드는 노트 스킨을 선택합니다."
+
+setting_note_splashes: "Note Splashes"
+description_note_splashes: "마음에 드는 노트 스플래시 변형을 선택하거나 끕니다."
+
+setting_note_splash_opacity: "Note Splash Opacity"
+description_note_splash_opacity: "노트 스플래시의 투명도를 조정합니다."
+
+setting_hide_hud: "Hide HUD"
+description_hide_hud: "켜져 있으면, 대부분의 HUD 요소를 숨깁니다."
+
+setting_time_bar: "Time Bar"
+description_time_bar: "시간 막대의 표시 내용을 선택합니다."
+
+setting_flashing_lights: "Flashing Lights"
+description_flashing_lights: "섬광에 민감하다면 이 옵션을 꺼주세요!"
+
+setting_camera_zooms: "Camera Zooms"
+description_camera_zooms: "꺼져 있으면, 비트 히트 시 카메라가 줌되지 않습니다."
+
+setting_score_text_grow_on_hit: "Score Text Grow on Hit"
+description_score_text_grow_on_hit: "꺼져 있으면, 노트 히트 시 점수 텍스트가 커지는 효과가 비활성화됩니다."
+
+setting_health_bar_opacity: "Health Bar Opacity"
+description_health_bar_opacity: "HP 바와 아이콘의 투명도를 조정합니다."
+
+setting_fps_counter: "FPS Counter"
+description_fps_counter: "꺼져 있으면, FPS 카운터를 숨깁니다."
+
+setting_pause_music: "Pause Screen Song"
+description_pause_music: "일시 정지 화면에서 재생할 곡을 선택합니다."
+
+setting_discord_rich_presence: "Discord Rich Presence"
+description_discord_rich_presence: "끄면 의도치 않은 유출을 방지하고 Discord의 '플레이 중' 상태를 숨깁니다."
+
+setting_combo_stacking: "Combo Stacking"
+description_combo_stacking: "꺼져 있으면, 평가와 콤보가 쌓이지 않아 시스템 메모리를 절약하고 읽기 더 쉬워집니다."
+
+setting_downscroll: "Downscroll"
+description_downscroll: "켜져 있으면, 노트가 위에서 아래로 스크롤됩니다."
+
+setting_middlescroll: "Middlescroll"
+description_middlescroll: "켜져 있으면, 당신의 노트가 중앙에 표시됩니다."
+
+setting_opponent_notes: "Opponent Notes"
+description_opponent_notes: "꺼져 있으면, 상대방의 노트가 숨겨집니다."
+
+setting_ghost_tapping: "Ghost Tapping"
+description_ghost_tapping: "켜져 있으면, 칠 수 있는 노트가 없을 때 키를 잘못 눌러도 미스로 간주되지 않습니다."
+
+setting_auto_pause: "Auto Pause"
+description_auto_pause: "켜져 있으면, 화면이 포커스를 잃을 때 게임이 자동으로 일시 정지됩니다."
+
+setting_disable_reset_button: "Disable Reset Button"
+description_disable_reset_button: "켜져 있으면, 리셋 키를 눌러도 아무 반응이 없습니다."
+
+setting_hitsound_volume: "Hitsound Volume"
+description_hitsound_volume: "노트 히트 시 타격음의 볼륨을 조정합니다."
+
+setting_rating_offset: "Rating Offset"
+description_rating_offset: "Sick!을 얻기 위해 얼마나 늦게/빨리 눌러야 하는지 조정합니다. 값이 높을수록 더 늦게 눌러야 합니다."
+
+setting_sick_hit_window: "Sick! Hit Window"
+description_sick_hit_window: "Sick!을 얻기 위한 판정 시간을 밀리초 단위로 조정합니다."
+
+setting_good_hit_window: "Good Hit Window"
+description_good_hit_window: "Good을 얻기 위한 판정 시간을 밀리초 단위로 조정합니다."
+
+setting_bad_hit_window: "Bad Hit Window"
+description_bad_hit_window: "Bad를 얻기 위한 판정 시간을 밀리초 단위로 조정합니다."
+
+setting_safe_frames: "Safe Frames"
+description_safe_frames: "노트 히트를 앞당기거나 지연시킬 수 있는 프레임 수를 조정합니다."
+
+setting_sustains_as_one_note: "Sustains as One Note"
+description_sustains_as_one_note: "켜져 있으면, 롱 노트가 한 번의 히트/미스로 계산됩니다. 이전 시스템이 좋다면 꺼주세요."
+
+// 키 바인딩 (영어)
+controls_rebinding: "Rebinding {1}"
+controls_rebinding2: "Hold ESC to Cancel\nHold Backspace to Delete"
+
+keygroup_NOTES: "NOTES"
+key_note_left: "Left"
+key_note_down: "Down"
+key_note_up: "Up"
+key_note_right: "Right"
+
+keygroup_UI: "UI"
+key_ui_left: "Left"
+key_ui_down: "Down"
+key_ui_up: "Up"
+key_ui_right: "Right"
+key_reset: "Reset"
+key_accept: "Accept"
+key_back: "Back"
+key_pause: "Pause"
+
+keygroup_VOLUME: "VOLUME"
+key_volume_mute: "Mute"
+key_volume_up: "Up"
+key_volume_down: "Down"
+
+keygroup_DEBUG: "DEBUG"
+key_debug_1: "Key 1"
+key_debug_2: "Key 2"
+
+// 지연 및 콤보 (영어)
+delay_beat_hit: "Beat Hit!"
+combo_rating_offset: "Rating Offset:"
+combo_numbers_offset: "Numbers Offset:"
+delay_current_offset: "Current offset: {1} ms"
+combo_offset: "Combo Offset"
+note_delay: "Note/Beat Delay"
+switch_on_accept: "(Press Accept to Switch)"
+switch_on_start: "(Press Start to Switch)"
+
+// 노트 색상
+note_colors_tip: "리셋 키를 눌러 선택한 노트 부분을 리셋합니다."
+note_colors_shift: "Shift"
+note_colors_lb: "Left Shoulder Button"
+note_colors_hold_tip: "{1}을(를) 누른 상태에서 리셋 키를 누르면 선택한 노트를 완전히 리셋합니다."
+
+// ============================================================
+//  ★★★ 일시 정지 메뉴 ★★★
+// ============================================================
+pause_resume: "Resume"
+pause_restart_song: "Restart Song"
+pause_change_difficulty: "Change Difficulty"
+pause_options: "Options"
+pause_exit_to_menu: "Exit to Menu"
+
+// 공통
+reset_achievement: "Reset Achievement:"
+
+yes: "Yes"
+no: "No"
+
+freeplay_tip: "스페이스바 곡 미리듣기 / CTRL키 게임 모드 메뉴 열기 / 리셋 키 점수 및 정확도 리셋"
+personal_best: "PERSONAL BEST: {1} ({2}%)"
+
+now_loading: "Now Loading{1}"
+
+reload_button: "RELOAD"
+enable_all_button: "ENABLE ALL"
+disable_all_button: "DISABLE ALL"
+no_mods_installed: "NO MODS INSTALLED\nPRESS BACK TO EXIT OR INSTALL A MOD"
+no_mods_found: "No Mods found."
+mod_restart: "* Moving or Toggling On/Off this Mod will restart the game."
+
+botplay: "자동 플레이"
+
+// ============================================================
+//  ★★★ 평가 (영어 유지) ★★★
+// ============================================================
+rating_you_suck: "너무 못해! 친구!"
+rating_shit: "똥"
+rating_bad: "나쁨"
+rating_bruh: "설마"
+rating_meh: "그저 그럼"
+rating_nice: "괜찮음"
+rating_good: "좋음"
+rating_great: "훌륭함"
+rating_sick: "신급!"
+rating_perfect: "완벽!!"
+
+clear: "보통"
+sdcb: "(좀 더 버틸 수 있지 않아?)"
+fc: "풀콤보"
+gfc: "우수 풀콤보"
+sfc: "완벽 풀콤보"
+
+score_text: "점수: {1} | 미스: {2} | 평가: {3}"
+score_text_instakill: "점수: {1} | 미스? (있으면 안 되는 건데...) | 평가: {2}"
+
+week_score: "WEEK SCORE: {1}"
+
+blueballed: "사망 횟수: {1}"
+practice_mode: "연습 모드"
+charting_mode: "편집 모드"
+
+reset_score: "Reset the score of"
+
+// 주차 이름 (한국어)
+storyname_tutorial: "튜토리얼"
+storyname_week1: "사랑하는 아빠"
+storyname_week2: "할로윈의 달"
+storyname_week3: "Pico"
+storyname_week4: "엄마는 살인해야 해"
+storyname_week5: "붉은 눈"
+storyname_week6: "증오 시뮬레이터 ft. 냐냐"
+storyname_week7: "전차병"
+storyname_weekend1: "빚"

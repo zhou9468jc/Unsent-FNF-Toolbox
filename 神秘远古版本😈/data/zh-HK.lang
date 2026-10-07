@@ -1,0 +1,335 @@
+Chinese (Hong Kong)
+//MOD: Unsent 嘅 Mod
+//作者: Unsent
+//請勿修改呢啲註解！
+
+// 難度
+difficulty_: ""
+difficulty_easy: "Easy"
+difficulty_normal: "Normal"
+difficulty_hard: "Hard"
+
+//toolbox
+unsent_toolbox_loaded: "工具箱已載入"
+unsent_toolbox_version: "運行於 Psych Engine 1.0.4"
+
+unsent_toolbox_botplay_on: "Botplay: 開啟"
+unsent_toolbox_botplay_off: "Botplay: 關閉"
+
+unsent_toolbox_practice_on: "練習模式: 開啟"
+unsent_toolbox_practice_off: "練習模式: 關閉"
+
+unsent_toolbox_speed_add_small: "滾動速度 +0.1:"
+unsent_toolbox_speed_add_big: "滾動速度 +0.5:"
+
+unsent_toolbox_speed_remove_small: "滾動速度 -0.1:"
+unsent_toolbox_speed_remove_big: "滾動速度 -0.5:"
+
+// 成就
+achievement_: ""
+description_: ""
+
+achievement_friday_night_play: "星期五晚嘅怪胎"
+description_friday_night_play: "喺星期五……夜晚玩。"
+achievement_week1_nomiss: "佢都叫我爸爸"
+description_week1_nomiss: "喺困難難度下無失誤通關第一週"
+achievement_week2_nomiss: "唔再搞把戲"
+description_week2_nomiss: "喺困難難度下無失誤通關第二週"
+achievement_week3_nomiss: "叫我殺手"
+description_week3_nomiss: "喺困難難度下無失誤通關第三週"
+achievement_week4_nomiss: "女士殺手"
+description_week4_nomiss: "喺困難難度下無失誤通關第四週"
+achievement_week5_nomiss: "無失誤聖誕"
+description_week5_nomiss: "喺困難難度下無失誤通關第五週"
+achievement_week6_nomiss: "最高分！！"
+description_week6_nomiss: "喺困難難度下無失誤通關第六週"
+achievement_week7_nomiss: "老天爺啊！"
+description_week7_nomiss: "喺困難難度下無失誤通關第七週"
+achievement_weekend1_nomiss: "打交唔失友"
+description_weekend1_nomiss: "喺困難難度下無失誤通關第一週週末"
+achievement_ur_bad: "真係場災難！"
+description_ur_bad: "以低過20%嘅評分完成一首歌"
+achievement_ur_good: "完美主義者"
+description_ur_good: "以100%嘅評分完成一首歌"
+achievement_roadkill_enthusiast: "路殺愛好者"
+description_roadkill_enthusiast: "睇住隨從死亡50次"
+achievement_oversinging: "唱得太多了吧……？"
+description_oversinging: "連續唱歌10秒唔返去空閒狀態"
+achievement_hype: "過度活躍"
+description_hype: "喺唔返去空閒狀態嘅情況下完成一首歌"
+achievement_two_keys: "得我哋兩個"
+description_two_keys: "淨係撳兩個掣完成一首歌"
+achievement_toastie: "多士爐玩家"
+description_toastie: "你有冇試過喺多士爐上面玩遊戲？"
+achievement_debugger: "除錯器"
+description_debugger: "由譜面編輯器通關「測試」關卡"
+// 模組內容
+achievement_the_end: "完結了"
+description_the_end: "通關終曲"
+achievement_hardcore: "人類嘅極限"
+description_hardcore: "全連通關「montagem-alquimia」嘅「impossible」難度"
+achievement_youarecheating: "兄弟你開咗掛！！！"
+description_youarecheating: "帶成績通關「nasa-tracked-aliens」關卡"
+achievement_lucks_come: "好運嚟！"
+description_lucks_come: "全連通關「lucks-come」嘅「impossible」難度"
+achievement_luotianyi: "華夏之音"
+description_luotianyi: "通關「dystopia-pieced-regret-remix」同「montagem-pitty」"
+achievement_ysstart: "原神啟動！"
+description_ysstart: "通關「song-to-the-mirrored-moon」"
+achievement_pvzwin: "通關咗？"
+description_pvzwin: "完美通關「pvz-win-music」"
+achievement_musedash: "我愛MuseDash！"
+description_musedash: "全連通關「muse-dash-legend」"
+
+// 自由遊玩
+musicplayer_playing: "正在播放：{1}"
+musicplayer_paused: "正在播放：{1}（已暫停）"
+musicplayer_tip: "撳 空格鍵 暫停 / 撳 ESC 退出 / 撳 R 重置歌曲"
+
+// ============================================================
+//  ★★★ 設定選單 - 大選項全部英文 ★★★
+// ============================================================
+gameplay_menu: "Gameplay"
+graphics_menu: "Graphics"
+visuals_menu: "Visuals"
+options_note_colors: "Note Colors"
+options_controls: "Controls"
+options_adjust_delay_and_combo: "Adjust Delay and Combo"
+options_graphics: "Graphics"
+options_visuals: "Visuals"
+options_gameplay: "Gameplay"
+options_language: "Language"
+
+// 選項名稱（英文）+ 描述（中文）
+setting_scroll_type: "Scroll Type"
+description_scroll_type: "選擇音符嘅滾動方向。"
+
+setting_scroll_speed: "Scroll Speed"
+description_scroll_speed: "調整音符滾動嘅速度。"
+
+setting_playback_rate: "Playback Rate"
+description_playback_rate: "調整歌曲播放速度。"
+
+setting_health_gain_multiplier: "Health Gain Multiplier"
+description_health_gain_multiplier: "調整擊中音符時血量嘅獲取倍率。"
+
+setting_health_loss_multiplier: "Health Loss Multiplier"
+description_health_loss_multiplier: "調整失誤時血量嘅損失倍率。"
+
+setting_instakill_on_miss: "Instakill on Miss"
+description_instakill_on_miss: "如果開啟，任何失誤都會即時死亡。"
+
+setting_practice_mode: "Practice Mode"
+description_practice_mode: "如果開啟，失誤唔會導致死亡，適合練習。"
+
+setting_botplay: "Botplay"
+description_botplay: "如果開啟，電腦會自動完美演奏。"
+
+setting_low_quality: "Low Quality"
+description_low_quality: "如果開啟，停用部分背景細節，減少載入時間並提升效能。"
+
+setting_anti-aliasing: "Anti-Aliasing"
+description_anti-aliasing: "如果關閉，停用抗鋸齒，提升效能但畫面會更銳利。"
+
+setting_shaders: "Shaders"
+description_shaders: "如果關閉，停用著色器，用於一啲視覺特效，對低配電腦消耗CPU。"
+
+setting_gpu_caching: "GPU Caching"
+description_gpu_caching: "如果開啟，容許GPU用嚟快取紋理，減少記憶體佔用。顯示卡差嘅話唔好開啟。"
+
+setting_framerate: "Framerate"
+description_framerate: "設定遊戲嘅最高幀率。"
+
+setting_note_skins: "Note Skins"
+description_note_skins: "選擇你鍾意嘅音符皮膚。"
+
+setting_note_splashes: "Note Splashes"
+description_note_splashes: "選擇你鍾意嘅音符濺射變體或者關閉佢。"
+
+setting_note_splash_opacity: "Note Splash Opacity"
+description_note_splash_opacity: "調整音符濺射嘅透明度。"
+
+setting_hide_hud: "Hide HUD"
+description_hide_hud: "如果開啟，隱藏大部份HUD元素。"
+
+setting_time_bar: "Time Bar"
+description_time_bar: "選擇時間條顯示嘅內容。"
+
+setting_flashing_lights: "Flashing Lights"
+description_flashing_lights: "如果你對閃光燈敏感，請關閉呢個選項！"
+
+setting_camera_zooms: "Camera Zooms"
+description_camera_zooms: "如果關閉，鏡頭喺擊中節拍時唔會縮放。"
+
+setting_score_text_grow_on_hit: "Score Text Grow on Hit"
+description_score_text_grow_on_hit: "如果關閉，停用擊中音符時分數文字放大嘅效果。"
+
+setting_health_bar_opacity: "Health Bar Opacity"
+description_health_bar_opacity: "調整血條同圖示嘅透明度。"
+
+setting_fps_counter: "FPS Counter"
+description_fps_counter: "如果關閉，隱藏FPS計數器。"
+
+setting_pause_music: "Pause Screen Song"
+description_pause_music: "選擇暫停畫面播放嘅歌曲。"
+
+setting_discord_rich_presence: "Discord Rich Presence"
+description_discord_rich_presence: "關閉以防止意外洩露，隱藏Discord「正在玩」狀態。"
+
+setting_combo_stacking: "Combo Stacking"
+description_combo_stacking: "如果關閉，評分同連擊唔會堆疊，節省系統記憶體並更易閱讀。"
+
+setting_downscroll: "Downscroll"
+description_downscroll: "如果開啟，音符從頂部向下滾動。"
+
+setting_middlescroll: "Middlescroll"
+description_middlescroll: "如果開啟，你嘅音符置中顯示。"
+
+setting_opponent_notes: "Opponent Notes"
+description_opponent_notes: "如果關閉，對手音符會被隱藏。"
+
+setting_ghost_tapping: "Ghost Tapping"
+description_ghost_tapping: "如果開啟，喺冇可擊中嘅音符時撳錯掣唔會算係失誤。"
+
+setting_auto_pause: "Auto Pause"
+description_auto_pause: "如果開啟，當畫面失去焦點時遊戲會自動暫停。"
+
+setting_disable_reset_button: "Disable Reset Button"
+description_disable_reset_button: "如果開啟，撳重置掣唔會有任何反應。"
+
+setting_hitsound_volume: "Hitsound Volume"
+description_hitsound_volume: "調整擊中音符時打擊音嘅音量。"
+
+setting_rating_offset: "Rating Offset"
+description_rating_offset: "調整獲得Sick!需要撳得有幾遲/幾早，數值越高代表需要撳得越遲。"
+
+setting_sick_hit_window: "Sick! Hit Window"
+description_sick_hit_window: "以毫秒為單位調整獲得Sick!嘅判定時間。"
+
+setting_good_hit_window: "Good Hit Window"
+description_good_hit_window: "以毫秒為單位調整獲得Good嘅判定時間。"
+
+setting_bad_hit_window: "Bad Hit Window"
+description_bad_hit_window: "以毫秒為單位調整獲得Bad嘅判定時間。"
+
+setting_safe_frames: "Safe Frames"
+description_safe_frames: "調整你可以提早或延遲擊中音符嘅幀數。"
+
+setting_sustains_as_one_note: "Sustains as One Note"
+description_sustains_as_one_note: "如果開啟，長按音符算作一次擊中/失誤。如果鍾意舊系統請關閉。"
+
+// 按鍵綁定（英文）
+controls_rebinding: "Rebinding {1}"
+controls_rebinding2: "Hold ESC to Cancel\nHold Backspace to Delete"
+
+keygroup_NOTES: "NOTES"
+key_note_left: "Left"
+key_note_down: "Down"
+key_note_up: "Up"
+key_note_right: "Right"
+
+keygroup_UI: "UI"
+key_ui_left: "Left"
+key_ui_down: "Down"
+key_ui_up: "Up"
+key_ui_right: "Right"
+key_reset: "Reset"
+key_accept: "Accept"
+key_back: "Back"
+key_pause: "Pause"
+
+keygroup_VOLUME: "VOLUME"
+key_volume_mute: "Mute"
+key_volume_up: "Up"
+key_volume_down: "Down"
+
+keygroup_DEBUG: "DEBUG"
+key_debug_1: "Key 1"
+key_debug_2: "Key 2"
+
+// 延遲同連擊（英文）
+delay_beat_hit: "Beat Hit!"
+combo_rating_offset: "Rating Offset:"
+combo_numbers_offset: "Numbers Offset:"
+delay_current_offset: "Current offset: {1} ms"
+combo_offset: "Combo Offset"
+note_delay: "Note/Beat Delay"
+switch_on_accept: "(Press Accept to Switch)"
+switch_on_start: "(Press Start to Switch)"
+
+// 音符顏色
+note_colors_tip: "撳 重置鍵 重置選中嘅音符部份。"
+note_colors_shift: "Shift"
+note_colors_lb: "Left Shoulder Button"
+note_colors_hold_tip: "撳住 {1} + 撳 重置鍵 完全重置選中嘅音符。"
+
+// ============================================================
+//  ★★★ 暫停選單 ★★★
+// ============================================================
+pause_resume: "Resume"
+pause_restart_song: "Restart Song"
+pause_change_difficulty: "Change Difficulty"
+pause_options: "Options"
+pause_exit_to_menu: "Exit to Menu"
+
+// 通用
+reset_achievement: "Reset Achievement:"
+
+yes: "Yes"
+no: "No"
+
+freeplay_tip: "撳 空格鍵 試聽歌曲 / 撳 CTRL鍵 開啟遊戲修改選單 / 撳 重置鍵 重置你嘅分數同準確度."
+personal_best: "PERSONAL BEST: {1} ({2}%)"
+
+now_loading: "Now Loading{1}"
+
+reload_button: "RELOAD"
+enable_all_button: "ENABLE ALL"
+disable_all_button: "DISABLE ALL"
+no_mods_installed: "NO MODS INSTALLED\nPRESS BACK TO EXIT OR INSTALL A MOD"
+no_mods_found: "No Mods found."
+mod_restart: "* Moving or Toggling On/Off this Mod will restart the game."
+
+botplay: "自動遊玩"
+
+// ============================================================
+//  ★★★ 評分（保留英文） ★★★
+// ============================================================
+rating_you_suck: "你太廢啦！老友！"
+rating_shit: "垃圾"
+rating_bad: "幾差"
+rating_bruh: "唔係掛"
+rating_meh: "一般"
+rating_nice: "唔錯"
+rating_good: "幾好"
+rating_great: "好正"
+rating_sick: "神級！"
+rating_perfect: "完美！！"
+
+clear: "普普通通"
+sdcb: "（你係咪可以堅持耐少少？）"
+fc: "全連"
+gfc: "優秀全連"
+sfc: "完美全連"
+
+score_text: "分數: {1} | 失誤: {2} | 評級: {3}"
+score_text_instakill: "分數: {1} | 失誤？（唔應該有嘅……） | 評級: {2}"
+
+week_score: "WEEK SCORE: {1}"
+
+blueballed: "死亡次數: {1}"
+practice_mode: "處於練習模式"
+charting_mode: "處於編輯模式"
+
+reset_score: "Reset the score of"
+
+// 週目名稱（中文）
+storyname_tutorial: "教學"
+storyname_week1: "親愛嘅爸爸"
+storyname_week2: "萬聖節之月"
+storyname_week3: "Pico"
+storyname_week4: "媽媽一定要謀殺"
+storyname_week5: "紅雪"
+storyname_week6: "憎恨模擬器 ft. 喵喵"
+storyname_week7: "坦克兵"
+storyname_weekend1: "債務"

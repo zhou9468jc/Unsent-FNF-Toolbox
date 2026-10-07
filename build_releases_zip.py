@@ -27,6 +27,7 @@ EXCLUDE_DIRS = {
     ".git",
     "releases",
     "NoBuildFiles",
+    "神秘远古版本😈",
 }
 
 # Exclude specific files.

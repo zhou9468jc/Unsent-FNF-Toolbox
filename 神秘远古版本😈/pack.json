@@ -1,0 +1,6 @@
+{
+	"name": "Unsent's toolbox",
+	"description": "This ToolBox is used in Psych Engine 1.0.4 or 0.6.2.\nC - Toggle Botplay    V - Toggle Practice Mode\nN - Add Scroll Speed 0.1 (Hold Shift to +0.5)\nM - Reduce Scroll Speed 0.1 (Hold Shift to -0.5)\n*If you installed this mod in Psych Engine 1.0.4, then check the Mod settings and enable the \"Psych Engine 1.0.4 Mode\"! *\n",
+	"restart": true,
+	"runsGlobally": true
+}
