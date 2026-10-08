@@ -1277,7 +1277,7 @@ function onUpdate(elapsed)
 
     if keyboardJustPressed(Key.Toggle.Botplay)
     and not disableBotplay
-    and keyboardPressed(Key.Modifier.Shift)
+    and keyboardPressed(Key.Toggle.FakeBotplayModifier)
     and keyCooldown <= 0 then
 
 
