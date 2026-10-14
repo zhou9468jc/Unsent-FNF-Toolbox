@@ -5,8 +5,29 @@
 --================================================
 -- Safe Setting
 --================================================
+local temp_psychVersion = version
+local temp_disableCheckVer = getModSetting("disableCheckVer") if temp_disableCheckVer == nil then temp_disableCheckVer = false end
+local success,result =
+	pcall(function()
+		local opponent =
+			getProperty(
+				'cpuControlled_opponent'
+			)
+		return opponent ~= nil
+	end)
+temp_isNFE = success and result
 
-local languages = readJson("data/language.json") or {}
+
+local function safeReadJson(value)
+	if temp_psychVersion == "0.7.3" and (type(readJson) == "function") then
+		if not (type(readJson) == "function") then return nil end
+		return readJson(value)
+	else
+		return nil
+	end
+end
+
+local languages = safeReadJson("data/language.json") or {["###GloBal_Language"]={Language_ReadError="Language Setting Read ERROR! 语言设置加载错误！"},English={Language_Name="English (Read Language File ERROR!)",Language_Current="Current Language",Enable="Enable",Disable="Disable",Enabled="Enabled",Disabled="Disabled",ModSetting_ReadError="ERROR: Failed to read Toolbox Mod Setting: {1} (Value is Nil),Will Use Default Value : {2}",FakeBotplay_ON="Fake Botplay: ON",FakeBotplay_OFF="Fake Botplay: OFF",Botplay_ON="Botplay: ON",Botplay_OFF="Botplay: OFF",Practice_ON="Practice Mode: ON",Practice_OFF="Practice Mode: OFF",SoftPause_ON="Soft Pause: ON",SoftPause_OFF="Soft Pause: OFF",SoftPause_Enable="Soft Pause: Enabled",SoftPause_Text="SOFT PAUSE\nPress {1} to Exit Soft Pause",SoftResume_Error="Soft Resume Error: {1}",SoftPause_Timeout="Soft Pause initialization timed out after 3 seconds!",Advanced_Debug="Advanced Debug Mode",AD_Playback_Rate="PlayBack Rate",AD_Scroll_Speed="Scroll Speed",AD_Practice="Practice Mode",AD_Botplay="Botplay",AD_BPM="BPM",AD_Song_Start="Song Start",AD_Difficulty="Difficulty",Playback_Info="Playback Rate {1} : {2} | Scroll Speed : {3} | Song Speed : {4}",Scroll_Info="Scroll Speed {1} : {2} | Playback Rate : {3} | Song Speed : {4}",Playback_Reset="Playback Rate RESET : {1} | Scroll Speed : {2} | Song Speed : {3}",Scroll_Reset="Scroll Speed RESET : {1} | Playback Rate : {2} | Song Speed : {3}",Health_Reset="Health RESET : 50%",Health_Info="Health {1} : {2}",Warning_Version="WARNING: Engine Version Check Disabled!",Warning_Debug="Debug output cannot be disabled while this option is enabled.",Error_Engine="ERROR: NovaFlare Engine required!",Error_Stop="Unsent's ToolBox stopped.",Developer_Loaded="Unsent's ToolBox Loaded",Warning_NoReset="WARNING: No Reset is disabled!",Warning_EnableNoReset="Please enable No Reset before using \"Reset Property\"!",Botplay_Disable="Please turn OFF Botplay first!",Toolbox_Print_ON="Toolbox Print: ON"}}
 local language = getModSetting("language")
 
 if language == nil then

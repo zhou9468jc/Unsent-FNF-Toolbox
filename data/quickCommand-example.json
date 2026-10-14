@@ -1,0 +1,68 @@
+{
+	"enableAll":true,
+	"commands":[
+		{
+			"name":"Test Message",
+			"enable":true,
+			"key":"F1",
+			"type":"lua",
+			"code":"debugPrint(\"QuickCommand Test OK\")"
+		},
+		{
+			"name":"Health +10%",
+			"enable":true,
+			"key":"F2",
+			"type":"lua",
+			"code":"setProperty('health',getProperty('health')+0.1)"
+		},
+		{
+			"name":"Health Reset",
+			"enable":true,
+			"key":"F3",
+			"type":"lua",
+			"code":"setProperty('health',1)"
+		},
+		{
+			"name":"Camera Zoom",
+			"enable":true,
+			"key":"F4",
+			"type":"hscript",
+			"code":"game.camGame.zoom = 1.5;"
+		},
+		{
+			"name":"Play Sound",
+			"enable":true,
+			"key":"F5",
+			"type":"hscript",
+			"code":"FlxG.sound.play(Paths.sound('confirmMenu'));"
+		},
+		{
+			"name":"Show Player Info",
+			"enable":true,
+			"key":"F6",
+			"type":"lua",
+			"code":"local x=getProperty('boyfriend.x')\nlocal y=getProperty('boyfriend.y')\ndebugPrint(\"BF Position: \"..x..\",\"..y)"
+		},
+		{
+			"name":"Toggle Practice",
+			"enable":true,
+			"key":"F7",
+			"type":"lua",
+			"code":"setProperty('practiceMode',not getProperty('practiceMode'))"
+		},
+		{
+			"name":"Trace Test",
+			"enable":true,
+			"key":"F8",
+			"type":"hscript",
+			"code":"trace(\"HScript QuickCommand Test\");"
+		},
+		{
+			"name":"Disabled Example",
+			"enable":false,
+			"key":"F9",
+			"type":"lua",
+			"code":"debugPrint(\"This command is disabled\")"
+		}
+	]
+}

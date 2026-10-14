@@ -315,7 +315,7 @@ local function startCover(
 	sustainLength
 )
 
-	if not sustainLength or sustainLength <= 100 then
+	if not sustainLength or sustainLength <= 150 then
 		return
 	end
 
@@ -370,7 +370,7 @@ local function startCover(
 	end
 
 	local duration =
-		(sustainLength / 1000) * 0.8 / rate
+		((sustainLength / 1000) / rate) - (0.150 / rate)
 
 	runTimer(
 		timerName,

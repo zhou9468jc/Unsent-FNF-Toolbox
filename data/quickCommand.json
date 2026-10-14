@@ -1,0 +1,12 @@
+{
+	"enableAll":true,
+	"commands":[
+		{
+			"name":"Test Message",
+			"enable":true,
+			"key":"F1",
+			"type":"lua",
+			"code":"debugPrint(\"QuickCommand Test OK\")"
+		}
+	]
+}

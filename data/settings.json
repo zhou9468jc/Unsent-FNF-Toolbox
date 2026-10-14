@@ -71,14 +71,14 @@
 		"save": "hideDevPrint",
 		"name": "Hide Tools Debug Print",
 		"type": "bool",
-		"description": "If enabled, debug shortcut key prints will be hidden.\n开启后工具箱左上角的输出会被隐藏。",
+		"description": "If enabled, debug shortcut key prints will be hidden.\n关闭后工具箱左上角的输出会被隐藏。",
 		"value": false
 	},
 	{
 		"save": "hideDevError",
 		"name": "Hide Tools Error/\nWarn Prints",
 		"type": "bool",
-		"description": "If enabled, debug shortcut key error and warning prints will be hidden.\n开启后工具箱左上角的报错和警告信息会被隐藏。",
+		"description": "If enabled, debug shortcut key error and warning prints will be hidden.\n关闭后工具箱左上角的报错和警告信息会被隐藏。",
 		"value": false
 	},
 	{
@@ -295,7 +295,7 @@
 		"name": "   Health Smooth\n    Speed:",
 		"type": "float",
 		"description": "Controls how quickly the displayed health follows the target health.\n调整血条缓动的速度。",
-		"value": 12,
+		"value":8,
 		"decimals": 1,
 		"min": 1,
 		"max": 30,
@@ -306,7 +306,7 @@
 		"save": "healthOpponentPush",
 		"name": "Opponent Health Drain",
 		"type": "bool",
-		"description": "Makes opponent notes reduce player health.\n开启后对手可以推条(但是更平滑)。",
+		"description": "Makes opponent notes reduce player health.\n开启后对手可以推条(但是更智能)。",
 		"value": false
 	},
 	{
@@ -314,7 +314,7 @@
 		"name": "   Opponent\n     Drain Amount :",
 		"type": "float",
 		"description": "Health reduced by a normal opponent note when Opponent Health Drain is enabled.\n调整对手按一个箭头扣多少血。",
-		"value": 0.020,
+		"value": 0.018,
 		"decimals": 3,
 		"min": 0,
 		"max": 0.1,
@@ -646,6 +646,13 @@
 		"name": "Disable Engine\n    Version Check",
 		"type": "bool",
 		"description": "If enabled, the script will no longer check whether the runtime environment is NovaFlare Engine. Under normal circumstances, \n*DO NOT* enable this option.\n如果启用将不再检查运行环境是否为NF引擎。在正常情况下，*请勿*开启此选项。",
+		"value": false
+	},
+	{
+		"save": "hideDebugPrints",
+		"name": "Hide All DebugPrints",
+		"type": "bool",
+		"description": "When enabled, all Debug prints will be hidden.\n开启后隐藏左上角的所有输出（不分敌我）。",
 		"value": false
 	},
 	{

@@ -1,21 +1,65 @@
 -- ============================================================
 -- Unsent's Toolbox NF Ver
 -- Main Script
--- Language Support
 -- ============================================================
+-- version check
+UnsentToolbox_NFEVersion = nil  --{ 1.2.0(+) / 1.1.8(-) / 1.0.1 / nil }
+local temp_psychVersion = version
+local temp_disableCheckVer = getModSetting("disableCheckVer") if temp_disableCheckVer == nil then temp_disableCheckVer = false end
+if not temp_disableCheckVer then
+	local success,result =
+		pcall(function()
+			local opponent =
+				getProperty(
+					'cpuControlled_opponent'
+				)
+			return opponent ~= nil
+		end)
+	temp_isNFE = success and result
 
-local Key = readJson("data/keys.json") or {}
+	if temp_isNFE == false then
+		UnsentToolbox_NFEVersion = nil
+	elseif temp_psychVersion == "0.6.3" then
+		UnsentToolbox_NFEVersion = "1.0.1"
+	elseif temp_psychVersion == "0.7.3" and not (type(readJson) == "function") then
+		UnsentToolbox_NFEVersion = "1.1.8"
+	else
+		UnsentToolbox_NFEVersion = "1.2.0"
+	end
 
+	pcall(runHaxeCode, 'trace("[Unsent\'s Toolbox] Current Version About: ' .. tostring(UnsentToolbox_NFEVersion) .. '");')
+end
+local function safeReadJson(value)
+	if UnsentToolbox_NFEVersion == "1.2.0" then
+		if not (type(readJson) == "function") then return nil end
+		return readJson(value)
+	else
+		return nil
+	end
+end
+if temp_isNFE == false and not temp_disableCheckVer then
+	error("[Unsent's ToolBox]\nIncorrect engine version! PLEASE USE NovaFlare Engine!",0)
+elseif temp_isNFE and type(readJson) ~= "function" and not temp_disableCheckVer then
+	--error("[Unsent's ToolBox]\nYour NovaFlare Engine version is too old (below 1.2.0).\nPlease update to a newer version!",0)
+	runHaxeCode([[
+		FlxG.stage.window.alert(
+			"Your NovaFlare Engine version is too old (below 1.2.0). Please update to a newer version!",
+			"Unsent's Toolbox - Engine Version ERROR!"
+		);
+	]])
+end
+
+local Key=safeReadJson("data/keys.json") or {Toggle={Botplay="ONE",Practice="TWO",FakeBotplayModifier="SHIFT",Reset="R",Increase="THREE",Decrease="FOUR",SoftPause1="SIX",SoftPause2="Disabled",Print="FIVE"},Modifier={SoftPauseModifierAndExit="SPACE",Control="CONTROL",Alt="ALT",Shift="SHIFT"}}
 Key.Toggle = Key.Toggle or {}
 Key.Modifier = Key.Modifier or {}
 
-local languages = readJson("data/language.json") or {}
+local languages = safeReadJson("data/language.json") or {["###GloBal_Language"]={Language_ReadError="Language Setting Read ERROR! 语言设置加载错误！"},English={Language_Name="English (Read Language File ERROR!)",Language_Current="Current Language",Enable="Enable",Disable="Disable",Enabled="Enabled",Disabled="Disabled",ModSetting_ReadError="ERROR: Failed to read Toolbox Mod Setting: {1} (Value is Nil),Will Use Default Value : {2}",FakeBotplay_ON="Fake Botplay: ON",FakeBotplay_OFF="Fake Botplay: OFF",Botplay_ON="Botplay: ON",Botplay_OFF="Botplay: OFF",Practice_ON="Practice Mode: ON",Practice_OFF="Practice Mode: OFF",SoftPause_ON="Soft Pause: ON",SoftPause_OFF="Soft Pause: OFF",SoftPause_Enable="Soft Pause: Enabled",SoftPause_Text="SOFT PAUSE\nPress {1} to Exit Soft Pause",SoftResume_Error="Soft Resume Error: {1}",SoftPause_Timeout="Soft Pause initialization timed out after 3 seconds!",Advanced_Debug="Advanced Debug Mode",AD_Playback_Rate="PlayBack Rate",AD_Scroll_Speed="Scroll Speed",AD_Practice="Practice Mode",AD_Botplay="Botplay",AD_BPM="BPM",AD_Song_Start="Song Start",AD_Difficulty="Difficulty",Playback_Info="Playback Rate {1} : {2} | Scroll Speed : {3} | Song Speed : {4}",Scroll_Info="Scroll Speed {1} : {2} | Playback Rate : {3} | Song Speed : {4}",Playback_Reset="Playback Rate RESET : {1} | Scroll Speed : {2} | Song Speed : {3}",Scroll_Reset="Scroll Speed RESET : {1} | Playback Rate : {2} | Song Speed : {3}",Health_Reset="Health RESET : 50%",Health_Info="Health {1} : {2}",Warning_Version="WARNING: Engine Version Check Disabled!",Warning_Debug="Debug output cannot be disabled while this option is enabled.",Error_Engine="ERROR: NovaFlare Engine required!",Error_Stop="Unsent's ToolBox stopped.",Developer_Loaded="Unsent's ToolBox Loaded",Warning_NoReset="WARNING: No Reset is disabled!",Warning_EnableNoReset="Please enable No Reset before using \"Reset Property\"!",Botplay_Disable="Please turn OFF Botplay first!",Toolbox_Print_ON="Toolbox Print: ON"}}
 local language = getModSetting("language")
 
 if language == nil then
 	local text =
-		"[Unsent's ToolBox] Error : "..(languages["###GloBal_Language"] or {})["Language_ReadError"]
-		or "Language_ReadError"
+		"[Unsent's ToolBox] Error : "
+		..((languages["###GloBal_Language"] or {}).Language_ReadError or "Language_ReadError")
 	debugPrint(text,"red")
 	local message = tostring(text)
 		:gsub("\\", "\\\\")
@@ -285,7 +329,7 @@ end
 
 
 
-local function isNovaFlare()
+--[[local function isNovaFlare()
 
 	local success,result =
 		pcall(function()
@@ -301,7 +345,7 @@ local function isNovaFlare()
 
 
 	return success and result
-end
+end]]--
 
 
 
@@ -766,7 +810,9 @@ function onCreate()
 			"developerMode",
 			false
 		)
-
+	if temp_isNFE == false then
+		developerMode = false
+	end
 	showcaseMode =
 		getSetting(
 			"showCaseMode",
@@ -823,44 +869,6 @@ function onCreate()
 	if showcaseMode then
 		return
 	end
-
-
-
-	if disableCheckVer then
-
-		devWarn(
-			getLang(false,
-				"Warning_Version"
-			)
-		)
-
-		devWarn(
-			getLang(false,
-				"Warning_Debug"
-			)
-		)
-
-
-	elseif not isNovaFlare() then
-
-
-		devError(
-			getLang(false,
-				"Error_Engine"
-			)
-		)
-
-		devError(
-			getLang(false,
-				"Error_Stop"
-			)
-		)
-
-
-		return
-
-	end
-
 
 
 	if not developerMode then

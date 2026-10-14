@@ -261,7 +261,7 @@
         "format": "   %v",
         "type": "float",
         "description": "Controls how quickly the displayed health follows the target health.",
-        "value": 12,
+        "value": 8,
         "decimals": 1,
         "min": 1,
         "max": 30,
@@ -294,7 +294,7 @@
 		"format": "  %v",
 		"type": "float",
 		"description": "Health reduced by a normal opponent note when Opponent Health Drain is enabled.",
-		"value": 0.020,
+		"value": 0.018,
 		"decimals": 3,
 		"min": 0,
 		"max": 0.1,
@@ -623,6 +623,13 @@
         "description": "If enabled, the script will no longer check whether the runtime environment is NovaFlare Engine. Under normal circumstances, \n*DO NOT* enable this option.",
         "value": false
     },
+	{
+		"save": "hideDebugPrints",
+		"name": "Hide All DebugPrints",
+		"type": "bool",
+		"description": "When enabled, all Debug prints will be hidden.",
+		"value": false
+	},
 	{
 		"save": "muse",
 		"name": "MuseDash",

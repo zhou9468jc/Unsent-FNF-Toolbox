@@ -61,7 +61,16 @@
 
 		"Botplay_Disable": "请先关闭 Botplay！",
 
-		"Toolbox_Print_ON": "工具箱输出：开启"
+		"Toolbox_Print_ON": "工具箱输出：开启",
+		
+		"QuickCommand_CannotLoadJson":"QuickCommand：无法加载 JSON 文件",
+		"QuickCommand_Loaded":"QuickCommand：已加载 {1} 个快捷指令",
+		"QuickCommand_RunHaxeUnavailable":"QuickCommand：runHaxeCode 不可用",
+		"QuickCommand_LuaError":"QuickCommand Lua 错误：{1}",
+		"QuickCommand_LuaRuntimeError":"QuickCommand Lua 运行错误：{1}",
+		"QuickCommand_HScriptError":"QuickCommand HScript 错误：{1}",
+		"QuickCommand_UnknownType":"QuickCommand：未知代码类型：{1}",
+		"QuickCommand_Execute":"QuickCommand：执行：{1}"
 	},
 	"English": {
 		"Language_Name": "English",
@@ -119,7 +128,16 @@
 
 		"Botplay_Disable": "Please turn OFF Botplay first!",
 
-		"Toolbox_Print_ON": "Toolbox Print: ON"
+		"Toolbox_Print_ON": "Toolbox Print: ON",
+		
+		"QuickCommand_CannotLoadJson":"QuickCommand : Cannot load json",
+		"QuickCommand_Loaded":"QuickCommand : Loaded {1} commands",
+		"QuickCommand_RunHaxeUnavailable":"QuickCommand : runHaxeCode unavailable",
+		"QuickCommand_LuaError":"QuickCommand Lua Error : {1}",
+		"QuickCommand_LuaRuntimeError":"QuickCommand Lua Runtime Error : {1}",
+		"QuickCommand_HScriptError":"QuickCommand HScript Error : {1}",
+		"QuickCommand_UnknownType":"QuickCommand : Unknown type : {1}",
+		"QuickCommand_Execute":"QuickCommand : Execute : {1}"
 	},
 	"老牧师？？？": {
 		"917813":"这是一个隐藏语言自己研究怎么装。",

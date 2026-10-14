@@ -4,10 +4,9 @@ Did you know: there is a surprise in the data folder of the Toolbox's source cod
 919191919191919191919191919191919191919191919191919191919191
 787878787878787878787878787878787878787878787878787878787878
 BeiHu, how did you make the engine you made?!
-Give me back my window borders!!!
 Congratulations to NovaFlare for getting updated again!
 It is known: NovaFlare has countless bugs.
-Did you know: the Toolbox's hotkeys can be changed by yourself. (provided that you can understand Lua)
+Did you know: The toolbox shortcuts can be customized. (If you only play with mods, don't bother changing them.)
 MVP of this round: ChatGPT.
 Notepad++ is so useful!!! (screaming)
 If you find Boyfriend constantly doing the "Hey" pose and unable to stop, it means your engine's mod settings are not working properly.
@@ -18,7 +17,7 @@ Haxe isn't something ordinary people can understand.
 debugPrint("[Unsent's Toolbox] Script Don't Running.")
 You must be a man, and if you're not, then you're a woman! (a philosophical question no one has been able to solve for 78 years)
 [Unwebt's Tolbox} Funk Myaekf
-AI：debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction onUpdate()
+AI：debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n ... \n\nfunction onUpdate()
 Question: Which song in NF has the lowest Rate rating?
 deprintBug("[Unsent's Toolbox] Am I supposed to owe you? You made me run it?") (Crash)
 Microsoft Windows: NovaFlare Engine has stopped working

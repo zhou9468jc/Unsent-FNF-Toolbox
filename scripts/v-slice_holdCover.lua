@@ -596,7 +596,7 @@ local function startCover(
 	direction,
 	sustainLength
 )
-	if not sustainLength or sustainLength <= 100 then
+	if not sustainLength or sustainLength <= 150 then
 		return
 	end
 
@@ -623,14 +623,24 @@ local function startCover(
 	playAnim(tag, 'start', true)
 
 	active[direction] = true
-
-	local rate = getProperty('playbackRate')
+	
+	local rate =
+		getProperty('playbackRate')
 
 	if type(rate) ~= 'number' or rate <= 0 then
 		rate = 1
 	end
+	
+	local startTime = 1 / 24
 
-	local duration = (sustainLength / 1000) * 0.9 / rate
+	local duration =
+		(sustainLength / 1000 / rate)
+		- startTime
+
+	if duration < 0 then
+		duration = 0
+	end
+
 	runTimer(timerName, duration)
 end
 

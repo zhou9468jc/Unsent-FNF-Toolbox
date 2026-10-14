@@ -4,10 +4,9 @@ local function getSetting(k,d)if getModSetting then local s,v=pcall(getModSettin
 919191919191919191919191919191919191919191919191919191919191
 787878787878787878787878787878787878787878787878787878787878
 北狐你看看你做的引擎！
-还我窗口边框！！！
 恭喜NovaFlare打赢复活赛！
 已知：NovaFlare的bug有无数个。
-你知道吗：工具箱的快捷键是可以自己改的。（前提是能看懂lua）
+你知道吗：工具箱的快捷键是可以自己改的。（只会玩模组还是别改了）
 本局MVP：ChatGPT。
 Notepad++太好用了！！！（尖叫）
 如果你发现bf一直在比耶并且停不了说明你的引擎读取模组设置不正常。
@@ -18,7 +17,7 @@ Haxe不是一般人能弄的。
 debugPrint("[Unsent's Toolbox] Script Don't Running.")
 你肯定是男的，如果不是的话就是女的！（哲学 78年无人能解）
 [Unwebt's Tolbox} Funk Myaekf
-AI：debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction onUpdate()
+AI：debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n ... \n\nfunction onUpdate()
 提问：NF里Rate评分最低的歌曲是哪一首？
 deprintBug("[Unsent's Toolbox] 我该你的你让我运行") （崩）
 Microsoft Windows：NovaFlare Engine已停止工作
@@ -28,7 +27,7 @@ runHaxeCode("/tellraw ('§l§eWarning','yellow')")
 最新报道：“删除NovaFlare Engine.exe会导致你无法启动游戏。”
 你知道吗：修改NF引擎目录里的funkin\chain.json可以快速切换运行模式。
 棱纸是：挡泥哪期受寄时尼就纳气了瘦鸡。
-tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:tags:
+Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: Tags: 
 提问：NovaFlare引擎的所有作者都是谁？
 当你怀疑别人用工具箱开挂时让他打开trace。
 ä½ ä¸­è®¡äº†ï¼šè¿™é‡Œä»€ä¹ˆéƒ½æ²¡æœ‰

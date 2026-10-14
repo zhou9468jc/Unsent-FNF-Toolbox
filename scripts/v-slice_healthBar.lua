@@ -369,7 +369,7 @@ function onCreate()
 
 	smoothSpeed = readSetting(
 		'healthSmoothSpeed',
-		12
+		8
 	)
 
 	sustainHealth = readSetting(
@@ -384,7 +384,7 @@ function onCreate()
 
 	opponentPush = readSetting(
 		'healthOpponentPushAmount',
-		0.020
+		0.018
 	)
 
 	opponentPushSustain = readSetting(

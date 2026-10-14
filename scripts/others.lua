@@ -270,7 +270,16 @@ function onSpawnNote(index)
 	end
 end
 
-
+--================================================
+--Hide Debug Prints
+--================================================
+local HDP_enable = getModSetting("hideDebugPrints")
+if HDP_enable == nil then HDP_enable = false end
+function HDP_UpdatePost()
+	if HDP_enable == true then
+		debugPrint("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	end
+end
 --================================================
 --Main
 --================================================
@@ -297,7 +306,7 @@ function onUpdatePost(elapsed)
 
 	updateMissLimitText()
 	scoreTextColorUpdate(elapsed)
-
+	HDP_UpdatePost()
 end
 
 
