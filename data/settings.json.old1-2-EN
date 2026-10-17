@@ -446,6 +446,7 @@
         "value": "Disable",
         "options": [
             "Disable",
+			"Follow Rank",
             "Follow Player",
             "Follow Op.",
             "Rainbow",
@@ -479,6 +480,25 @@
             "Silver"
         ]
     },
+	{
+		"save": "unsentBottomHUDBackground",
+		"name": "Bottom HUD Background",
+		"type": "bool",
+		"description": "Enable or disable the bottom HUD background",
+		"value": true
+	},
+	{
+		"save": "unsentBottomHUDBackgroundAlpha",
+		"name": "Bottom HUD Background Alpha",
+		"type": "percent",
+		"description": "Controls the bottom HUD background opacity",
+		"value": 0.5,
+		"min": 0,
+		"format":"%v%",
+		"max": 1,
+		"step": 0.05,
+		"decimals": 2
+	},
     {
         "save": "blindPlay",
         "name": "   Blind Play",

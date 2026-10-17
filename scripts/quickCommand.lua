@@ -10,7 +10,7 @@ local loaded = false
 
 local DefaultLang =
 {
-	QuickCommand_CannotLoadJson = "QuickCommand : Cannot load json",
+	QuickCommand_CannotLoadJson = "QuickCommand : Cannot load json\nQuickCommand : Language Read ERROR!",
 	QuickCommand_Loaded = "QuickCommand : Loaded {1} commands",
 	QuickCommand_RunHaxeUnavailable = "QuickCommand : runHaxeCode unavailable",
 	QuickCommand_LuaError = "QuickCommand Lua Error : {1}",

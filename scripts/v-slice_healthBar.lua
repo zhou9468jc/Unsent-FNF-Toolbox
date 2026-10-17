@@ -682,6 +682,7 @@ function onUpdatePost()
 				end
 
 				if not externalChanged then
+					runHaxeCode('trace("[Unsent\'s toolbox] On Step '..curStep..' : No Other Script Change Health")')
 					targetHealth =
 						math.max(
 							0.25,

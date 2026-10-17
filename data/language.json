@@ -2,7 +2,7 @@
 	"###GloBal_Language":{
 		"Language_ReadError":"Language Setting Read ERROR! 语言设置加载错误！"
 	},
-	"中文": {
+	"Chinese": {
 		"Language_Name": "中文",
 		"Language_Current": "当前语言",
 		"ON":"开启",
