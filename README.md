@@ -85,6 +85,21 @@ Unsent's Toolbox 是一款专为 **NovaFlare Engine 1.2.x** 打造的调试工�
 
 
 # 📃 附录
+## 🖼️ 图集（图片来自Unsent's Toolbox在NF1.2.1-HF2实机演示）
+
+<img width="1599" height="849" alt="image" src="https://github.com/user-attachments/assets/6fef71fb-b8dd-4a35-bcbb-a27a2df9a0ba" />
+
+<img width="1599" height="850" alt="image" src="https://github.com/user-attachments/assets/a8c57d99-0bcc-4cfb-beb1-64269b72ae9c" />
+
+<img width="1599" height="850" alt="image" src="https://github.com/user-attachments/assets/33e7252b-c6eb-4e79-bad6-3586bcf28e23" />
+
+<img width="1599" height="850" alt="image" src="https://github.com/user-attachments/assets/1612a8e0-db88-4bc6-a412-fc5563b715b4" />
+
+<img width="1599" height="849" alt="image" src="https://github.com/user-attachments/assets/3e9e9575-1cb6-4cb5-b13b-a7a5c1bb9a50" />
+
+<img width="1599" height="852" alt="image" src="https://github.com/user-attachments/assets/f8c92b88-6bcc-4f6e-aa11-b3a7f709ea60" />
+
+
 ## ⚡ Quick Command 编辑说明
 
 Quick Command（快捷命令）系统允许用户通过自定义 JSON 配置快捷键，并在按下对应按键时执行指定的 Lua 或 HScript 代码。
@@ -335,6 +350,19 @@ Starting on **September 24, 2026**, this project is distributed under the **MIT 
 Author: **Unsent / 难寄期许**
 
 # 📃 Appendix
+## 🖼️ Gallery (Images captured from Unsent's Toolbox running in NF 1.2.1-HF2)
+
+<img width="1599" height="849" alt="image" src="https://github.com/user-attachments/assets/6fef71fb-b8dd-4a35-bcbb-a27a2df9a0ba" />
+
+<img width="1599" height="850" alt="image" src="https://github.com/user-attachments/assets/a8c57d99-0bcc-4cfb-beb1-64269b72ae9c" />
+
+<img width="1599" height="850" alt="image" src="https://github.com/user-attachments/assets/33e7252b-c6eb-4e79-bad6-3586bcf28e23" />
+
+<img width="1599" height="850" alt="image" src="https://github.com/user-attachments/assets/1612a8e0-db88-4bc6-a412-fc5563b715b4" />
+
+<img width="1599" height="849" alt="image" src="https://github.com/user-attachments/assets/3e9e9575-1cb6-4cb5-b13b-a7a5c1bb9a50" />
+
+<img width="1599" height="852" alt="image" src="https://github.com/user-attachments/assets/f8c92b88-6bcc-4f6e-aa11-b3a7f709ea60" />
 
 ## ⚡ Quick Command Editing Guide
 
