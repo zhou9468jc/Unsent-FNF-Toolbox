@@ -246,27 +246,26 @@ function updateRestartProgressBar():Void {
 }
 
 // ===== 执行软重启 =====
+// ===== 重启整个游戏 =====
 function performSoftRestart():Void {
 	if (restarting)
 		return;
 
 	restarting = true;
-	waitingForTitleRestart = true;
+	restartHoldTime = 0;
 
+	// 清理进度条及其独立摄像机
 	clearRestartUI();
 
+	// 重置标题状态，确保启动流程重新初始化
 	TitleState.initialized = false;
 	TitleState.closedState = false;
 
-	FlxG.sound.music.fadeOut(0.3);
+	// 淡出音乐，然后重启整个游戏
+	if (FlxG.sound.music != null)
+		FlxG.sound.music.stop();
 
-	FlxG.camera.fade(
-		FlxColor.BLACK,
-		0.5,
-		false,
-		FlxG.resetGame,
-		false
-	);
+	FlxG.resetGame();
 }
 
 // ===== 每帧更新 =====
