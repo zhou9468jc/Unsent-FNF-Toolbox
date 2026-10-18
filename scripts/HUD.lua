@@ -1,5 +1,6 @@
 -- ============================================================
 -- Unsent - HUD
+-- 写屎山代码，享屎山人生
 -- ============================================================
 local bottomBGEnabled = getModSetting('unsentBottomHUDBackground')
 local showcase = getModSetting('showCaseMode')
@@ -96,143 +97,78 @@ local function shouldKeepFC(fc)
     return nil
 end
 
-function onSpawnNote(id, direction, noteType, isSustainNote)
-    if isSustainNote then
-        setPropertyFromGroup('notes', id, 'alpha', 1)
-        setPropertyFromGroup('notes', id, 'multAlpha', 1)
-    end
-end
-
 -- ============================================================
 -- UPDATE CUSTOM RATING AND SCORE TEXT
 -- ============================================================
 local function updateCustomRating()
     if not enableCustomRating or not getProperty('scoreTxt.visible') then return end
-
     local text = getProperty('scoreTxt.text')
     if type(text) ~= 'string' or text == '' then return end
 
-    -- Chinese字体
+    -- 中文字体
     if language == 'Chinese' then
         setTextFont('scoreTxt', 'unsentScoreText.ttf')
-
         if not customRatingFontSizeSet then
             customRatingOriginalFontSize = tonumber(getProperty('scoreTxt.size')) or 16
             setTextSize('scoreTxt', customRatingOriginalFontSize + 4)
             customRatingFontSizeSet = true
         end
     elseif customRatingFontSizeSet then
-        if customRatingOriginalFontSize then
-            setTextSize('scoreTxt', customRatingOriginalFontSize)
-        end
+        if customRatingOriginalFontSize then setTextSize('scoreTxt', customRatingOriginalFontSize) end
         customRatingFontSizeSet = false
     end
 
-    -- 获取当前统计数据
+    -- 仅识别 NFE HUD 的统计格式；其他引擎的文本不由本脚本改写
+    local isNFEText = text:match('^NPS:%s*') ~= nil
+        and text:find('|', 1, true) ~= nil
+        and (text:find('准确率:', 1, true) ~= nil
+            or text:find('Accuracy:', 1, true) ~= nil)
+    if not isNFEText then return end
+
     local ratingPercent = math.floor((tonumber(getProperty('ratingPercent')) or 0) * 10000 + 0.5) / 100
     local score = tonumber(getProperty('songScore')) or 0
     local misses = tonumber(getProperty('songMisses')) or 0
     local missLimit = tonumber(getModSetting('missLimit'))
-
-    -- 格式化准确率：99.00 -> 99，99.50 -> 99.5
-    local accuracyText = string.format('%.2f', ratingPercent)
-        :gsub('0+$', '')
-        :gsub('%.$', '')
-
-    -- 失误上限文本
+    local accuracyText = string.format('%.2f', ratingPercent):gsub('0+$', ''):gsub('%.$', '')
     local missText = ''
-    if missLimit and missLimit ~= -1 then
-        missText = '/' .. tostring(missLimit)
-    end
+    if missLimit and missLimit ~= -1 then missText = '/' .. tostring(missLimit) end
 
-    local before, finalPart
-    local fc
-
-    if language == 'Chinese' then
-        -- 提取 NPS 前缀，避免重复保留旧统计文本
-        before = text:match('^(NPS:.-|)')
-
-        if not before then
-            before = text:match('^(.-|)')
-        end
-
-        -- 兼容原始文字中已有的 FC/AP 标记
-        finalPart = text:match('%s*(%b())')
-        if finalPart then
-            fc = finalPart:match('^%((.-)%)')
-        end
-    else
-        -- 保留 NF 原版英文统计文字，只提取评级之前的内容
-        -- 去除本脚本上一次添加的 Rank，避免重复
-        local originalText = text:gsub('%s*Rank:%s*.*$', '')
-        before, finalPart = originalText:match('^(.*|)%s*(.*)$')
-
-        if finalPart then
-            fc = finalPart:match('^%((.-)%)%s*')
-        end
-    end
-
+    -- 移除脚本上一次添加的自定义评级，保留 NPS 前缀
+    local before = text:match('^(NPS:.-%|)')
     if not before then return end
 
-    -- 判断 FC / AP
-    if (ratingPercent >= 1 and misses <= 0) or fc == 'PFC' then
-        fc = 'AP'
-    end
-
-    if fc == nil and misses <= 0 then
-        fc = ratingPercent >= 1 and 'AP' or 'FC'
-    end
-
-    fc = shouldKeepFC(fc)
+    -- FC/AP 完全由 Toolbox 根据实时数据判定，不读取 NFE 原有标记
+    local fc = nil
+    if misses <= 0 then 
+		if customRating == 'N/A' then
+			fc = nil
+		elseif ratingPercent >= 100 then
+			fc = 'AP' 
+		else
+			fc = 'FC'
+		end
+	end
     customRating = getCustomRating()
 
     local newText
-
     if language == 'Chinese' then
-        -- Chinese：直接在替换文字时处理失误上限
         newText = before
             .. ' 分数: ' .. score
             .. ' | 失误: ' .. misses .. missText
             .. ' | 准确率: ' .. accuracyText .. '%'
+            .. ' | 评级: ' .. customRating
+        if fc then newText = newText .. ' (' .. fc .. ')' end
     else
-        -- 英文：以 NF 原版文字为基础，只修改 Misses 字段
+        -- NFE 英文 HUD：保留原始 NPS，使用引擎实时统计重建其余字段
         newText = before
-
-        if missText ~= '' then
-            local replaced = false
-
-            newText = newText:gsub('(Misses:%s*)[^|]*', function(prefix)
-                replaced = true
-                return prefix .. misses .. missText .. ' '
-            end, 1)
-
-            -- 如果原版文字中没有 Misses 字段，则不额外重建整段英文 HUD
-            -- 避免改变 NF 原本的文字格式
-        end
+            .. ' Score: ' .. score
+            .. ' | Misses: ' .. misses .. missText
+            .. ' | Accuracy: ' .. accuracyText .. '%'
+            .. ' Rank: ' .. customRating
+        if fc then newText = newText .. ' (' .. fc .. ')' end
     end
 
-    -- 添加自定义评级
-    if language == 'Chinese' then
-        if customRating == 'N/A' then
-            newText = newText .. ' | 评级: N/A'
-        elseif fc then
-            newText = newText .. ' | 评级: ' .. customRating .. ' (' .. fc .. ')'
-        else
-            newText = newText .. ' | 评级: ' .. customRating
-        end
-    else
-        if customRating == 'N/A' then
-            newText = newText .. ' Rank: N/A'
-        elseif fc then
-            newText = newText .. ' Rank: ' .. customRating .. ' (' .. fc .. ')'
-        else
-            newText = newText .. ' Rank: ' .. customRating
-        end
-    end
-
-    if newText ~= text then
-        setProperty('scoreTxt.text', newText)
-    end
+    if newText ~= text then setProperty('scoreTxt.text', newText) end
 end
 
 -- ============================================================

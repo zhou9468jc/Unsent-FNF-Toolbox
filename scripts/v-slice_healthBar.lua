@@ -283,6 +283,13 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	})
 end
 
+function onSpawnNote(id, direction, noteType, isSustainNote)
+    if isSustainNote and originalHealthBar then
+        setPropertyFromGroup('notes', id, 'alpha', 1)
+        setPropertyFromGroup('notes', id, 'multAlpha', 1)
+    end
+end
+
 -- ============================================================
 -- Update Post
 -- ============================================================

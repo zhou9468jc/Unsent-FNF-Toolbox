@@ -138,6 +138,7 @@ local function getSetting(key, default)
 	if getModSetting then
 		local ok, val = pcall(getModSetting, key)
 		if ok and val ~= nil then
+			debugPrint(key..val)
 			return val
 		end
 	end
@@ -147,7 +148,7 @@ local function getSetting(key, default)
 		getLang(false, "ModSetting_ReadError", key, default),
 		"red"
 	)
-
+	debugPrint(key..default)
 	return default
 end
 local function onCreateTestCodes()
@@ -877,11 +878,6 @@ function onCreate()
             false
         )
 	
-	enablePauseMus =
-        getSetting(
-            'pauseMusic',
-            false
-        )
 
 	if showcaseMode then
 		return
@@ -890,10 +886,6 @@ function onCreate()
 
 	if not developerMode then
 		return
-	end
-	
-	if enablePauseMus == true then
-		addHScript("extraScript/randomPauseMusic.hx",true)
 	end
 
 

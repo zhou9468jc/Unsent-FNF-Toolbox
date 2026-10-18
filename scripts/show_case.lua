@@ -64,59 +64,52 @@ function onUpdate(elapsed)
 end
 
 function savePrefs()
-	if oldPrefs.saved then
-		return
-	end
-
-	oldPrefs.saved=true
+	if oldPrefs.saved then return end
+	oldPrefs.saved = true
 
 	runHaxeCode([[
-		game.variables.set(
-			"showcase_keyboardViewer",
-			ClientPrefs.data.keyboardViewer
-		);
+		game.variables.set("showcase_keyboardViewer", ClientPrefs.data.keyboardViewer);
+		game.variables.set("showcase_judgementCounter", ClientPrefs.data.judgementCounter);
+		game.variables.set("showcase_showRating", ClientPrefs.data.showRating);
+		game.variables.set("showcase_showComboNum", ClientPrefs.data.showComboNum);
+		game.variables.set("showcase_showFPS", ClientPrefs.data.showFPS);
+		game.variables.set("showcase_fpsViewerVisible", Main.fpsVar != null ? Main.fpsVar.visible : ClientPrefs.data.showFPS);
 
-		game.variables.set(
-			"showcase_judgementCounter",
-			ClientPrefs.data.judgementCounter
-		);
+		ClientPrefs.data.keyboardViewer = false;
+		ClientPrefs.data.judgementCounter = false;
+		ClientPrefs.data.showRating = false;
+		ClientPrefs.data.showComboNum = false;
+		ClientPrefs.data.showFPS = false;
 
-		game.variables.set(
-			"showcase_showRating",
-			ClientPrefs.data.showRating
-		);
+		if (Main.fpsVar != null)
+			Main.fpsVar.visible = false;
+		game.variables.set("showcase_watermarkVisible", Main.watermark != null ? Main.watermark.visible : false);
+		game.variables.set("showcase_showWatermark", ClientPrefs.data.showWatermark);
 
-		game.variables.set(
-			"showcase_showComboNum",
-			ClientPrefs.data.showComboNum
-		);
-
-		ClientPrefs.data.keyboardViewer=false;
-		ClientPrefs.data.judgementCounter=false;
-		ClientPrefs.data.showRating=false;
-		ClientPrefs.data.showComboNum=false;
+		ClientPrefs.data.showWatermark = false;
+		if (Main.watermark != null)
+			Main.watermark.visible = false;
 	]])
 end
 
 function restorePrefs()
-	if not oldPrefs.saved then
-		return
-	end
-
-	oldPrefs.saved=false
+	if not oldPrefs.saved then return end
+	oldPrefs.saved = false
 
 	runHaxeCode([[
-		ClientPrefs.data.keyboardViewer =
-			game.variables.get("showcase_keyboardViewer");
+		ClientPrefs.data.keyboardViewer = game.variables.get("showcase_keyboardViewer");
+		ClientPrefs.data.judgementCounter = game.variables.get("showcase_judgementCounter");
+		ClientPrefs.data.showRating = game.variables.get("showcase_showRating");
+		ClientPrefs.data.showComboNum = game.variables.get("showcase_showComboNum");
+		ClientPrefs.data.showFPS = game.variables.get("showcase_showFPS");
 
-		ClientPrefs.data.judgementCounter =
-			game.variables.get("showcase_judgementCounter");
+		if (Main.fpsVar != null)
+			Main.fpsVar.visible = game.variables.get("showcase_fpsViewerVisible");
+			
+		ClientPrefs.data.showWatermark = game.variables.get("showcase_showWatermark");
 
-		ClientPrefs.data.showRating =
-			game.variables.get("showcase_showRating");
-
-		ClientPrefs.data.showComboNum =
-			game.variables.get("showcase_showComboNum");
+		if (Main.watermark != null)
+			Main.watermark.visible = game.variables.get("showcase_watermarkVisible");
 	]])
 end
 
