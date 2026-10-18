@@ -36,7 +36,9 @@ local enableIndicator =
 if enableIndicator == nil then
 	enableIndicator = true
 end
-
+if getModSetting('showCaseMode') == true then 
+	enableIndicator = false
+end
 
 -- ============================================================
 -- Ghost Tap Settings

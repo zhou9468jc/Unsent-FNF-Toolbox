@@ -261,7 +261,7 @@
         "format": "   %v",
         "type": "float",
         "description": "Controls how quickly the displayed health follows the target health.",
-        "value": 8,
+        "value": 20,
         "decimals": 1,
         "min": 1,
         "max": 30,

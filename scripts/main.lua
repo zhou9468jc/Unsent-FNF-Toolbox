@@ -31,9 +31,19 @@ if not temp_disableCheckVer then
 end
 local function safeReadJson(value)
 	if UnsentToolbox_NFEVersion == "1.2.0" then
-		if not (type(readJson) == "function") then return nil end
 		return readJson(value)
 	else
+		local content = getTextFromFile(value)
+		if content == nil then return nil end
+
+		local success, result = pcall(function()
+			return json.decode(content)
+		end)
+
+		if success then
+			return result
+		end
+
 		return nil
 	end
 end
@@ -175,6 +185,7 @@ local speedInitialized = false
 local disableBotplay = false
 local advancedDebugMode = false
 local showcaseMode = false
+local enablePauseMus = false
 
 local function haxeTrace(text)
     local message = tostring(text)
@@ -865,6 +876,12 @@ function onCreate()
             'originalHealthBar',
             false
         )
+	
+	enablePauseMus =
+        getSetting(
+            'pauseMusic',
+            false
+        )
 
 	if showcaseMode then
 		return
@@ -874,7 +891,10 @@ function onCreate()
 	if not developerMode then
 		return
 	end
-
+	
+	if enablePauseMus == true then
+		addHScript("extraScript/randomPauseMusic.hx",true)
+	end
 
 
 	scriptEnabled = true

@@ -269,10 +269,10 @@
 		"format": "   %v",
 		"type": "float",
 		"description": "Controls how quickly the displayed health follows the target health.\n调整血条缓动的速度。",
-		"value":8,
+		"value":20,
 		"decimals": 1,
 		"min": 1,
-		"max": 30,
+		"max": 50,
 		"step": 0.5,
 		"scroll": 1
 	},
@@ -318,9 +318,9 @@
 	},
 	{
 		"save": "originalHealthBar",
-		"name": "V-Slice Score Text",
+		"name": "V-Slice Health Bar",
 		"type": "bool",
-		"description": "Changes the score text style to match V-Slice.\n开启后使用V-Slice那样的分数文字样式。",
+		"description": "Changes the health bar and score text style to match V-Slice.\n开启后使用V-Slice那样的血条和分数文字样式。",
 		"value": false
 	},
 	{
@@ -553,6 +553,13 @@
 		"name": "Better Rank",
 		"type": "bool",
 		"description": "Enable better final rating.\n打开后获得更好的评级。",
+		"value": true
+	},
+	{
+		"save": "pauseMusic",
+		"name": "Enable ToolBox Pause Music",
+		"type": "bool",
+		"description": "Enable ToolBox Pause Music.\n启用工具箱的暂停音乐。",
 		"value": true
 	},
 	{

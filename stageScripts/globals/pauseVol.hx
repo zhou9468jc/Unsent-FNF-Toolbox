@@ -1,7 +1,7 @@
 // Unsent - Pause Music Position Fix
-// Target: NovaFlare Engine 1.2.1-HF
+// Target: NovaFlare Engine 1.2.1-HF2
 // Path: stageScripts/globals/pauseVol.hx
-// 功能：尝试让暂停音乐从头播放，并输出调试信息。
+// 功能：读取暂停音乐设置、固定音量，并尝试让暂停音乐从头播放。
 
 var pauseSubStateClass = Type.resolveClass("substates.PauseSubState");
 
@@ -11,21 +11,26 @@ var lastLoggedTime:Float = -1;
 var resetAttempts:Int = 0;
 var resetPending:Bool = false;
 var resetDone:Bool = false;
+var maxResetAttempts:Int = 1;
 
-var maxResetAttempts:Int = 30;
+// 获取暂停音乐设置。
+// 每次调用时读取，避免只在 HScript 初始化时读取一次。
+// 读取模组设置
+function isPauseMusicEnabled():Bool {
+    var result:Dynamic = getModSetting("pauseMusic");
+    return result == true;
+}
 
-// 读取暂停音乐对象
-function getPauseMusic():Dynamic
-{
+// 获取暂停音乐对象
+function getPauseMusic():Dynamic {
     if (pauseSubStateClass == null)
         return null;
 
     return Reflect.field(pauseSubStateClass, "pauseMusic");
 }
 
-// 读取当前暂停曲目名称
-function getPauseSongName():String
-{
+// 获取当前暂停曲目名称
+function getPauseSongName():String {
     if (pauseSubStateClass == null)
         return "";
 
@@ -33,34 +38,29 @@ function getPauseSongName():String
     return name == null ? "" : Std.string(name);
 }
 
-// 尝试重置播放位置
-function resetPauseMusic(music:Dynamic):Void
-{
+// 尝试从头播放暂停音乐
+function resetPauseMusic(music:Dynamic):Void {
     if (music == null)
         return;
 
-    try
-    {
-        music.time = 0;
+    try {
         music.pause();
-        music.play(false, 0);
         music.time = 0;
-
+        music.play(false, 0);
         trace("[Unsent] Attempted to restart pause music from 0.");
-    }
-    catch (e:Dynamic)
-    {
+    } catch (e:Dynamic) {
         trace("[Unsent] Failed to reset pause music: " + Std.string(e));
     }
 }
 
-// 全局更新：暂停菜单打开期间也会执行
-function onUpdatePost(elapsed:Float):Void
-{
+// 暂停菜单更新期间执行
+function onUpdatePost(elapsed:Float):Void {
+    if (!isPauseMusicEnabled())
+        return;
+
     var music = getPauseMusic();
 
-    if (music == null)
-    {
+    if (music == null) {
         lastMusic = null;
         lastSongName = "";
         lastLoggedTime = -1;
@@ -69,12 +69,18 @@ function onUpdatePost(elapsed:Float):Void
         resetDone = false;
         return;
     }
-	music.volume = 0.5;
+
+    // 固定暂停音乐音量
+    try {
+        music.volume = 0.5;
+    } catch (e:Dynamic) {
+        trace("[Unsent] Could not set pause music volume.");
+    }
+
     var songName = getPauseSongName();
 
-    // 对象或曲目变化时，准备重置
-    if (music != lastMusic || songName != lastSongName)
-    {
+    // 音乐对象或曲目变化时，重新开始重置流程
+    if (music != lastMusic || songName != lastSongName) {
         lastMusic = music;
         lastSongName = songName;
         lastLoggedTime = -1;
@@ -85,34 +91,27 @@ function onUpdatePost(elapsed:Float):Void
         trace("[Unsent] Detected pause music: " + songName);
     }
 
-    // 暂停音乐初始化期间，多次尝试重置。
-    // 如果引擎随后再次覆盖播放位置，就可能仍然无法生效。
-    if (resetPending && !resetDone)
-    {
+    // 初始化期间最多尝试重置五次
+    if (resetPending && !resetDone) {
         resetPauseMusic(music);
         resetAttempts++;
 
-        if (resetAttempts >= maxResetAttempts)
-        {
+        if (resetAttempts >= maxResetAttempts) {
             resetPending = false;
             resetDone = true;
             trace("[Unsent] Pause music reset attempts finished.");
         }
     }
 
-    // 输出播放位置，方便确认是否从头开始
-    try
-    {
+    // 每隔约一秒输出一次播放位置，方便调试
+    try {
         var currentTime:Float = music.time;
 
-        if (lastLoggedTime < 0 || Math.abs(currentTime - lastLoggedTime) >= 1000)
-        {
+        if (lastLoggedTime < 0 || Math.abs(currentTime - lastLoggedTime) >= 1000) {
             lastLoggedTime = currentTime;
-            trace("[Unsent] Pause music time: " + currentTime + " / " + music.length);
+            // trace("[Unsent] Pause music time: " + currentTime + " / " + music.length);
         }
-    }
-    catch (e:Dynamic)
-    {
+    } catch (e:Dynamic) {
         trace("[Unsent] Could not read pause music time.");
     }
 }

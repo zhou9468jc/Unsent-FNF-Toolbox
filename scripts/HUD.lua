@@ -1,7 +1,8 @@
 -- ============================================================
--- Unsent - Bottom HUD Background
+-- Unsent - HUD
 -- ============================================================
 local bottomBGEnabled = getModSetting('unsentBottomHUDBackground')
+local showcase = getModSetting('showCaseMode')
 local showCaseMode = getModSetting('showCaseMode')
 local bottomBGAlpha = tonumber(getModSetting('unsentBottomHUDBackgroundAlpha'))
 if bottomBGEnabled == nil then bottomBGEnabled = true end
@@ -14,7 +15,7 @@ local boxTag = 'unsentBottomHUDBackground'
 local imageName = 'unsentBottomHUDBackground'
 
 function onCreatePost()
-    if not bottomBGEnabled then return end
+    if (not bottomBGEnabled) or showcase==true then return end
     local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
     local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
     local x = math.floor((screenWidth - boxWidth) / 2)
@@ -26,6 +27,8 @@ function onCreatePost()
     setProperty(boxTag .. '.alpha', bottomBGAlpha)
     addLuaSprite(boxTag, false)
     setObjectOrder(boxTag, 0)
+	setProperty("iconP1.y",getProperty("iconP1.y")+8)
+	setProperty("iconP2.y",getProperty("iconP2.y")+8)
 end
 
 -- ============================================================
@@ -91,6 +94,13 @@ local function shouldKeepFC(fc)
     if fc == 'AP' or fc == 'FC' then return fc end
     if fc == 'SFC' or fc == 'GFC' or fc == 'BFC' then return 'FC' end
     return nil
+end
+
+function onSpawnNote(id, direction, noteType, isSustainNote)
+    if isSustainNote then
+        setPropertyFromGroup('notes', id, 'alpha', 1)
+        setPropertyFromGroup('notes', id, 'multAlpha', 1)
+    end
 end
 
 -- ============================================================
