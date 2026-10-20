@@ -1,6 +1,6 @@
 local enableSystem = getModSetting("2026BfGf")
 if enableSystem == nil then
-	enableSystem = false
+    enableSystem = false
 end
 
 local changedBF = false
@@ -61,7 +61,9 @@ function onUpdate()
         return
     end
 
-    if not enableSystem then return end
+    if not enableSystem then
+        return
+    end
 
     local boyfriend = getProperty('boyfriend.curCharacter') or ''
     local dad = getProperty('dad.curCharacter') or ''
@@ -79,9 +81,13 @@ function onUpdate()
         changedBF = true
     end
 
-    -- GF
+    -- GF：角色名以 no 或 hide 开头时不替换
+    local gfLower = gf:lower()
+
     if not changedGF
         and not contains(gf, 'pixel')
+        and not gfLower:match('^no')
+        and not gfLower:match('^hide')
         and (contains(gf, 'gf') or contains(gf, 'girlfriend')) then
 
         if gf ~= 'unsent-gf' then
