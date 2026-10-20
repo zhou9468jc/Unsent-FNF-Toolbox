@@ -1,0 +1,150 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				8
+			],
+			"loop": false,
+			"anim": "cheer",
+			"fps": 24,
+			"name": "cheer",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-16
+			],
+			"loop": false,
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "left",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-25
+			],
+			"loop": false,
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "down",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-1
+			],
+			"loop": false,
+			"anim": "singUP",
+			"fps": 24,
+			"name": "up",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-24
+			],
+			"loop": false,
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "right",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-2,
+				-19
+			],
+			"loop": false,
+			"anim": "sad",
+			"fps": 24,
+			"name": "sad",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-10
+			],
+			"loop": false,
+			"anim": "danceLeft",
+			"fps": 24,
+			"name": "dance left",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-10
+			],
+			"loop": false,
+			"anim": "danceRight",
+			"fps": 24,
+			"name": "dance right",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-10
+			],
+			"loop": true,
+			"anim": "hairBlow",
+			"fps": 24,
+			"name": "hair landing",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-10
+			],
+			"loop": false,
+			"anim": "hairFall",
+			"fps": 24,
+			"name": "hair landing",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-2,
+				-20
+			],
+			"loop": true,
+			"anim": "scared",
+			"fps": 24,
+			"name": "scared",
+			"indices": []
+		}
+	],
+	"taunts": [
+		"hey",
+		"hey",
+		"hey",
+		"hey"
+	],
+	"no_antialiasing": false,
+	"image": "characters/GF_Amane",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "unsent-gf",
+	"flip_x": false,
+	"healthbar_colors": [
+		200,
+		0,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

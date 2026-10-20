@@ -8,7 +8,7 @@ var pauseMusicList:Array<String> = [
     "pause/1", "pause/2", "pause/3", "pause/4", "pause/5",
     "pause/6", "pause/7", "pause/8", "pause/9", "pause/10",
     "pause/11", "pause/12", "pause/13", "pause/14", "pause/15",
-    "pause/16", "pause/17", "pause/18"
+    "pause/16", "pause/17"
 ];
 
 var lastPauseMusic:String = null;

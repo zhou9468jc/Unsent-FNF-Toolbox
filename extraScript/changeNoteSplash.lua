@@ -30,11 +30,11 @@ local function getRandomAnim(direction)
 end
 
 local function getSplashAnim(direction, noteType)
-	if noteType == 'OrangeBoneNote' or noteType == 'PapyrusNote' then
+	if noteType == 'FUCK HAXE9' or noteType == 'FUCK HAXE10' then
 		return 'vanilla splash 1 red'
-	elseif noteType == 'BendySplashNote' then
+	elseif noteType == 'FUCK HAXE8' then
 		return 'vanilla splash 1 purple'
-	elseif noteType == 'Parry Note' then
+	elseif noteType == 'FUCK HAXE7' then
 		return 'ParryFX'
 	end
 	return getRandomAnim(direction)
@@ -145,7 +145,7 @@ end
 function spawnSplash(direction, noteType)
 	if hasSplash(direction, noteType) then return end
 
-	local name = 'noteSplash' .. #splashes
+	local name = 'unsentSvsliceNoteSplash' .. #splashes
 	local file = texture
 	local scaleX = 1
 	local scaleY = 1
@@ -154,9 +154,9 @@ function spawnSplash(direction, noteType)
 	local offsetY = 85
 	local color = nil
 
-	if noteType == 'BlueBoneNote' then
+	if noteType == 'FUCK HAXE5' then
 		color = '000000'
-	elseif noteType == 'Parry Note' then
+	elseif noteType == 'FUCK HAXE6' then
 		file = 'noteSplashes/noteParry'
 		offsetX = 210
 		offsetY = 240
@@ -174,11 +174,11 @@ function spawnSplash(direction, noteType)
 	scaleObject(name, scaleX, scaleY)
 
 	-- 注册动画：随机编号 1 和 2 都需要存在于对应 XML 中
-	if noteType == 'OrangeBoneNote' or noteType == 'PapyrusNote' then
+	if noteType == 'FUCK HAXE1' or noteType == 'FUCK HAXE2' then
 		addAnimationByPrefix(name, 'anim', 'vanilla splash 1 red', speed, false)
-	elseif noteType == 'BendySplashNote' then
+	elseif noteType == 'FUCK HAXE3' then
 		addAnimationByPrefix(name, 'anim', 'vanilla splash 1 purple', speed, false)
-	elseif noteType == 'Parry Note' then
+	elseif noteType == 'FUCK HAXE4' then
 		addAnimationByPrefix(name, 'anim', 'ParryFX', speed, false)
 	else
 		for i = 1, 4 do

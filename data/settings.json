@@ -1,6 +1,14 @@
 [
 	{
 		"save": "language",
+		"name": "[Unsent's Toolbox] Settings",
+		"type": "string",
+		"description": "67676767676767676767",
+		"value": "English",
+		"options": ["English","Chinese"]
+	},
+	{
+		"save": "language",
 		"name": "Output Language",
 		"type": "string",
 		"description": "Set ToolBox output language...\n设置工具箱输出语言...",
@@ -318,9 +326,9 @@
 	},
 	{
 		"save": "originalHealthBar",
-		"name": "V-Slice Health Bar",
+		"name": "V-Slice HUD",
 		"type": "bool",
-		"description": "Changes the health bar and score text style to match V-Slice.\n开启后使用V-Slice那样的血条和分数文字样式。",
+		"description": "Changes the HUD style to match V-Slice.\n开启后使用V-Slice那样的界面。",
 		"value": false
 	},
 	{
@@ -563,6 +571,13 @@
 		"value": true
 	},
 	{
+		"save": "2026BfGf",
+		"name": "Better BF/GF Style",
+		"type": "bool",
+		"description": "When enabled, replaces BF and GF with improved sprites. If any issues occur, press 9 before the song starts to temporarily disable this feature. (Spritesheets are from the mod \"2hotBFMix2026\".)\n开启后，将 BF 和 GF 替换为改良版精灵图。如果出现问题，请在歌曲开始前按 9 暂时禁用此功能。（精灵图素材来自模组 \"2hotBFMix2026\"。）",
+		"value": false
+	},
+	{
 		"save": "titleAdvanced",
 		"name": "/!\\Advanced Settings/!\\",
 		"type": "string",
@@ -670,7 +685,7 @@
 		"name": "   Soft Restart Key :",
 		"format": "  %v",
 		"type": "string",
-		"description": "Holding it for 3 seconds on any screen will immediately soft-restart the game. If you don't need it, be sure not to set it!\n在任何界面按住3秒会立即软重启游戏，用不到千万不要设！",
+		"description": "Holding it for 3 seconds on any screen will immediately soft-restart the game. If you don't need it, be sure not to set it!(Don't use it in Playstate!)\n在任何界面按住3秒会立即软重启游戏，用不到千万不要设！\n(不要在Playstate里用！不然你会后悔的！)",
 		"value": "Disable",
 		"options": [
 			"Disable",

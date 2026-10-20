@@ -1,6 +1,6 @@
 
 -- ============================================================
--- Unsent's Health Bar
+-- Unsent's HUD
 -- Health Smoothing + V-Slice Health Bar
 -- Smooth Score Display
 -- ============================================================
@@ -109,6 +109,7 @@ end
 local function setupVSliceHealthBar()
 	if not originalHealthBar then return end
 	addLuaScript("extraScript/changeNoteSplash.lua",true)
+	addLuaScript("extraScript/RatingsVslice.lua",true)
 	setProperty('scoreTxt.visible', false)
 
 	if originalScoreCreated then return end
