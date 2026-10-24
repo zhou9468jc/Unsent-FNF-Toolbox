@@ -5,12 +5,17 @@
 	"Chinese": {
 		"Language_Name": "中文",
 		"Language_Current": "当前语言",
+		"Milk_Powder?":"选奶粉？就用中国fnf玩家精选奶粉引擎(NF)，适合中国玩家体质！",
 		"ON":"开启",
 		"OFF":"关闭",
 		"Enable":"启用",
 		"Disable":"禁用",
 		"Enabled":"已启用",
 		"Disabled":"已禁用",
+		"Version_Too_Old":"你的NF版本太低了(低于1.2.0)，脚本正在尽量运行。\n部分功能可能异常，建议升级NF版本。",
+		"Version_Too_Old_Title":"Unsent's Toolbox - 引擎版本异常! - 版本过旧",
+		"Incorrect_Engine":"引擎版本错误！请使用NF引擎！\n让我猜猜你用的是Psych Engine版本是：{1}",
+		"Incorrect_Engine_Title":"Unsent's Toolbox - 引擎版本异常! - 未运行在NF",
 		
 		"ModSetting_ReadError": "模组设置\"{1}\"读取错误(值为空)，将使用默认值:\"{2}\"",
 		
@@ -79,6 +84,11 @@
 		"Disable":"Disable",
 		"Enabled":"Enabled",
 		"Disabled":"Disabled",
+		"Version_Too_Old":"Your NovaFlare Engine version is too old (below 1.2.0). Please update to a newer version!",
+		"Version_Too_Old_Title":"Unsent's Toolbox - Engine Version ERROR! - Too Old",
+		"Incorrect_Engine":"Incorrect engine version! PLEASE USE NovaFlare Engine!\n(Psych Engine {1})",
+		"Incorrect_Engine_Title":"Unsent's Toolbox - Engine Version ERROR! - Not NovaFlare",
+		
 		"ModSetting_ReadError": "ERROR: Failed to read Toolbox Mod Setting: {1} (Value is Nil),Will Use Default Value : {2}",
 
 		"FakeBotplay_ON": "Fake Botplay: ON",
@@ -140,7 +150,7 @@
 		"QuickCommand_Execute":"QuickCommand : Execute : {1}"
 	},
 	"老牧师？？？": {
-		"917813":"这是一个隐藏语言自己研究怎么装。",
+		"91781367":"这是一个隐藏语言自己研究怎么装。",
 		"Language_Name": "中文...吗？",
 		"Language_Current": "当前语言",
 		"ON":"开启",
