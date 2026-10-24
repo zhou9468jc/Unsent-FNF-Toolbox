@@ -1,8 +1,5 @@
-
 -- ============================================================
--- Unsent's HUD
--- Health Smoothing + V-Slice Health Bar
--- Smooth Score Display
+-- Unsent's VSlice HUD
 -- ============================================================
 
 -- Settings
@@ -108,12 +105,12 @@ end
 
 local function setupVSliceHealthBar()
 	if not originalHealthBar then return end
-	addLuaScript("extraScript/changeNoteSplash.lua",true)
-	addLuaScript("extraScript/RatingsVslice.lua",true)
-	setProperty('scoreTxt.visible', false)
+
+	addLuaScript("extraScript/RatingsVslice.lua", true)
 
 	if originalScoreCreated then return end
 
+	-- 创建自定义分数文本
 	makeLuaText(originalScoreTag, 'Score: 0', 0, 0, 0)
 	setTextFont(originalScoreTag, 'origin.ttf')
 	setTextSize(originalScoreTag, 16.5)
@@ -128,25 +125,39 @@ local function setupVSliceHealthBar()
 	scoreLayerFixed = false
 end
 
+-- ============================================================
+-- Strum Movement
+-- ============================================================
+
 local strumMoved = false
+
 function onCountdownTick(cou)
 	if cou ~= 0 or strumMoved then return end
 	if not originalHealthBar then return end
+
 	for i = 0, 3 do
-		setPropertyFromGroup('strumLineNotes', i, 'x', getPropertyFromGroup('strumLineNotes', i, 'x') - 50)
+		setPropertyFromGroup(
+			'strumLineNotes', i, 'x',
+			getPropertyFromGroup('strumLineNotes', i, 'x') - 50
+		)
 	end
+
 	for i = 4, 7 do
-		setPropertyFromGroup('strumLineNotes', i, 'x', getPropertyFromGroup('strumLineNotes', i, 'x') - 40)
+		setPropertyFromGroup(
+			'strumLineNotes', i, 'x',
+			getPropertyFromGroup('strumLineNotes', i, 'x') - 40
+		)
 	end
+
+	strumMoved = true
 end
+
 -- ============================================================
 -- Smooth Score Display
 -- ============================================================
 
 local function updateVSliceHealthBar(elapsed)
 	if not originalHealthBar or not originalScoreCreated then return end
-
-	setProperty('scoreTxt.visible', false)
 
 	local realScore = getProperty('songScore') or 0
 	targetScore = realScore
@@ -188,11 +199,11 @@ end
 
 function onCreate()
 	enable = readSetting('healthSmooth', false)
-	sustainHealth = readSetting('healthSustainAmount', 0.008)
+	sustainHealth = readSetting('healthSustainAmount', 0.015)
 
 	enableOpponentPush = readSetting('healthOpponentPush', false)
-	opponentPush = readSetting('healthOpponentPushAmount', 0.018)
-	opponentPushSustain = readSetting('healthOpponentPushSustain', 0.007)
+	opponentPush = readSetting('healthOpponentPushAmount', 0.020)
+	opponentPushSustain = readSetting('healthOpponentPushSustain', 0.012)
 
 	forceOpponentPush = readSetting('healthOpponentPushForce', false)
 	originalHealthBar = readSetting('originalHealthBar', false)
@@ -212,18 +223,27 @@ function onCreate()
 	end
 end
 
-local originalAlpha = nil
 function onCreatePost()
+	if originalHealthBar then
+		if not getPropertyFromClass('PlayState', 'isPixelStage') then
+			addLuaScript('extraScript/changeNoteSplash.lua', true)
+		end
+
+		-- 将原版分数文本移出屏幕，不再隐藏它
+		local scoreTxtX = getProperty('scoreTxt.x') or 0
+		setProperty('scoreTxt.x', -screenWidth * 2 - math.abs(scoreTxtX))
+	end
+
 	if not initialized or not originalHealthBar or not originalScoreCreated then
 		return
 	end
-	if originalHealthBar then
-		local value = 10
-		setProperty('healthBar.y', getProperty('healthBar.y') + value)
-		setProperty('healthBarBG.y', getProperty('healthBarBG.y') + value)
-		setProperty('iconP1.y', getProperty('iconP1.y') + value)
-		setProperty('iconP2.y', getProperty('iconP2.y') + value)
-	end
+
+	local value = 10
+	setProperty('healthBar.y', getProperty('healthBar.y') + value)
+	setProperty('healthBarBG.y', getProperty('healthBarBG.y') + value)
+	setProperty('iconP1.y', getProperty('iconP1.y') + value)
+	setProperty('iconP2.y', getProperty('iconP2.y') + value)
+
 	updateScoreLayer()
 end
 
@@ -249,8 +269,8 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 		currentScoreScrollRate = sustainScoreScrollRate
 
 		if enableSustainReward then
-			addHealth(sustainHealth/2)
-			addHealth(sustainHealth/2) --只是看着更平滑
+			addHealth(sustainHealth / 2)
+			addHealth(sustainHealth / 2)
 
 			if not (getProperty('cpuControlled') or false) then
 				addScore(30)
@@ -267,6 +287,7 @@ end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if not enableOpponentPush then return end
+	if not enableSustainReward and isSustainNote then return end
 
 	local currentHealth = getProperty('health')
 	if currentHealth ~= nil and currentHealth < 0.25 then return end
@@ -285,10 +306,10 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function onSpawnNote(id, direction, noteType, isSustainNote)
-    if isSustainNote and originalHealthBar then
-        setPropertyFromGroup('notes', id, 'alpha', 1)
-        setPropertyFromGroup('notes', id, 'multAlpha', 1)
-    end
+	if isSustainNote and originalHealthBar then
+		setPropertyFromGroup('notes', id, 'alpha', 1)
+		setPropertyFromGroup('notes', id, 'multAlpha', 1)
+	end
 end
 
 -- ============================================================
@@ -297,7 +318,9 @@ end
 
 function onUpdatePost(elapsed)
 	if not initialized then return end
+
 	applyVSliceHealthBarColors()
+
 	-- Opponent Push Detection
 	if enableOpponentPush and not forceOpponentPush and #pendingOpponentPushes > 0 then
 		local currentHealth = clampHealth(getProperty('health') or 0)
@@ -326,17 +349,23 @@ function onUpdatePost(elapsed)
 		pendingOpponentPushes = {}
 	end
 
-	-- V-Slice Score
+	-- 自定义分数文本同步原版分数文本的显示状态和透明度
 	if not originalHealthBar or not originalScoreCreated then return end
 
 	setObjectCamera(originalScoreTag, 'hud')
+
+	local originalVisible = getProperty('scoreTxt.visible')
+	local originalAlpha = getProperty('scoreTxt.alpha')
+
+	if originalVisible == nil then originalVisible = true end
+	if originalAlpha == nil then originalAlpha = 1 end
 
 	if readSetting('showCaseMode', false) then
 		setProperty(originalScoreTag .. '.visible', false)
 		setProperty(originalScoreTag .. '.alpha', 0)
 	else
-		setProperty(originalScoreTag .. '.visible', true)
-		setProperty(originalScoreTag .. '.alpha', getProperty('scoreTxt.alpha'))
+		setProperty(originalScoreTag .. '.visible', originalVisible)
+		setProperty(originalScoreTag .. '.alpha', originalAlpha)
 	end
 end
 

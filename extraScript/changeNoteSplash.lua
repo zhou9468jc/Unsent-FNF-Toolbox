@@ -57,6 +57,9 @@ end
 -- ============================================================
 
 function onCreate()
+    for i = 0, getProperty('unspawnNotes.length') - 1 do
+        setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', true)
+    end
 	if version >= '0.7' then
 		if enableSystem then
 			splashAlpha = getPropertyFromClass('backend.ClientPrefs', 'data.splashAlpha')

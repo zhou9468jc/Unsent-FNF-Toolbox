@@ -1,7 +1,7 @@
 local fileDir = 'Rattings/'
 local fileSCL = '1.05'
 local numDir  = ''
-local numSCL  = '0.85'
+local numSCL  = '1.05'
 local tipe    = ''
 local tipe2   = ''
 local antiii  = true
@@ -28,6 +28,7 @@ function onCreatePost()
     precacheImage(fileDir..'bad'..tipe)
     precacheImage(fileDir..'good'..tipe)
     precacheImage(fileDir..'sick'..tipe)
+    precacheImage(fileDir..'marvelous'..tipe)
     for i = 0, 9 do
         precacheImage(numDir..'num'..tipe2..i)
     end
@@ -37,12 +38,12 @@ function onSongStart()
     permiteRating = (songName ~= 'name')
 
     if getPropertyFromClass('PlayState', 'isPixelStage') then
-        fileDir = 'pixelUI/'
+        fileDir = 'pixelUI/Rattings/'
         fileSCL = '7.05'
-        numDir  = 'pixelUI/'
-        numSCL  = '6.85'
-        tipe    = '-pixel'
-        tipe2   = '-pixel'
+        numDir  = 'pixelUI/Rattings/'
+        numSCL  = '10'
+        tipe    = ''
+        tipe2   = ''
         antiii  = false
     end
 end
@@ -84,8 +85,9 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
     local uid = ratingUID
 
     local rating = getPropertyFromGroup('notes', id, 'rating')
-    local ratingImg = 'sick'
-    if rating == 'good' then ratingImg = 'good'
+    local ratingImg = 'marvelous'
+	if rating == 'sick' then ratingImg = 'sick'
+    elseif rating == 'good' then ratingImg = 'good'
     elseif rating == 'bad' then ratingImg = 'bad'
     elseif rating == 'shit' then ratingImg = 'shit' end
 

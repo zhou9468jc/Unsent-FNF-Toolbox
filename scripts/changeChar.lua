@@ -3,6 +3,9 @@ if enableSystem == nil then
     enableSystem = false
 end
 
+-- 是否保存并恢复角色状态
+local saveCharacterState = true
+
 local changedBF = false
 local changedGF = false
 local changedDad = false
@@ -20,6 +23,10 @@ end
 
 -- 保存角色状态
 local function getCharacterState(side)
+    if not saveCharacterState then
+        return nil
+    end
+
     local state = {}
     local properties = {
         'angle',
@@ -36,11 +43,14 @@ local function getCharacterState(side)
     return state
 end
 
--- 切换角色并等待同步状态
+-- 切换角色
 local function changeCharacter(side, newCharacter)
     local state = getCharacterState(side)
     triggerEvent('Change Character', side, newCharacter)
-    pendingSync[side] = state
+
+    if saveCharacterState and state then
+        pendingSync[side] = state
+    end
 end
 
 function onCreatePost()
@@ -68,24 +78,23 @@ function onUpdate()
     local boyfriend = getProperty('boyfriend.curCharacter') or ''
     local dad = getProperty('dad.curCharacter') or ''
     local gf = getProperty('gf.curCharacter') or ''
+    local gfLower = gf:lower()
 
     -- BF
-    if not changedBF
-        and not contains(boyfriend, 'pixel')
-        and (contains(boyfriend, 'bf') or contains(boyfriend, 'boyfriend')) then
-
-        if boyfriend ~= 'unsent-bf' then
-            changeCharacter('bf', 'unsent-bf')
+    if contains(boyfriend, 'bf') or contains(boyfriend, 'boyfriend') then
+        if boyfriend ~= 'unsent-bf' and boyfriend ~= 'unsent-bf-pixel' then
+            if contains(boyfriend, 'pixel') then
+                changeCharacter('bf', 'unsent-bf-pixel')
+            else
+                changeCharacter('bf', 'unsent-bf')
+            end
         end
 
         changedBF = true
     end
 
     -- GF：角色名以 no 或 hide 开头时不替换
-    local gfLower = gf:lower()
-
-    if not changedGF
-        and not contains(gf, 'pixel')
+    if not contains(gf, 'pixel')
         and not gfLower:match('^no')
         and not gfLower:match('^hide')
         and (contains(gf, 'gf') or contains(gf, 'girlfriend')) then
@@ -98,12 +107,23 @@ function onUpdate()
     end
 
     -- Dad
-    if not changedDad
-        and not contains(dad, 'pixel')
-        and (contains(dad, 'bf') or contains(dad, 'boyfriend')) then
+    if contains(dad, 'bf') or contains(dad, 'boyfriend') then
+        if dad ~= 'unsent-bf-op' and dad ~= 'unsent-bf-pixel-op' then
+            if contains(dad, 'pixel') then
+                changeCharacter('dad', 'unsent-bf-pixel-op')
+            else
+                changeCharacter('dad', 'unsent-bf-op')
+            end
+        end
 
-        if dad ~= 'unsent-bf' then
-            changeCharacter('dad', 'unsent-bf')
+        changedDad = true
+    elseif not contains(dad, 'pixel')
+        and not dad:lower():match('^no')
+        and not dad:lower():match('^hide')
+        and (contains(dad, 'gf') or contains(dad, 'girlfriend')) then
+
+        if dad ~= 'unsent-gf' then
+            changeCharacter('dad', 'unsent-gf')
         end
 
         changedDad = true
@@ -112,6 +132,11 @@ end
 
 -- 切换后同步角色状态
 function onUpdatePost()
+    if not saveCharacterState then
+        pendingSync = {}
+        return
+    end
+
     for side, state in pairs(pendingSync) do
         for property, value in pairs(state) do
             if value ~= nil then

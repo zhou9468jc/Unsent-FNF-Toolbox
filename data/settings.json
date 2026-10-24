@@ -1,11 +1,11 @@
 [
 	{
 		"save": "language",
-		"name": "[Unsent's Toolbox] Settings",
+		"name": "-[Unsent's Toolbox] Settings-",
 		"type": "string",
 		"description": "67676767676767676767",
-		"value": "English",
-		"options": ["English","Chinese"]
+		"value": " ",
+		"options": [" "]
 	},
 	{
 		"save": "language",
@@ -250,9 +250,9 @@
 		"value": 0.6,
 		"min": 0,
 		"max": 1,
-		"step": 0.05,
+		"step": 0.01,
 		"decimals": 2,
-		"scroll": 1
+		"scroll": 0.5
 	},
 	{
 		"save": "titleHealthSmooth",
@@ -277,12 +277,12 @@
 		"format": "   %v",
 		"type": "float",
 		"description": "Controls how quickly the displayed health follows the target health.\n调整血条缓动的速度。",
-		"value":20,
+		"value":10,
 		"decimals": 1,
 		"min": 1,
 		"max": 50,
-		"step": 0.5,
-		"scroll": 1
+		"step": 0.1,
+		"scroll": 5
 	},
 	{
 		"save": "healthOpponentPush",
@@ -302,7 +302,7 @@
 		"min": 0,
 		"max": 0.1,
 		"step": 0.001,
-		"scroll": 1
+		"scroll": 0.05
 	},
 	{
 		"save": "healthOpponentPushSustain",
@@ -310,12 +310,12 @@
 		"format": "  %v",
 		"type": "float",
 		"description": "Health reduced by an opponent sustain note when Opponent Health Drain is enabled.\n调整对手长按条每节扣多少血。",
-		"value": 0.007,
+		"value": 0.012,
 		"decimals": 3,
 		"min": 0,
 		"max": 0.1,
 		"step": 0.001,
-		"scroll": 1
+		"scroll": 0.05
 	},
 	{
 		"save":"healthOpponentPushForce",
@@ -335,7 +335,7 @@
 		"save": "healthSustainReward",
 		"name": "Enable Sustain Note Reward",
 		"type": "bool",
-		"description": "If enabled, sustain notes can restore health and give score.\n开启后长条可以回血以及获得分数。",
+		"description": "If enabled, sustain notes can restore health and give score(make opponent sustain note can reduce health).\n开启后长条可以回血以及获得分数(对手长条也能推条)。",
 		"value": false
 	},
 	{
@@ -344,12 +344,12 @@
 		"format": "   %v",
 		"type": "float",
 		"description": "Health gained or lost for each sustain note tick.\n调整长按条每节回多少血。",
-		"value": 0.008,
+		"value": 0.015,
 		"decimals": 3,
 		"min": 0,
 		"max": 0.1,
 		"step": 0.001,
-		"scroll": 1
+		"scroll": 0.05
 	},
 	{
 		"save": "holdCover",
@@ -512,7 +512,7 @@
 		"min": 0,
 		"format":"  %v%",
 		"max": 1,
-		"step": 0.05,
+		"step": 0.01,
 		"decimals": 2
 	},
 	{
@@ -574,7 +574,7 @@
 		"save": "2026BfGf",
 		"name": "Better BF/GF Style",
 		"type": "bool",
-		"description": "When enabled, replaces BF and GF with improved sprites. If any issues occur, press 9 before the song starts to temporarily disable this feature. (Spritesheets are from the mod \"2hotBFMix2026\".)\n开启后，将 BF 和 GF 替换为改良版精灵图。如果出现问题，请在歌曲开始前按 9 暂时禁用此功能。（精灵图素材来自模组 \"2hotBFMix2026\"。）",
+		"description": "When enabled, replaces BF and GF with improved sprites. If any issues occur, press 9 before the song starts to temporarily disable this feature. (Spritesheets are from the mod \"2hotBFMix2026\" and \"Vs Impostor Legacy\".)\n开启后，将 BF 和 GF 替换为改良版精灵图。如果出现问题，请在歌曲开始前按 9 暂时禁用此功能。（精灵图素材来自模组 \"2hotBFMix2026\"和\"Vs Impostor Legacy\"。）",
 		"value": false
 	},
 	{

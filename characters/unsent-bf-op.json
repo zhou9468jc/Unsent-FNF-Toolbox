@@ -1,0 +1,311 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				10,
+				-13
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				-12,
+				-10
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left normal"
+		},
+		{
+			"offsets": [
+				4,
+				-58
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down normal"
+		},
+		{
+			"offsets": [
+				18,
+				23
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up normal"
+		},
+		{
+			"offsets": [
+				34,
+				-16
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right normal"
+		},
+		{
+			"offsets": [
+				-9,
+				-6
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT-alt",
+			"indices": [],
+			"name": "left alt a"
+		},
+		{
+			"offsets": [
+				24,
+				-58
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN-alt",
+			"indices": [],
+			"name": "down alt a"
+		},
+		{
+			"offsets": [
+				18,
+				22
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP-alt",
+			"indices": [],
+			"name": "up alt a"
+		},
+		{
+			"offsets": [
+				34,
+				-16
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT-alt",
+			"indices": [],
+			"name": "right alt a"
+		},
+		{
+			"offsets": [
+				-9,
+				-6
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT-alt2",
+			"indices": [],
+			"name": "left alt b"
+		},
+		{
+			"offsets": [
+				-6,
+				-60
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN-alt2",
+			"indices": [],
+			"name": "down alt b"
+		},
+		{
+			"offsets": [
+				18,
+				23
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP-alt2",
+			"indices": [],
+			"name": "up alt b"
+		},
+		{
+			"offsets": [
+				37,
+				-16
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT-alt2",
+			"indices": [],
+			"name": "right alt b"
+		},
+		{
+			"offsets": [
+				-15,
+				-6
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "left miss"
+		},
+		{
+			"offsets": [
+				18,
+				-57
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"indices": [],
+			"name": "down miss"
+		},
+		{
+			"offsets": [
+				6,
+				29
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUPmiss",
+			"indices": [],
+			"name": "up miss"
+		},
+		{
+			"offsets": [
+				32,
+				-13
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"indices": [],
+			"name": "right miss"
+		},
+		{
+			"offsets": [
+				94,
+				-15
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "scared",
+			"indices": [],
+			"name": "scared"
+		},
+		{
+			"offsets": [
+				8,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "hey",
+			"indices": [],
+			"name": "hey"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "get up",
+			"indices": [],
+			"name": "get up"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "get up (loop)",
+			"indices": [
+				58,
+				59,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79
+			],
+			"name": "get up"
+		},
+		{
+			"offsets": [
+				250,
+				315
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "attack",
+			"indices": [],
+			"name": "attack"
+		},
+		{
+			"offsets": [
+				250,
+				315
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "pre-attack",
+			"indices": [],
+			"name": "pre-attack"
+		},
+		{
+			"offsets": [
+				250,
+				310
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "hurt",
+			"indices": [],
+			"name": "hurt"
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": false,
+	"image": "characters/BF_2026",
+	"position": [
+		10,
+		330
+	],
+	"healthicon": "unsent-bf",
+	"flip_x": true,
+	"healthbar_colors": [
+		116,
+		188,
+		231
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1,
+	"_editor_isPlayer": false
+}
