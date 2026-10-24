@@ -120,6 +120,7 @@ Unsent's Toolbox 是一款专为 **NovaFlare Engine 1.2.x** 打造的调试工�
 | 开发者快捷键系统               | ✅               | ✅               | ✅               | ✅                  |
 | 引擎版本检测                 | ✅               | ✅               | ✅               | ✅                  |
 | 额外脚本加载器                | ✅               | ✅               | ?               | ?                  |
+| JustSay替换                | ✅               | ⚠️               | ❌               | ❌                  |
 
 ## 🖼️ 图集（图片来自Unsent's Toolbox在NF1.2.1-HF2实机演示）
 
