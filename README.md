@@ -136,6 +136,8 @@ Unsent's Toolbox 是一款专为 **NovaFlare Engine 1.2.x** 打造的调试工�
 
 <img width="1599" height="852" alt="image" src="https://github.com/user-attachments/assets/f8c92b88-6bcc-4f6e-aa11-b3a7f709ea60" />
 
+https://github.com/user-attachments/assets/53b5731f-1616-4f4b-98a1-6877b260f02e
+>OH!VSlice! (我敢说还原度到了91%)
 
 ## ⚡ Quick Command 编辑说明
 
@@ -400,6 +402,9 @@ Author: **Unsent / 难寄期许**
 <img width="1599" height="849" alt="image" src="https://github.com/user-attachments/assets/3e9e9575-1cb6-4cb5-b13b-a7a5c1bb9a50" />
 
 <img width="1599" height="852" alt="image" src="https://github.com/user-attachments/assets/f8c92b88-6bcc-4f6e-aa11-b3a7f709ea60" />
+
+https://github.com/user-attachments/assets/53b5731f-1616-4f4b-98a1-6877b260f02e
+> OH! V-Slice! (I’d say it’s 91% accurate!)
 
 ## ⚡ Quick Command Editing Guide
 
