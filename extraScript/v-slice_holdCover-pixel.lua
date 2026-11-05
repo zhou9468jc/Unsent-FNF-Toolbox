@@ -239,7 +239,7 @@ end
 -- ============================================================
 
 local function startCover(direction, sustainLength)
-    if not sustainLength or sustainLength <= 150 then return end
+    if not sustainLength or sustainLength <= 100 then return end
 
     local tag = covers[direction]
     if not tag then return end

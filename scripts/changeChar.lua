@@ -61,7 +61,7 @@ end
 
 function onUpdate()
     -- 按 9 恢复原角色
-    if canDis and keyJustPressed('NINE') then
+    if canDis and keyPressed('NINE') then
         enableSystem = false
 
         changeCharacter('bf', Dboyfriend)

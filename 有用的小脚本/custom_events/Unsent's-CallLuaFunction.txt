@@ -1,0 +1,3 @@
+Unsent's-CallLuaFunction
+Value1: Lua Function Name / Output Result (eq:{"triggerEvent",true})
+Value2: Optional Table Of Arguments (eq:{"Hey!","BF",0.6})

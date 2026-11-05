@@ -1,6 +1,6 @@
 [
 	{
-		"save": "language",
+		"save": "title",
 		"name": "-[Unsent's Toolbox] Settings-",
 		"type": "string",
 		"description": "67676767676767676767",
@@ -99,6 +99,13 @@
 		"step": 0.01,
 		"decimals": 2,
 		"scroll": 0.5
+	},
+	{
+		"save": "cleanShowCase",
+		"name": "   Pureful Showcase",
+		"type": "bool",
+		"description": "When enabled, automatically clears HUD Lua Sprites created by other scripts during Showcase Mode.\n开启后，将在展示模式下自动清理其他脚本创建的 HUD Lua Sprite。",
+		"value": false
 	},
 	{
 		"save": "title2",
@@ -247,7 +254,7 @@
 		"format": "   %v%",
 		"type": "percent",
 		"description": "Set the volume of the \"Hey\" sound effect when taunting.\n调整\"Hey\"音效的音量。",
-		"value": 0.6,
+		"value": 1,
 		"min": 0,
 		"max": 1,
 		"step": 0.01,
@@ -270,6 +277,19 @@
 		"type": "bool",
 		"description": "Smoothly interpolates health changes instead of applying them instantly.\n开启后拥有更平滑的血条。",
 		"value": false
+	},
+	{
+		"save": "healthSmoothMode",
+		"name": "   Smooth Mode :",
+		"format": "  %v",
+		"type": "string",
+		"description": "Configure how the health bar smoothing behaves.\n设置血条缓动的运作模式。\nIL = VS Impostor Legacy",
+		"value": "IL Mode",
+		"options": [
+			"IL Mode",
+			"VSlice Mode",
+			"UTB Old Mode"
+		]
 	},
 	{
 		"save": "healthSmoothSpeed",
@@ -329,6 +349,13 @@
 		"name": "V-Slice HUD",
 		"type": "bool",
 		"description": "Changes the HUD style to match V-Slice.\n开启后使用V-Slice那样的界面。",
+		"value": false
+	},
+	{
+		"save": "makeRatingsOnGame",
+		"name": "Show Ratings On Stage",
+		"type": "bool",
+		"description": "When \"V-Slice HUD\" is enabled, display the rating on the stage instead of the HUD.\n开启“V-Slice HUD”时将评级显示在舞台而非HUD。",
 		"value": false
 	},
 	{
@@ -786,6 +813,13 @@
 		]
 	},
 	{
+		"save": "fullWindow",
+		"name": "Widescreen mode",
+		"type": "bool",
+		"description": "When enabled, the visible game area automatically expands horizontally according to the window height without stretching the game. Restart required after changing.\n启用后，游戏画面的可视区域会根据窗口高度自动向左右扩展，不会拉伸画面。修改设置后需要重启游戏。",
+		"value": false
+	},
+	{
 		"save": "muse",
 		"name": "MuseDash",
 		"type": "bool",
@@ -801,5 +835,5 @@
 		"options": [
 			" "
 		]
-	},
+	}
 ]

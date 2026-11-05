@@ -2,7 +2,10 @@
 -- Unsent's VSlice HUD
 -- ============================================================
 
+-- ============================================================
 -- Settings
+-- ============================================================
+
 local enable = false
 local sustainHealth = 0.008
 local enableOpponentPush = false
@@ -18,7 +21,10 @@ local sustainScoreScrollRate = 1
 local scoreScrollSpeed = 12
 local currentScoreScrollRate = 1
 
+-- ============================================================
 -- Internal State
+-- ============================================================
+
 local initialized = false
 local displayScore = 0
 local targetScore = 0
@@ -27,39 +33,241 @@ local originalScoreTag = 'unsentOriginalScore'
 local originalScoreCreated = false
 local scoreLayerFixed = false
 
+local oldPrefs = {
+    saved = false
+}
+
+local hidden = false
+
+local oldBotplayVisible = nil
+local oldScoreTxtX = nil
+
+local oldPositions = {
+    healthBar = nil,
+    healthBarBG = nil,
+    iconP1 = nil,
+    iconP2 = nil
+}
+
 -- Opponent Push Detection
-local pendingOpponentPushes = {}
+local pendingOpponentPushes = {
+    amount = 0,
+    healthBefore = nil
+}
+
+-- Strum Movement
+local strumMoved = false
+local originalStrumPositions = {}
 
 -- ============================================================
 -- Utility
 -- ============================================================
 
 local function readSetting(name, default)
-	local value = getModSetting(name)
-	if value == nil then return default end
-	return value
+    local value = getModSetting(name)
+    if value == nil then return default end
+    return value
 end
 
 local function clampHealth(value)
-	if value < 0 then return 0 end
-	if value > 2 then return 2 end
-	return value
+    if value < 0 then return 0 end
+    if value > 2 then return 2 end
+    return value
 end
 
 local function formatNumber(num)
-	local formatted = tostring(num)
+    local formatted = tostring(num)
 
-	while true do
-		local count
-		formatted, count = string.gsub(
-			formatted,
-			"^(-?%d+)(%d%d%d)",
-			"%1,%2"
-		)
-		if count == 0 then break end
-	end
+    while true do
+        local count
+        formatted, count = string.gsub(
+            formatted,
+            "^(-?%d+)(%d%d%d)",
+            "%1,%2"
+        )
 
-	return formatted
+        if count == 0 then break end
+    end
+
+    return formatted
+end
+
+local function isDownScrollEnabled()
+    local success, value = pcall(function()
+        return getPropertyFromClass(
+            'backend.ClientPrefs',
+            'data.downScroll'
+        )
+    end)
+
+    if success and value ~= nil then
+        return value == true
+    end
+
+    success, value = pcall(function()
+        return getPropertyFromClass(
+            'ClientPrefs',
+            'data.downScroll'
+        )
+    end)
+
+    if success and value ~= nil then
+        return value == true
+    end
+
+    return false
+end
+
+-- ============================================================
+-- NFE UI Control
+-- ============================================================
+
+function hideNFEUI()
+    if oldPrefs.saved then return end
+
+    local success = pcall(runHaxeCode, [[
+        // FPS
+        game.variables.set("hideUI_showFPS", ClientPrefs.data.showFPS);
+        game.variables.set(
+            "hideUI_fpsViewerVisible",
+            Main.fpsVar != null ? Main.fpsVar.visible : false
+        );
+
+        // Watermark
+        game.variables.set("hideUI_showWatermark", ClientPrefs.data.showWatermark);
+        game.variables.set(
+            "hideUI_watermarkVisible",
+            Main.watermark != null ? Main.watermark.visible : false
+        );
+
+        // Judgement Counter
+        game.variables.set(
+            "hideUI_judgementCounter",
+            ClientPrefs.data.judgementCounter
+        );
+
+        game.variables.set(
+            "hideUI_judgementVisible",
+            game.judgementCounter_S != null
+                ? game.judgementCounter_S.visible
+                : false
+        );
+
+        game.variables.set(
+            "hideUI_judgementExists",
+            game.judgementCounter_S != null
+                ? game.judgementCounter_S.exists
+                : false
+        );
+
+        // Keyboard Viewer
+        game.variables.set(
+            "hideUI_keyboardViewer",
+            ClientPrefs.data.keyboardViewer
+        );
+
+        game.variables.set(
+            "hideUI_keyboardVisible",
+            game.keyboardViewer != null
+                ? game.keyboardViewer.visible
+                : false
+        );
+
+        game.variables.set(
+            "hideUI_keyboardExists",
+            game.keyboardViewer != null
+                ? game.keyboardViewer.exists
+                : false
+        );
+
+        // Hide FPS
+        ClientPrefs.data.showFPS = false;
+        if (Main.fpsVar != null)
+            Main.fpsVar.visible = false;
+
+        // Hide Watermark
+        ClientPrefs.data.showWatermark = false;
+        if (Main.watermark != null)
+            Main.watermark.visible = false;
+
+        // Hide Judgement Counter
+        ClientPrefs.data.judgementCounter = false;
+        if (game.judgementCounter_S != null)
+        {
+            game.judgementCounter_S.visible = false;
+            game.judgementCounter_S.exists = false;
+        }
+
+        // Hide Keyboard Viewer
+        ClientPrefs.data.keyboardViewer = false;
+        if (game.keyboardViewer != null)
+        {
+            game.keyboardViewer.visible = false;
+            game.keyboardViewer.exists = false;
+        }
+    ]])
+
+    if success then
+        oldPrefs.saved = true
+        hidden = true
+    else
+        debugPrint('[Unsent VSlice HUD] Failed to hide NFE UI')
+    end
+end
+
+function restoreNFEUI()
+    if not oldPrefs.saved then return end
+
+    local success = pcall(runHaxeCode, [[
+        // Restore FPS
+        ClientPrefs.data.showFPS =
+            game.variables.get("hideUI_showFPS");
+
+        if (Main.fpsVar != null)
+            Main.fpsVar.visible =
+                game.variables.get("hideUI_fpsViewerVisible");
+
+        // Restore Watermark
+        ClientPrefs.data.showWatermark =
+            game.variables.get("hideUI_showWatermark");
+
+        if (Main.watermark != null)
+            Main.watermark.visible =
+                game.variables.get("hideUI_watermarkVisible");
+
+        // Restore Judgement Counter
+        ClientPrefs.data.judgementCounter =
+            game.variables.get("hideUI_judgementCounter");
+
+        if (game.judgementCounter_S != null)
+        {
+            game.judgementCounter_S.visible =
+                game.variables.get("hideUI_judgementVisible");
+
+            game.judgementCounter_S.exists =
+                game.variables.get("hideUI_judgementExists");
+        }
+
+        // Restore Keyboard Viewer
+        ClientPrefs.data.keyboardViewer =
+            game.variables.get("hideUI_keyboardViewer");
+
+        if (game.keyboardViewer != null)
+        {
+            game.keyboardViewer.visible =
+                game.variables.get("hideUI_keyboardVisible");
+
+            game.keyboardViewer.exists =
+                game.variables.get("hideUI_keyboardExists");
+        }
+    ]])
+
+    if success then
+        oldPrefs.saved = false
+        hidden = false
+    else
+        debugPrint('[Unsent VSlice HUD] Failed to restore NFE UI')
+    end
 end
 
 -- ============================================================
@@ -67,89 +275,133 @@ end
 -- ============================================================
 
 local function applyVSliceHealthBarColors()
-	if not originalHealthBar then return end
-	setHealthBarColors('FF0000', '00FF00')
+    if not originalHealthBar then return end
+
+    setHealthBarColors('FF0000', '00FF00')
 end
 
 local function updateScoreLayer()
-	if not originalScoreCreated or scoreLayerFixed then return end
+    if not originalScoreCreated or scoreLayerFixed then return end
 
-	runHaxeCode([[
-		var scoreObj = game.getLuaObject('unsentOriginalScore');
+    local success, result = pcall(runHaxeCode, [[
+        var scoreObj = game.getLuaObject('unsentOriginalScore');
 
-		if (scoreObj != null && game.noteGroup != null)
-		{
-			scoreObj.cameras = [game.camHUD];
+        if (scoreObj == null || game.noteGroup == null)
+            return false;
 
-			var noteIndex = game.members.indexOf(game.noteGroup);
-			var scoreIndex = game.members.indexOf(scoreObj);
+        scoreObj.cameras = [game.camHUD];
 
-			if (noteIndex >= 0 && scoreIndex >= 0)
-			{
-				var desiredIndex = noteIndex - 1;
+        var noteIndex = game.members.indexOf(game.noteGroup);
+        var scoreIndex = game.members.indexOf(scoreObj);
 
-				if (scoreIndex != desiredIndex)
-				{
-					game.remove(scoreObj, false);
-					noteIndex = game.members.indexOf(game.noteGroup);
+        if (noteIndex < 0)
+            return false;
 
-					if (noteIndex >= 0)
-						game.insert(noteIndex, scoreObj);
-				}
-			}
-		}
-	]])
+        var desiredIndex = noteIndex - 1;
 
-	scoreLayerFixed = true
+        if (scoreIndex != desiredIndex)
+        {
+            game.remove(scoreObj, false);
+
+            noteIndex = game.members.indexOf(game.noteGroup);
+
+            if (noteIndex < 0)
+                return false;
+
+            game.insert(noteIndex, scoreObj);
+        }
+
+        return true;
+    ]])
+
+    if success and result == true then
+        scoreLayerFixed = true
+    end
 end
 
 local function setupVSliceHealthBar()
-	if not originalHealthBar then return end
+    if not originalHealthBar then return end
 
-	addLuaScript("extraScript/RatingsVslice.lua", true)
+    addLuaScript("extraScript/RatingsVslice.lua", true)
 
-	if originalScoreCreated then return end
+    if originalScoreCreated then return end
 
-	-- 创建自定义分数文本
-	makeLuaText(originalScoreTag, 'Score: 0', 0, 0, 0)
-	setTextFont(originalScoreTag, 'origin.ttf')
-	setTextSize(originalScoreTag, 16.5)
-	setTextColor(originalScoreTag, 'FFFFFF')
-	setTextBorder(originalScoreTag, 1, '000000')
-	setTextAlignment(originalScoreTag, 'left')
-	setObjectCamera(originalScoreTag, 'hud')
-	addLuaText(originalScoreTag, true)
-	setProperty(originalScoreTag .. '.letterSpacing', 0.7)
+    makeLuaText(originalScoreTag, 'Score: 0', 0, 0, 0)
+    setTextFont(originalScoreTag, 'origin.ttf')
+    setTextSize(originalScoreTag, 16.5)
+    setTextColor(originalScoreTag, 'FFFFFF')
+    setTextBorder(originalScoreTag, 1, '000000')
+    setTextAlignment(originalScoreTag, 'left')
+    setObjectCamera(originalScoreTag, 'hud')
+    addLuaText(originalScoreTag, true)
+    setProperty(originalScoreTag .. '.letterSpacing', 0.7)
 
-	originalScoreCreated = true
-	scoreLayerFixed = false
+    originalScoreCreated = true
+    scoreLayerFixed = false
 end
 
 -- ============================================================
 -- Strum Movement
 -- ============================================================
 
-local strumMoved = false
+local function moveStrums()
+    if strumMoved then return end
+
+    for i = 0, 7 do
+        local x = getPropertyFromGroup('strumLineNotes', i, 'x')
+
+        if x ~= nil then
+            originalStrumPositions[i] = x
+
+            local offset = i < 4 and 50 or 40
+
+            setPropertyFromGroup(
+                'strumLineNotes',
+                i,
+                'x',
+                x - offset
+            )
+        end
+    end
+
+    strumMoved = true
+end
+
+local function restoreStrums()
+    if not strumMoved then return end
+
+    for i = 0, 7 do
+        local x = originalStrumPositions[i]
+
+        if x ~= nil then
+            pcall(function()
+                setPropertyFromGroup(
+                    'strumLineNotes',
+                    i,
+                    'x',
+                    x
+                )
+            end)
+        end
+    end
+
+    originalStrumPositions = {}
+    strumMoved = false
+end
 
 function onCountdownTick(cou)
-	if cou ~= 0 or strumMoved then return end
-	if not originalHealthBar then return end
+    if getPropertyFromClass(
+        'backend.ClientPrefs',
+        'data.middleScroll'
+    ) then
+        return
+    end
 
-	for i = 0, 3 do
-		setPropertyFromGroup(
-			'strumLineNotes', i, 'x',
-			getPropertyFromGroup('strumLineNotes', i, 'x') - 50
-		)
-	end
+    if cou ~= 0 or strumMoved then return end
+    if not originalHealthBar then return end
+    if getModSetting("fullWindow") == true then return end
 
-	for i = 4, 7 do
-		setPropertyFromGroup(
-			'strumLineNotes', i, 'x',
-			getPropertyFromGroup('strumLineNotes', i, 'x') - 40
-		)
-	end
-
-	strumMoved = true
+    moveStrums()
 end
 
 -- ============================================================
@@ -157,40 +409,53 @@ end
 -- ============================================================
 
 local function updateVSliceHealthBar(elapsed)
-	if not originalHealthBar or not originalScoreCreated then return end
+    if not originalHealthBar or not originalScoreCreated then
+        return
+    end
 
-	local realScore = getProperty('songScore') or 0
-	targetScore = realScore
+    local realScore = getProperty('songScore') or 0
+    targetScore = realScore
 
-	local scoreDifference = targetScore - displayScore
+    local scoreDifference = targetScore - displayScore
 
-	if math.abs(scoreDifference) > 0.5 then
-		local effectiveSpeed = scoreScrollSpeed * currentScoreScrollRate
-		local follow = 1 - math.exp(-effectiveSpeed * elapsed)
-		displayScore = displayScore + scoreDifference * follow
-	else
-		displayScore = targetScore
-	end
+    if math.abs(scoreDifference) > 0.5 then
+        local effectiveSpeed =
+            scoreScrollSpeed * currentScoreScrollRate
 
-	local shownScore = math.floor(displayScore + 0.5)
-	local isBotplay = getProperty('cpuControlled') or false
+        local follow = 1 - math.exp(-effectiveSpeed * elapsed)
 
-	if isBotplay and readSetting('showBotText', true) then
-		setTextString(originalScoreTag, 'Bot Play Enabled')
-	else
-		setTextString(originalScoreTag, 'Score: ' .. formatNumber(shownScore))
-	end
+        displayScore = displayScore + scoreDifference * follow
+    else
+        displayScore = targetScore
+    end
 
-	local healthBarY
+    local shownScore = math.floor(displayScore + 0.5)
+    local isBotplay = getProperty('cpuControlled') or false
 
-	if getPropertyFromClass('backend.ClientPrefs', 'data.downScroll') then
-		healthBarY = screenHeight * 0.11
-	else
-		healthBarY = screenHeight * 0.89
-	end
+    if isBotplay and readSetting('showBotText', true) then
+        setTextString(originalScoreTag, 'Bot Play Enabled')
+    else
+        setTextString(
+            originalScoreTag,
+            'Score: ' .. formatNumber(shownScore)
+        )
+    end
 
-	setProperty(originalScoreTag .. '.x', (screenWidth / 2) + 100)
-	setProperty(originalScoreTag .. '.y', healthBarY + 38)
+    local healthBarY
+
+    if isDownScrollEnabled() then
+        healthBarY = screenHeight * 0.11
+    else
+        healthBarY = screenHeight * 0.89
+    end
+
+    setProperty(originalScoreTag .. '.x', (screenWidth / 2) + 100)
+
+    if isDownScrollEnabled() then
+        setProperty(originalScoreTag .. '.y', healthBarY + 3)
+    else
+        setProperty(originalScoreTag .. '.y', healthBarY + 38)
+    end
 end
 
 -- ============================================================
@@ -198,53 +463,122 @@ end
 -- ============================================================
 
 function onCreate()
-	enable = readSetting('healthSmooth', false)
-	sustainHealth = readSetting('healthSustainAmount', 0.015)
+    enable = readSetting('healthSmooth', false)
+    local runMode = readSetting('healthSmoothMode', 'IL Mode')
 
-	enableOpponentPush = readSetting('healthOpponentPush', false)
-	opponentPush = readSetting('healthOpponentPushAmount', 0.020)
-	opponentPushSustain = readSetting('healthOpponentPushSustain', 0.012)
+    sustainHealth = readSetting('healthSustainAmount', 0.015)
 
-	forceOpponentPush = readSetting('healthOpponentPushForce', false)
-	originalHealthBar = readSetting('originalHealthBar', false)
-	enableSustainReward = readSetting('healthSustainReward', false)
+    enableOpponentPush = readSetting('healthOpponentPush', false)
+    opponentPush = readSetting('healthOpponentPushAmount', 0.020)
+    opponentPushSustain = readSetting('healthOpponentPushSustain', 0.012)
 
-	displayScore = getProperty('songScore') or 0
-	targetScore = displayScore
-	currentScoreScrollRate = 1
-	initialized = true
+    forceOpponentPush = readSetting('healthOpponentPushForce', false)
+    originalHealthBar = readSetting('originalHealthBar', false)
+    enableSustainReward = readSetting('healthSustainReward', false)
 
-	if originalHealthBar then
-		setupVSliceHealthBar()
-	end
+    displayScore = getProperty('songScore') or 0
+    targetScore = displayScore
+    currentScoreScrollRate = 1
 
-	if enable then
-		addLuaScript('extraScript/lerp.lua', true)
-	end
+    initialized = true
+
+    if originalHealthBar then
+        setupVSliceHealthBar()
+        addHScript("extraScript/iconScale.hx")
+    end
+
+    if enable then
+        if runMode == 'VSlice mode' then
+            addLuaScript('extraScript/lerp-VSlice.lua')
+        elseif runMode == 'UTB Old Mode' then
+            addLuaScript('extraScript/lerp-old.lua')
+        else
+            addLuaScript('extraScript/lerp-IL.lua')
+        end
+    end
 end
 
+-- ============================================================
+-- Create Post
+-- ============================================================
+
 function onCreatePost()
-	if originalHealthBar then
-		if not getPropertyFromClass('PlayState', 'isPixelStage') then
-			addLuaScript('extraScript/changeNoteSplash.lua', true)
-		end
+    if not originalHealthBar then return end
 
-		-- 将原版分数文本移出屏幕，不再隐藏它
-		local scoreTxtX = getProperty('scoreTxt.x') or 0
-		setProperty('scoreTxt.x', -screenWidth * 2 - math.abs(scoreTxtX))
-	end
+    -- Save Botplay state
+    oldBotplayVisible = getProperty('botplayTxt.visible')
 
-	if not initialized or not originalHealthBar or not originalScoreCreated then
-		return
-	end
+    -- Save original score position
+    oldScoreTxtX = getProperty('scoreTxt.x')
 
-	local value = 10
-	setProperty('healthBar.y', getProperty('healthBar.y') + value)
-	setProperty('healthBarBG.y', getProperty('healthBarBG.y') + value)
-	setProperty('iconP1.y', getProperty('iconP1.y') + value)
-	setProperty('iconP2.y', getProperty('iconP2.y') + value)
+    -- Move original score text outside the screen
+    local scoreTxtX = oldScoreTxtX or 0
 
-	updateScoreLayer()
+    setProperty(
+        'scoreTxt.x',
+        -screenWidth * 2 - math.abs(scoreTxtX)
+    )
+
+    -- Move icon layer
+    pcall(function()
+        setObjectOrder(
+            'iconP1',
+            getObjectOrder('iconP2', 'uiGroup') + 1,
+            'uiGroup'
+        )
+    end)
+
+    -- Hide NFE UI
+    hideNFEUI()
+
+    if not initialized or not originalScoreCreated then
+        return
+    end
+
+    -- Save original positions
+    oldPositions.healthBar = getProperty('healthBar.y')
+    oldPositions.healthBarBG = getProperty('healthBarBG.y')
+    oldPositions.iconP1 = getProperty('iconP1.y')
+    oldPositions.iconP2 = getProperty('iconP2.y')
+
+    -- Adjust health bar
+    local value = 10
+
+    if not isDownScrollEnabled() then
+        setProperty(
+            'healthBar.y',
+            (oldPositions.healthBar or 0) + value
+        )
+
+        setProperty(
+            'healthBarBG.y',
+            (oldPositions.healthBarBG or 0) + value
+        )
+
+        setProperty(
+            'iconP1.y',
+            (oldPositions.iconP1 or 0) + value
+        )
+
+        setProperty(
+            'iconP2.y',
+            (oldPositions.iconP2 or 0) + value
+        )
+    end
+
+    -- Try fixing score layer
+    updateScoreLayer()
+end
+
+-- ============================================================
+-- Spawn Note
+-- ============================================================
+
+function onSpawnNote(id, direction, noteType, isSustainNote)
+    if isSustainNote and originalHealthBar then
+        setPropertyFromGroup('notes', id, 'alpha', 1)
+        setPropertyFromGroup('notes', id, 'multAlpha', 1)
+    end
 end
 
 -- ============================================================
@@ -252,12 +586,13 @@ end
 -- ============================================================
 
 function onUpdate(elapsed)
-	if not initialized then return end
+	applyVSliceHealthBarColors()
+    if not initialized then return end
 
-	if originalHealthBar then
-		setProperty('botplayTxt.visible', false)
-		updateVSliceHealthBar(elapsed)
-	end
+    if originalHealthBar then
+        setProperty('botplayTxt.visible', false)
+        updateVSliceHealthBar(elapsed)
+    end
 end
 
 -- ============================================================
@@ -265,20 +600,19 @@ end
 -- ============================================================
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
-	if isSustainNote then
-		currentScoreScrollRate = sustainScoreScrollRate
+    if isSustainNote then
+        currentScoreScrollRate = sustainScoreScrollRate
 
-		if enableSustainReward then
-			addHealth(sustainHealth / 2)
-			addHealth(sustainHealth / 2)
+        if enableSustainReward then
+            addHealth(sustainHealth)
 
-			if not (getProperty('cpuControlled') or false) then
-				addScore(30)
-			end
-		end
-	else
-		currentScoreScrollRate = normalScoreScrollRate
-	end
+            if not (getProperty('cpuControlled') or false) then
+                addScore(30)
+            end
+        end
+    else
+        currentScoreScrollRate = normalScoreScrollRate
+    end
 end
 
 -- ============================================================
@@ -286,30 +620,32 @@ end
 -- ============================================================
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-	if not enableOpponentPush then return end
-	if not enableSustainReward and isSustainNote then return end
+    if not enableOpponentPush then return end
+    if not enableSustainReward and isSustainNote then return end
 
-	local currentHealth = getProperty('health')
-	if currentHealth ~= nil and currentHealth < 0.25 then return end
+    local currentHealth = getProperty('health') or 0
 
-	local amount = isSustainNote and opponentPushSustain or opponentPush
+    if currentHealth < 0.25 then return end
 
-	if forceOpponentPush then
-		setProperty('health', math.max(0.2, (getProperty('health') or 0) - amount))
-		return
-	end
+    local amount = isSustainNote
+        and opponentPushSustain
+        or opponentPush
 
-	table.insert(pendingOpponentPushes, {
-		amount = amount,
-		healthBefore = currentHealth
-	})
-end
+    if forceOpponentPush then
+        setProperty(
+            'health',
+            math.max(0.2, currentHealth - amount)
+        )
+        return
+    end
 
-function onSpawnNote(id, direction, noteType, isSustainNote)
-	if isSustainNote and originalHealthBar then
-		setPropertyFromGroup('notes', id, 'alpha', 1)
-		setPropertyFromGroup('notes', id, 'multAlpha', 1)
-	end
+    -- Record the first health value of this batch
+    if pendingOpponentPushes.healthBefore == nil then
+        pendingOpponentPushes.healthBefore = currentHealth
+    end
+
+    pendingOpponentPushes.amount =
+        pendingOpponentPushes.amount + amount
 end
 
 -- ============================================================
@@ -317,56 +653,69 @@ end
 -- ============================================================
 
 function onUpdatePost(elapsed)
-	if not initialized then return end
+    applyVSliceHealthBarColors()
+    if not initialized then return end
 
-	applyVSliceHealthBarColors()
+    -- Retry score layer adjustment until successful
+    if originalHealthBar and originalScoreCreated and not scoreLayerFixed then
+        updateScoreLayer()
+    end
 
-	-- Opponent Push Detection
-	if enableOpponentPush and not forceOpponentPush and #pendingOpponentPushes > 0 then
-		local currentHealth = clampHealth(getProperty('health') or 0)
-		local engineHealthChanged = false
+    -- Opponent Push Detection
+    if enableOpponentPush
+        and not forceOpponentPush
+        and pendingOpponentPushes.healthBefore ~= nil then
 
-		for i = 1, #pendingOpponentPushes do
-			local pending = pendingOpponentPushes[i]
+        local healthBefore = pendingOpponentPushes.healthBefore
+        local totalAmount = pendingOpponentPushes.amount
+        local currentHealth = clampHealth(getProperty('health') or 0)
 
-			if currentHealth < pending.healthBefore - 0.000001 then
-				engineHealthChanged = true
-				break
-			end
-		end
+        -- Calculate how much damage the engine already applied
+        local engineDamage = math.max(
+            0,
+            healthBefore - currentHealth
+        )
 
-		if not engineHealthChanged then
-			local totalAmount = 0
+        -- Only compensate for the missing damage
+        local missingDamage = math.max(
+            0,
+            totalAmount - engineDamage
+        )
 
-			for i = 1, #pendingOpponentPushes do
-				totalAmount = totalAmount + pendingOpponentPushes[i].amount
-			end
+        if missingDamage > 0 then
+            setProperty(
+                'health',
+                math.max(
+                    0.2,
+                    currentHealth - missingDamage
+                )
+            )
+        end
 
-			local health = getProperty('health') or 0
-			setProperty('health', math.max(0.2, health - totalAmount))
-		end
+        pendingOpponentPushes.amount = 0
+        pendingOpponentPushes.healthBefore = nil
+    end
 
-		pendingOpponentPushes = {}
-	end
+    -- Custom score text synchronization
+    if not originalHealthBar or not originalScoreCreated then
+        return
+    end
 
-	-- 自定义分数文本同步原版分数文本的显示状态和透明度
-	if not originalHealthBar or not originalScoreCreated then return end
+    setObjectCamera(originalScoreTag, 'hud')
 
-	setObjectCamera(originalScoreTag, 'hud')
+    local originalVisible = getProperty('scoreTxt.visible')
+    local originalAlpha = getProperty('scoreTxt.alpha')
 
-	local originalVisible = getProperty('scoreTxt.visible')
-	local originalAlpha = getProperty('scoreTxt.alpha')
+    if originalVisible == nil then originalVisible = true end
+    if originalAlpha == nil then originalAlpha = 1 end
 
-	if originalVisible == nil then originalVisible = true end
-	if originalAlpha == nil then originalAlpha = 1 end
-
-	if readSetting('showCaseMode', false) then
-		setProperty(originalScoreTag .. '.visible', false)
-		setProperty(originalScoreTag .. '.alpha', 0)
-	else
-		setProperty(originalScoreTag .. '.visible', originalVisible)
-		setProperty(originalScoreTag .. '.alpha', originalAlpha)
-	end
+    if readSetting('showCaseMode', false) then
+        setProperty(originalScoreTag .. '.visible', false)
+        setProperty(originalScoreTag .. '.alpha', 0)
+    else
+        setProperty(originalScoreTag .. '.visible', originalVisible)
+        setProperty(originalScoreTag .. '.alpha', originalAlpha)
+    end
 end
 
 -- ============================================================
@@ -374,10 +723,46 @@ end
 -- ============================================================
 
 function onDestroy()
-	pendingOpponentPushes = {}
+    -- Clear pending data
+    pendingOpponentPushes.amount = 0
+    pendingOpponentPushes.healthBefore = nil
 
-	if originalScoreCreated then
-		removeLuaText(originalScoreTag, true)
-		originalScoreCreated = false
-	end
+    -- Restore NFE UI
+    restoreNFEUI()
+
+    -- Restore Botplay text
+    if oldBotplayVisible ~= nil then
+        pcall(function()
+            setProperty('botplayTxt.visible', oldBotplayVisible)
+        end)
+    end
+
+    -- Restore original score text position
+    if oldScoreTxtX ~= nil then
+        pcall(function()
+            setProperty('scoreTxt.x', oldScoreTxtX)
+        end)
+    end
+
+    -- Restore health bar positions
+    if oldPositions.healthBar ~= nil then
+        pcall(function()
+            setProperty('healthBar.y', oldPositions.healthBar)
+            setProperty('healthBarBG.y', oldPositions.healthBarBG)
+            setProperty('iconP1.y', oldPositions.iconP1)
+            setProperty('iconP2.y', oldPositions.iconP2)
+        end)
+    end
+
+    -- Restore Strum positions
+    restoreStrums()
+
+    -- Remove custom score text
+    if originalScoreCreated then
+        removeLuaText(originalScoreTag, true)
+        originalScoreCreated = false
+    end
+
+    initialized = false
+    scoreLayerFixed = false
 end

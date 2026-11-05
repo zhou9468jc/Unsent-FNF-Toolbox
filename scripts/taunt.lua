@@ -53,8 +53,18 @@ function onUpdate()
 		local duration=getModSetting('tauntDuration')
 		local volume=getModSetting('tauntSoundVolume')
 		triggerEvent('Hey!',character,tostring(duration))
-		if volume>0 then
-			playSound('hey',volume)
+		local anim = getProperty('boyfriend.animation.curAnim.name')
+		if anim == 'hey' then
+			if volume>0 then
+				if math.random(1,2) == 1 then
+					playSound('yeeh',volume)
+				else
+					playSound('hey',volume)
+				end
+			end
+		else
+			setProperty('boyfriend.animation.curAnim.name',"idle")
+			playSound('cancelMenu')
 		end
 	end
 end

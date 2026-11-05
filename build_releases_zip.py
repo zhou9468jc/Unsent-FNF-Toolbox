@@ -28,6 +28,7 @@ EXCLUDE_DIRS = {
     "releases",
     "NoBuildFiles",
     "神秘远古版本😈",
+    "有用的小脚本",
 }
 
 # Exclude specific files.

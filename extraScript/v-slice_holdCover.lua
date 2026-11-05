@@ -1,6 +1,7 @@
 -- ============================================================
 -- Unsent's Hold Cover
 -- V-Slice-style hold cover effect
+-- Optimized Animation & Property Updates
 -- ============================================================
 
 -- ============================================================
@@ -8,72 +9,41 @@
 -- ============================================================
 
 local enableHoldCover = getModSetting('holdCover')
-
-if enableHoldCover == nil then
-	enableHoldCover = true
-end
+if enableHoldCover == nil then enableHoldCover = true end
 
 local holdCoverOffsetX = getModSetting('holdCoverOffsetX')
-
-if holdCoverOffsetX == nil then
-	holdCoverOffsetX = 0
-end
+if holdCoverOffsetX == nil then holdCoverOffsetX = 0 end
 
 local holdCoverOffsetY = getModSetting('holdCoverOffsetY')
+if holdCoverOffsetY == nil then holdCoverOffsetY = 0 end
 
-if holdCoverOffsetY == nil then
-	holdCoverOffsetY = 0
-end
-
+-- Animation FPS
+local COVER_FPS = 24
 
 -- ============================================================
 -- Debug Mode
---
--- false = Normal Hold Cover behavior
--- true  = Hold Cover offset adjustment mode
---
--- Q / E:
--- Select arrow
---
--- Arrow Keys:
--- Normal = 1 pixel
--- Shift  = 4 pixels
--- Ctrl   = 8 pixels
--- Alt    = 32 pixels
---
--- Debug mode directly modifies baseOffset.
 -- ============================================================
 
 local debugMode = false
-
 local debugSelectedDirection = 0
 
 local debugDirectionNames = {
-	[0] = 'LEFT',
-	[1] = 'DOWN',
-	[2] = 'UP',
-	[3] = 'RIGHT'
+    [0] = 'LEFT',
+    [1] = 'DOWN',
+    [2] = 'UP',
+    [3] = 'RIGHT'
 }
-
 
 -- ============================================================
 -- Base Offset
---
--- 0 = Purple / LEFT
--- 1 = Blue   / DOWN
--- 2 = Green  / UP
--- 3 = Red    / RIGHT
---
--- These values are directly modified by Debug Mode.
 -- ============================================================
 
 local baseOffset = {
-	[0] = {-106, -98},
-	[1] = {-108, -98},
-	[2] = {-108, -98},
-	[3] = {-106, -98}
+    [0] = {-106, -98},
+    [1] = {-108, -98},
+    [2] = {-108, -98},
+    [3] = {-106, -98}
 }
-
 
 -- ============================================================
 -- Variables
@@ -82,867 +52,515 @@ local baseOffset = {
 local covers = {}
 local active = {}
 local endTimers = {}
+local lastAlpha = {}
 
 local debugTextTag = 'holdCoverDebugText'
-
 
 -- ============================================================
 -- Hold Cover Configuration
 -- ============================================================
 
 local coverData = {
-	[0] = {
-		image = 'holdCoverPurple',
-		start = 'holdCoverStartPurple',
-		hold = 'holdCoverPurple',
-		finish = 'holdCoverEndPurple'
-	},
-
-	[1] = {
-		image = 'holdCoverBlue',
-		start = 'holdCoverStartBlue',
-		hold = 'holdCoverBlue',
-		finish = 'holdCoverEndBlue'
-	},
-
-	[2] = {
-		image = 'holdCoverGreen',
-		start = 'holdCoverStartGreen',
-		hold = 'holdCoverGreen',
-		finish = 'holdCoverEndGreen'
-	},
-
-	[3] = {
-		image = 'holdCoverRed',
-		start = 'holdCoverStartRed',
-		hold = 'holdCoverRed',
-		finish = 'holdCoverEndRed'
-	}
+    [0] = {
+        image = 'holdCoverPurple',
+        start = 'holdCoverStartPurple',
+        hold = 'holdCoverPurple',
+        finish = 'holdCoverEndPurple'
+    },
+    [1] = {
+        image = 'holdCoverBlue',
+        start = 'holdCoverStartBlue',
+        hold = 'holdCoverBlue',
+        finish = 'holdCoverEndBlue'
+    },
+    [2] = {
+        image = 'holdCoverGreen',
+        start = 'holdCoverStartGreen',
+        hold = 'holdCoverGreen',
+        finish = 'holdCoverEndGreen'
+    },
+    [3] = {
+        image = 'holdCoverRed',
+        start = 'holdCoverStartRed',
+        hold = 'holdCoverRed',
+        finish = 'holdCoverEndRed'
+    }
 }
-
 
 -- ============================================================
 -- Keyboard Detection
---
--- 0 = LEFT
--- 1 = DOWN
--- 2 = UP
--- 3 = RIGHT
 -- ============================================================
 
 local function isDirectionPressed(direction)
-	if direction == 0 then
-		return keyboardPressed('LEFT')
-	elseif direction == 1 then
-		return keyboardPressed('DOWN')
-	elseif direction == 2 then
-		return keyboardPressed('UP')
-	elseif direction == 3 then
-		return keyboardPressed('RIGHT')
-	end
+    local keys = {
+        [0] = 'LEFT',
+        [1] = 'DOWN',
+        [2] = 'UP',
+        [3] = 'RIGHT'
+    }
 
-	return false
+    return keyboardPressed(keys[direction])
 end
-
 
 -- ============================================================
 -- Debug Keyboard Detection
 -- ============================================================
 
 local function getDebugMoveAmount()
-	if keyboardPressed('ALT') then
-		return 32
-	end
-
-	if keyboardPressed('CONTROL') then
-		return 8
-	end
-
-	if keyboardPressed('SHIFT') then
-		return 4
-	end
-
-	return 1
+    if keyboardPressed('ALT') then return 32 end
+    if keyboardPressed('CONTROL') then return 8 end
+    if keyboardPressed('SHIFT') then return 4 end
+    return 1
 end
-
 
 -- ============================================================
 -- Debug Text
 -- ============================================================
 
 local function updateDebugText()
-	if not debugMode then
-		return
-	end
+    if not debugMode then return end
 
-	local text =
-		'Hold Cover Offset Debug\n' ..
-		'Q / E : Select Arrow\n' ..
-		'Arrow : ±1    Shift : ±4    Ctrl : ±8    Alt : ±32\n\n'
+    local text =
+        'Hold Cover Offset Debug\n' ..
+        'Q / E : Select Arrow\n' ..
+        'Arrow : ±1    Shift : ±4    Ctrl : ±8    Alt : ±32\n\n'
 
-	for direction = 0, 3 do
-		local offset = baseOffset[direction]
+    for direction = 0, 3 do
+        local offset = baseOffset[direction]
+        local prefix = direction == debugSelectedDirection and '> ' or '  '
 
-		local prefix = '  '
+        text = text ..
+            prefix .. debugDirectionNames[direction] ..
+            '   X: ' .. tostring(offset[1]) ..
+            '   Y: ' .. tostring(offset[2]) .. '\n'
+    end
 
-		if direction == debugSelectedDirection then
-			prefix = '> '
-		end
-
-		text = text ..
-			prefix ..
-			debugDirectionNames[direction] ..
-			'   X: ' ..
-			tostring(offset[1]) ..
-			'   Y: ' ..
-			tostring(offset[2]) ..
-			'\n'
-	end
-
-	setTextString(
-		debugTextTag,
-		text
-	)
+    setTextString(debugTextTag, text)
 end
-
 
 -- ============================================================
 -- Debug Text Creation
 -- ============================================================
 
 local function createDebugText()
-	if not debugMode then
-		return
-	end
+    if not debugMode then return end
 
-	makeLuaText(
-		debugTextTag,
-		'',
-		0,
-		20,
-		20
-	)
+    makeLuaText(debugTextTag, '', 0, 20, 20)
+    setTextSize(debugTextTag, 18)
+    setTextBorder(debugTextTag, 2, '000000')
+    setObjectCamera(debugTextTag, 'hud')
+    addLuaText(debugTextTag, true)
 
-	setTextSize(
-		debugTextTag,
-		18
-	)
-
-	setTextBorder(
-		debugTextTag,
-		2,
-		'000000'
-	)
-
-	setObjectCamera(
-		debugTextTag,
-		'hud'
-	)
-
-	addLuaText(
-		debugTextTag,
-		true
-	)
-
-	updateDebugText()
+    updateDebugText()
 end
-
 
 -- ============================================================
 -- Debug Keyboard
 -- ============================================================
 
 local function updateDebugKeyboard()
-	if not debugMode then
-		return
-	end
+    if not debugMode then return end
 
-	-- Select previous arrow
-	if keyboardJustPressed('Q') then
-		debugSelectedDirection =
-			debugSelectedDirection - 1
+    if keyboardJustPressed('Q') then
+        debugSelectedDirection = (debugSelectedDirection + 3) % 4
+    end
 
-		if debugSelectedDirection < 0 then
-			debugSelectedDirection = 3
-		end
-	end
+    if keyboardJustPressed('E') then
+        debugSelectedDirection = (debugSelectedDirection + 1) % 4
+    end
 
-	-- Select next arrow
-	if keyboardJustPressed('E') then
-		debugSelectedDirection =
-			debugSelectedDirection + 1
+    local amount = getDebugMoveAmount()
+    local offset = baseOffset[debugSelectedDirection]
 
-		if debugSelectedDirection > 3 then
-			debugSelectedDirection = 0
-		end
-	end
+    if keyboardJustPressed('LEFT') then
+        offset[1] = offset[1] - amount
+    end
 
-	local amount = getDebugMoveAmount()
-	local offset = baseOffset[debugSelectedDirection]
+    if keyboardJustPressed('RIGHT') then
+        offset[1] = offset[1] + amount
+    end
 
-	-- Left
-	if keyboardJustPressed('LEFT') then
-		offset[1] =
-			offset[1] - amount
-	end
+    if keyboardJustPressed('UP') then
+        offset[2] = offset[2] - amount
+    end
 
-	-- Right
-	if keyboardJustPressed('RIGHT') then
-		offset[1] =
-			offset[1] + amount
-	end
+    if keyboardJustPressed('DOWN') then
+        offset[2] = offset[2] + amount
+    end
 
-	-- Up
-	if keyboardJustPressed('UP') then
-		offset[2] =
-			offset[2] - amount
-	end
-
-	-- Down
-	if keyboardJustPressed('DOWN') then
-		offset[2] =
-			offset[2] + amount
-	end
-
-	updateDebugText()
+    updateDebugText()
 end
-
 
 -- ============================================================
 -- Update Showcase Alpha
---
--- Normal Mode:
--- Hold Cover alpha = 1
---
--- Showcase Mode:
--- Hold Cover follows showCaseStrumAlpha
+-- Only write alpha when it changes
 -- ============================================================
 
-local function updateShowcaseAlpha(direction)
+local function updateShowcaseAlpha(direction, showcase, showcaseAlpha)
+    local tag = covers[direction]
+    if not tag then return end
 
-	local tag = covers[direction]
+    local alpha = 1
 
-	if not tag then
-		return
-	end
+    if showcase then
+        alpha = showcaseAlpha
+    else
+        local strum = 'playerStrums.members[' .. direction .. ']'
+        local value = getProperty(strum .. '.alpha')
 
+        if value ~= nil then
+            alpha = tonumber(value) or 1
+        end
+    end
 
-	local showcase =
-		getModSetting('showCaseMode')
+    alpha = math.max(0, math.min(1, alpha))
 
-
-	-- Showcase 模式
-	if showcase then
-
-		local alpha =
-			getModSetting('showCaseStrumAlpha')
-
-
-		if alpha == nil then
-			alpha = 0
-		end
-
-
-		alpha =
-			tonumber(alpha) or 0
-
-
-		alpha =
-			math.max(
-				0,
-				math.min(
-					1,
-					alpha
-				)
-			)
-
-
-		setProperty(
-			tag .. '.alpha',
-			alpha
-		)
-
-		return
-	end
-
-
-	-- 普通模式：跟随玩家箭头透明度
-	local strum =
-		'playerStrums.members[' .. direction .. ']'
-
-
-	local alpha = 1
-
-
-	if getProperty(strum .. '.alpha') ~= nil then
-		alpha =
-			getProperty(strum .. '.alpha')
-	end
-
-
-	setProperty(
-		tag .. '.alpha',
-		alpha
-	)
-
+    if lastAlpha[direction] ~= alpha then
+        setProperty(tag .. '.alpha', alpha)
+        lastAlpha[direction] = alpha
+    end
 end
-
 
 -- ============================================================
 -- Update All Showcase Alpha
 -- ============================================================
 
 local function updateAllShowcaseAlpha()
-	for direction = 0, 3 do
-		updateShowcaseAlpha(direction)
-	end
-end
+    local showcase = getModSetting('showCaseMode') == true
+    local showcaseAlpha = tonumber(getModSetting('showCaseStrumAlpha')) or 0
 
+    showcaseAlpha = math.max(0, math.min(1, showcaseAlpha))
+
+    for direction = 0, 3 do
+        updateShowcaseAlpha(direction, showcase, showcaseAlpha)
+    end
+end
 
 -- ============================================================
 -- Create Cover
 -- ============================================================
 
 local function makeCover(direction)
-	local data = coverData[direction]
+    local data = coverData[direction]
+    if not data then return end
 
-	if not data then
-		return
-	end
+    local tag = 'holdCover' .. direction
 
-	local tag = 'holdCover' .. direction
+    makeAnimatedLuaSprite(tag, data.image, 0, 0)
 
-	makeAnimatedLuaSprite(
-		tag,
-		data.image,
-		0,
-		0
-	)
+    addAnimationByPrefix(tag, 'start', data.start, COVER_FPS, false)
+    addAnimationByPrefix(tag, 'hold', data.hold, COVER_FPS, true)
+    addAnimationByPrefix(tag, 'end', data.finish, COVER_FPS, false)
 
-	addAnimationByPrefix(
-		tag,
-		'start',
-		data.start,
-		24,
-		false
-	)
+    setObjectCamera(tag, 'hud')
 
-	addAnimationByPrefix(
-		tag,
-		'hold',
-		data.hold,
-		24,
-		true
-	)
+    setProperty(tag .. '.visible', false)
+    setProperty(tag .. '.alpha', 1)
 
-	addAnimationByPrefix(
-		tag,
-		'end',
-		data.finish,
-		24,
-		false
-	)
+    addLuaSprite(tag, true)
 
-	setObjectCamera(
-		tag,
-		'hud'
-	)
-	
-	setObjectOrder(tag,10001)
-	
-	setProperty(
-		tag .. '.visible',
-		false
-	)
+    -- Set order after adding the sprite
+    setObjectOrder(tag, 10001)
 
-	setProperty(
-		tag .. '.alpha',
-		1
-	)
-
-	addLuaSprite(
-		tag,
-		true
-	)
-
-	covers[direction] = tag
-	active[direction] = false
-	endTimers[direction] = nil
+    covers[direction] = tag
+    active[direction] = false
+    endTimers[direction] = nil
+    lastAlpha[direction] = 1
 end
-
 
 -- ============================================================
 -- Create All Covers
 -- ============================================================
 
 function onCreatePost()
-	if not enableHoldCover then
-		return
-	end
+    if not enableHoldCover then return end
 
-	for direction = 0, 3 do
-		makeCover(direction)
-	end
+    for direction = 0, 3 do
+        makeCover(direction)
+    end
 
-	-- Debug text
-	createDebugText()
+    createDebugText()
 
-	-- Debug Mode:
-	-- Keep all four Hold Covers visible and looping.
-	if debugMode then
-		for direction = 0, 3 do
-			local tag = covers[direction]
+    if debugMode then
+        for direction = 0, 3 do
+            local tag = covers[direction]
 
-			if tag then
-				setProperty(
-					tag .. '.visible',
-					true
-				)
+            if tag then
+                setProperty(tag .. '.visible', true)
+                playAnim(tag, 'hold', true)
+            end
+        end
+    end
 
-				playAnim(
-					tag,
-					'hold',
-					true
-				)
-			end
-		end
-	end
-
-	updateAllShowcaseAlpha()
+    updateAllShowcaseAlpha()
 end
-
 
 -- ============================================================
 -- Update Cover Position
---
--- Final position:
---
--- Player Strum Position
--- + Direction Base Offset
--- + Shared X/Y Offset
 -- ============================================================
 
 local function updateCoverPosition(direction)
-	local tag = covers[direction]
+    local tag = covers[direction]
+    if not tag then return end
 
-	if not tag then
-		return
-	end
+    local strum = 'playerStrums.members[' .. direction .. ']'
+    local offset = baseOffset[direction]
 
-	local strum =
-		'playerStrums.members[' .. direction .. ']'
+    local x = getProperty(strum .. '.x')
+    local y = getProperty(strum .. '.y')
 
-	local offset =
-		baseOffset[direction]
+    if x == nil or y == nil then return end
 
-	setProperty(
-		tag .. '.x',
-		getProperty(strum .. '.x')
-			+ offset[1]
-			+ holdCoverOffsetX
-	)
+    setProperty(
+        tag .. '.x',
+        x + offset[1] + holdCoverOffsetX
+    )
 
-	setProperty(
-		tag .. '.y',
-		getProperty(strum .. '.y')
-			+ offset[2]
-			+ holdCoverOffsetY
-	)
+    setProperty(
+        tag .. '.y',
+        y + offset[2] + holdCoverOffsetY
+    )
 end
-
 
 -- ============================================================
 -- Update All Debug Covers
 -- ============================================================
 
 local function updateAllDebugCovers()
-	if not debugMode then
-		return
-	end
+    if not debugMode then return end
 
-	for direction = 0, 3 do
-		local tag = covers[direction]
+    for direction = 0, 3 do
+        local tag = covers[direction]
 
-		if tag then
-			updateCoverPosition(direction)
+        if tag then
+            updateCoverPosition(direction)
 
-			setProperty(
-				tag .. '.visible',
-				true
-			)
+            setProperty(tag .. '.visible', true)
 
-			local animName =
-				getProperty(
-					tag .. '.animation.curAnim.name'
-				)
+            local animName = getProperty(tag .. '.animation.curAnim.name')
 
-			if animName ~= 'hold' then
-				playAnim(
-					tag,
-					'hold',
-					true
-				)
-			end
-		end
-	end
+            if animName ~= 'hold' then
+                playAnim(tag, 'hold', true)
+            end
+        end
+    end
 end
-
 
 -- ============================================================
 -- Start Cover
 -- ============================================================
 
-local function startCover(
-	direction,
-	sustainLength
-)
-	if not sustainLength or sustainLength <= 150 then
-		return
-	end
+local function startCover(direction, sustainLength)
+    if not sustainLength or sustainLength <= 100 then return end
 
-	local tag = covers[direction]
+    local tag = covers[direction]
+    if not tag then return end
 
-	if not tag then
-		return
-	end
+    local oldTimer = endTimers[direction]
 
-	local oldTimer = endTimers[direction]
+    if oldTimer then
+        cancelTimer(oldTimer)
+        endTimers[direction] = nil
+    end
 
-	if oldTimer then
-		cancelTimer(oldTimer)
-		endTimers[direction] = nil
-	end
+    local timerName = 'holdCoverEnd' .. direction
+    endTimers[direction] = timerName
 
-	local timerName = 'holdCoverEnd' .. direction
-	endTimers[direction] = timerName
+    updateCoverPosition(direction)
+    updateAllShowcaseAlpha()
 
-	updateCoverPosition(direction)
-	updateShowcaseAlpha(direction)
+    setProperty(tag .. '.visible', true)
+    playAnim(tag, 'start', true)
 
-	setProperty(tag .. '.visible', true)
-	playAnim(tag, 'start', true)
+    active[direction] = true
 
-	active[direction] = true
-	
-	local rate =
-		getProperty('playbackRate')
+    local rate = getProperty('playbackRate')
 
-	if type(rate) ~= 'number' or rate <= 0 then
-		rate = 1
-	end
-	
-	local startTime = 1 / 24
+    if type(rate) ~= 'number' or rate <= 0 then
+        rate = 1
+    end
 
-	local duration =
-		(sustainLength / 1000 / rate)
-		- startTime
+    local duration =
+        (sustainLength / 1000 / rate) - (1 / COVER_FPS)
 
-	if duration < 0 then
-		duration = 0
-	end
+    if duration < 0 then duration = 0 end
 
-	runTimer(timerName, duration)
+    runTimer(timerName, duration)
 end
-
 
 -- ============================================================
 -- Stop Cover
---
--- Used when the player releases the key.
--- No End animation is played.
 -- ============================================================
 
 local function stopCover(direction)
-	local tag = covers[direction]
+    local tag = covers[direction]
+    if not tag then return end
 
-	if not tag then
-		return
-	end
+    local oldTimer = endTimers[direction]
 
-	local oldTimer =
-		endTimers[direction]
+    if oldTimer then
+        cancelTimer(oldTimer)
+    end
 
-	if oldTimer then
-		cancelTimer(oldTimer)
-	end
+    endTimers[direction] = nil
+    active[direction] = false
 
-	endTimers[direction] = nil
-	active[direction] = false
-
-	setProperty(
-		tag .. '.visible',
-		false
-	)
+    setProperty(tag .. '.visible', false)
 end
-
 
 -- ============================================================
 -- End Cover
 -- ============================================================
 
 local function endCover(direction)
-	local tag = covers[direction]
+    local tag = covers[direction]
+    if not tag then return end
+    if not active[direction] then return end
 
-	if not tag then
-		return
-	end
+    active[direction] = false
+    endTimers[direction] = nil
 
-	if not active[direction] then
-		return
-	end
+    updateCoverPosition(direction)
+    updateAllShowcaseAlpha()
 
-	active[direction] = false
-	endTimers[direction] = nil
-
-	updateCoverPosition(direction)
-	updateShowcaseAlpha(direction)
-
-	playAnim(
-		tag,
-		'end',
-		true
-	)
+    playAnim(tag, 'end', true)
 end
-
 
 -- ============================================================
 -- Player Note Hit
 -- ============================================================
 
-function goodNoteHit(
-	id,
-	direction,
-	noteType,
-	isSustainNote
-)
-	if not enableHoldCover then
-		return
-	end
+function goodNoteHit(id, direction, noteType, isSustainNote)
+    if not enableHoldCover or debugMode then return end
+    if isSustainNote then return end
 
-	if debugMode then
-		return
-	end
+    local sustainLength = tonumber(
+        getPropertyFromGroup('notes', id, 'sustainLength')
+    ) or 0
 
-	if isSustainNote then
-		return
-	end
+    if sustainLength <= 0 then return end
 
-	local sustainLength = 0
-
-	local value =
-		getPropertyFromGroup(
-			'notes',
-			id,
-			'sustainLength'
-		)
-
-	if value ~= nil then
-		sustainLength =
-			tonumber(value) or 0
-	end
-
-	if sustainLength <= 0 then
-		return
-	end
-
-	startCover(
-		direction,
-		sustainLength
-	)
+    startCover(direction, sustainLength)
 end
-
 
 -- ============================================================
 -- Update
 -- ============================================================
 
 function onUpdate(elapsed)
-	if not enableHoldCover then
-		return
-	end
+    if not enableHoldCover then return end
 
-	-- ========================================================
-	-- Debug Mode
-	-- ========================================================
+    updateAllShowcaseAlpha()
 
-	if debugMode then
-		updateDebugKeyboard()
-		updateAllDebugCovers()
-		updateAllShowcaseAlpha()
+    if debugMode then
+        updateDebugKeyboard()
+        updateAllDebugCovers()
+        return
+    end
 
-		-- 不执行正常 Hold Cover 的按键释放逻辑
-		return
-	end
+    local botplay = getProperty('cpuControlled')
 
-	-- ========================================================
-	-- Normal Mode
-	-- ========================================================
+    for direction = 0, 3 do
+        local tag = covers[direction]
 
-	updateAllShowcaseAlpha()
+        if tag and active[direction] then
+            updateCoverPosition(direction)
 
-	local botplay =
-		getProperty('cpuControlled')
+            if not botplay and not isDirectionPressed(direction) then
+                stopCover(direction)
+            else
+                local animName =
+                    getProperty(tag .. '.animation.curAnim.name')
 
-	for direction = 0, 3 do
-		local tag = covers[direction]
+                local finished =
+                    getProperty(tag .. '.animation.curAnim.finished')
 
-		if tag and active[direction] then
-			updateCoverPosition(direction)
-
-			-- Botplay 开启时不检测键盘。
-			-- 正常玩家游玩时才检测是否松开按键。
-			if not botplay
-				and not isDirectionPressed(direction) then
-
-				stopCover(direction)
-			else
-				local animName =
-					getProperty(
-						tag .. '.animation.curAnim.name'
-					)
-
-				local finished =
-					getProperty(
-						tag .. '.animation.curAnim.finished'
-					)
-
-				if animName == 'start'
-					and finished then
-
-					playAnim(
-						tag,
-						'hold',
-						true
-					)
-				end
-			end
-		end
-	end
+                if animName == 'start' and finished then
+                    playAnim(tag, 'hold', true)
+                end
+            end
+        end
+    end
 end
-
 
 -- ============================================================
 -- Timer
 -- ============================================================
 
 function onTimerCompleted(tag)
-	if not enableHoldCover then
-		return
-	end
+    if not enableHoldCover or debugMode then return end
 
-	if debugMode then
-		return
-	end
-
-	for direction = 0, 3 do
-		if tag == endTimers[direction] then
-			endCover(direction)
-			return
-		end
-	end
+    for direction = 0, 3 do
+        if tag == endTimers[direction] then
+            endCover(direction)
+            return
+        end
+    end
 end
-
 
 -- ============================================================
 -- Missed Note
 -- ============================================================
 
-function noteMiss(
-	id,
-	direction,
-	noteType,
-	isSustainNote
-)
-	if not enableHoldCover then
-		return
-	end
+function noteMiss(id, direction, noteType, isSustainNote)
+    if not enableHoldCover or debugMode then return end
 
-	if debugMode then
-		return
-	end
+    if active[direction] then
+        local oldTimer = endTimers[direction]
 
-	if active[direction] then
-		local oldTimer =
-			endTimers[direction]
+        if oldTimer then
+            cancelTimer(oldTimer)
+        end
 
-		if oldTimer then
-			cancelTimer(oldTimer)
-		end
-
-		endTimers[direction] = nil
-
-		endCover(direction)
-	end
+        endTimers[direction] = nil
+        endCover(direction)
+    end
 end
-
 
 -- ============================================================
 -- Hide Finished End Animation
 -- ============================================================
 
 function onUpdatePost()
-	if not enableHoldCover then
-		return
-	end
+    if not enableHoldCover or debugMode then return end
 
-	if debugMode then
-		return
-	end
+    for direction = 0, 3 do
+        local tag = covers[direction]
 
-	for direction = 0, 3 do
-		local tag = covers[direction]
+        if tag and not active[direction] then
+            local animName =
+                getProperty(tag .. '.animation.curAnim.name')
 
-		if tag and not active[direction] then
-			local animName =
-				getProperty(
-					tag .. '.animation.curAnim.name'
-				)
+            local finished =
+                getProperty(tag .. '.animation.curAnim.finished')
 
-			local finished =
-				getProperty(
-					tag .. '.animation.curAnim.finished'
-				)
-
-			if animName == 'end'
-				and finished then
-
-				setProperty(
-					tag .. '.visible',
-					false
-				)
-			end
-		end
-	end
+            if animName == 'end' and finished then
+                setProperty(tag .. '.visible', false)
+            end
+        end
+    end
 end
-
 
 -- ============================================================
 -- Cleanup
 -- ============================================================
 
 function onDestroy()
-	if not enableHoldCover then
-		return
-	end
+    if not enableHoldCover then return end
 
-	for direction = 0, 3 do
-		local timerName =
-			endTimers[direction]
+    for direction = 0, 3 do
+        local timerName = endTimers[direction]
 
-		if timerName then
-			cancelTimer(timerName)
-		end
-	end
+        if timerName then
+            cancelTimer(timerName)
+        end
+    end
 
-	-- 防止离开歌曲后残留透明度状态
-	for direction = 0, 3 do
-		local tag = covers[direction]
+    for direction = 0, 3 do
+        local tag = covers[direction]
 
-		if tag then
-			setProperty(
-				tag .. '.alpha',
-				1
-			)
-		end
-	end
+        if tag then
+            setProperty(tag .. '.alpha', 1)
+        end
+    end
 end

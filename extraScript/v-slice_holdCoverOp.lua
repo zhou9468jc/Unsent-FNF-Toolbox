@@ -315,7 +315,7 @@ local function startCover(
 	sustainLength
 )
 
-	if not sustainLength or sustainLength <= 150 then
+	if not sustainLength or sustainLength <= 100 then
 		return
 	end
 

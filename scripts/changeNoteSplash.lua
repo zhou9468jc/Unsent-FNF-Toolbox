@@ -2,6 +2,17 @@
 -- Unsent's Note Splash
 -- Random V-Slice Note Splash Animations
 -- ============================================================
+-- ============================================================
+-- Stage Mode Guard
+-- 仅允许 Pixel 舞台运行
+-- ============================================================
+
+if not (getPropertyFromClass('PlayState', 'isPixelStage') == false and getModSetting("originalHealthBar") == true) then
+	close()
+end
+function isPixelStage()
+	return true
+end
 
 local texture = 'noteSplashes/noteSplashes-vslice'
 local splashAlpha = 0
@@ -16,10 +27,32 @@ local splashAnims = {
 	'note impact %s green',
 	'note impact %s red'
 }
+local function disableNoteSplash(group, id)
+	if not group or id == nil then return end
 
+	pcall(function()
+		setPropertyFromGroup(group, id, 'noteSplashData.disabled', true)
+	end)
+end
+
+local function disableAllNoteSplashes()
+	local groups = {'unspawnNotes', 'notes'}
+
+	for _, group in ipairs(groups) do
+		local length = getProperty(group .. '.length') or 0
+
+		for i = 0, length - 1 do
+			disableNoteSplash(group, i)
+		end
+	end
+end
 -- ============================================================
 -- Utility
 -- ============================================================
+function onSpawnNote(id, data, noteType, isSustainNote, isHurtNote)
+	if not isPixelStage() then return end
+	disableNoteSplash('notes', id)
+end
 
 local function getRandomAnim(direction)
 	local index = direction + 1
@@ -57,22 +90,24 @@ end
 -- ============================================================
 
 function onCreate()
+	if not isPixelStage() then return end
     for i = 0, getProperty('unspawnNotes.length') - 1 do
         setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', true)
     end
 	if version >= '0.7' then
 		if enableSystem then
 			splashAlpha = getPropertyFromClass('backend.ClientPrefs', 'data.splashAlpha')
-			setPropertyFromClass('backend.ClientPrefs', 'data.splashAlpha', 0)
+			--setPropertyFromClass('backend.ClientPrefs', 'data.splashAlpha', 0)
 		end
 	else
 		splashAlpha = 0.6
 		enableSystem = getPropertyFromClass('ClientPrefs', 'noteSplashes') == true
-		setPropertyFromClass('ClientPrefs', 'noteSplashes', false)
+		--setPropertyFromClass('ClientPrefs', 'noteSplashes', false)
 	end
 end
 
 function onDestroy()
+	if not isPixelStage() then return end
 	if version >= '0.7' then
 		if enableSystem then
 			setPropertyFromClass('backend.ClientPrefs', 'data.splashAlpha', splashAlpha)
@@ -83,6 +118,7 @@ function onDestroy()
 end
 
 function onCreatePost()
+	if not isPixelStage() then return end
 	precacheImage(texture)
 
 	if splashAlpha > 0 and enableSystem then
@@ -103,6 +139,7 @@ end
 -- ============================================================
 
 function goodNoteHit(id, data, noteType, isSustainNote)
+	if not isPixelStage() then return end
 	if splashAlpha <= 0 or not enableSystem then return end
 
 	local rating = getPropertyFromGroup('notes', id, 'rating')
@@ -234,6 +271,7 @@ end
 -- ============================================================
 
 function onUpdate()
+	if not isPixelStage() then return end
 	for i = 1, #splashes do
 		local name = splashes[i][3]
 

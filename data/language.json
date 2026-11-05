@@ -67,6 +67,7 @@
 		"Botplay_Disable": "请先关闭 Botplay！",
 
 		"Toolbox_Print_ON": "工具箱输出：开启",
+		"Toolbox_Print_OFF": "工具箱输出：关闭",
 		
 		"QuickCommand_CannotLoadJson":"QuickCommand：无法加载 JSON 文件",
 		"QuickCommand_Loaded":"QuickCommand：已加载 {1} 个快捷指令",
@@ -75,7 +76,11 @@
 		"QuickCommand_LuaRuntimeError":"QuickCommand Lua 运行错误：{1}",
 		"QuickCommand_HScriptError":"QuickCommand HScript 错误：{1}",
 		"QuickCommand_UnknownType":"QuickCommand：未知代码类型：{1}",
-		"QuickCommand_Execute":"QuickCommand：执行：{1}"
+		"QuickCommand_Execute":"QuickCommand：执行：{1}",
+		
+		"Window_Title_Paused":"暂停...",
+		"Window_Title_Gameover":"不是你怎么死了:D",
+		"Window_Title_GameStart":"歌曲开始"
 	},
 	"English": {
 		"Language_Name": "English",
@@ -139,6 +144,7 @@
 		"Botplay_Disable": "Please turn OFF Botplay first!",
 
 		"Toolbox_Print_ON": "Toolbox Print: ON",
+		"Toolbox_Print_OFF": "Toolbox Print: OFF",
 		
 		"QuickCommand_CannotLoadJson":"QuickCommand : Cannot load json",
 		"QuickCommand_Loaded":"QuickCommand : Loaded {1} commands",
@@ -147,7 +153,11 @@
 		"QuickCommand_LuaRuntimeError":"QuickCommand Lua Runtime Error : {1}",
 		"QuickCommand_HScriptError":"QuickCommand HScript Error : {1}",
 		"QuickCommand_UnknownType":"QuickCommand : Unknown type : {1}",
-		"QuickCommand_Execute":"QuickCommand : Execute : {1}"
+		"QuickCommand_Execute":"QuickCommand : Execute : {1}",
+		
+		"Window_Title_Paused":"PAUSED",
+		"Window_Title_Gameover":"GAMEOVER",
+		"Window_Title_GameStart":"SONGSTART"
 	},
 	"老牧师？？？": {
 		"91781367":"这是一个隐藏语言自己研究怎么装。",
