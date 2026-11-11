@@ -6,8 +6,8 @@ from fontTools import subset, ttLib
 # 精简英文、数字、常用符号及 NFE 中文评级 HUD 字符
 # ============================================================
 
-INPUT_FONT = Path("vcr.ttf")
-OUTPUT_FONT = Path("unsentScoreText.ttf")
+INPUT_FONT = Path("input.ttf")
+OUTPUT_FONT = Path("output.ttf")
 
 # 字体集合中的字体编号：0 或 1 等
 FONT_NUMBER = 0

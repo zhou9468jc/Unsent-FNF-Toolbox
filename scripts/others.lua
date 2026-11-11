@@ -62,7 +62,6 @@ end
 
 local blindPlayMode='Disable'
 
-
 function onSpawnNote(index)
 
 	if blindPlayMode=='Disable' then
@@ -100,7 +99,51 @@ function onSpawnNote(index)
 
 	end
 end
+local function hasPlayerNotes(song)
+    if not song or not song.notes then return false end
 
+    for _, section in ipairs(song.notes) do
+        local mustHit = section.mustHitSection == true
+
+        for _, note in ipairs(section.sectionNotes or {}) do
+            local noteData = tonumber(note[2])
+
+            if noteData then
+                local isPlayer = mustHit
+                if noteData >= 4 then
+                    isPlayer = not isPlayer
+                end
+
+                if isPlayer then return true end
+            end
+        end
+    end
+
+    return false
+end
+
+local function hasPlayerNotes()
+    return runHaxeCode([[
+        if (game == null) return false;
+
+        for (note in game.unspawnNotes) {
+            if (note.mustPress) return true;
+        }
+
+        for (note in game.notes) {
+            if (note.mustPress) return true;
+        }
+
+        return false;
+    ]])
+end
+function onSongStart()
+    if blindPlayMode == 'Disable' then return end
+
+    if not hasPlayerNotes() then
+        unlockAchievement('noNote')
+    end
+end
 --================================================
 --Hide Debug Prints
 --================================================

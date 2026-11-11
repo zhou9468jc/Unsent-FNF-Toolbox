@@ -317,7 +317,7 @@
 		"format": "  %v",
 		"type": "float",
 		"description": "Health reduced by a normal opponent note when Opponent Health Drain is enabled.\n调整对手按一个箭头扣多少血。",
-		"value": 0.018,
+		"value": 0.022,
 		"decimals": 3,
 		"min": 0,
 		"max": 0.1,
@@ -330,7 +330,7 @@
 		"format": "  %v",
 		"type": "float",
 		"description": "Health reduced by an opponent sustain note when Opponent Health Drain is enabled.\n调整对手长按条每节扣多少血。",
-		"value": 0.012,
+		"value": 0.018,
 		"decimals": 3,
 		"min": 0,
 		"max": 0.1,
@@ -371,7 +371,7 @@
 		"format": "   %v",
 		"type": "float",
 		"description": "Health gained or lost for each sustain note tick.\n调整长按条每节回多少血。",
-		"value": 0.015,
+		"value": 0.020,
 		"decimals": 3,
 		"min": 0,
 		"max": 0.1,
@@ -601,7 +601,7 @@
 		"save": "2026BfGf",
 		"name": "Better BF/GF Style",
 		"type": "bool",
-		"description": "When enabled, replaces BF and GF with improved sprites. If any issues occur, press 9 before the song starts to temporarily disable this feature. (Spritesheets are from the mod \"2hotBFMix2026\" and \"Vs Impostor Legacy\".)\n开启后，将 BF 和 GF 替换为改良版精灵图。如果出现问题，请在歌曲开始前按 9 暂时禁用此功能。（精灵图素材来自模组 \"2hotBFMix2026\"和\"Vs Impostor Legacy\"。）",
+		"description": "When enabled, replaces BF and GF with improved sprites. If any issues occur, press 9 before the song starts to temporarily disable this feature. (Spritesheets are from the mod \"Vs Impostor Legacy\".)\n开启后，将 BF 和 GF 替换为改良版精灵图。如果出现问题，请在歌曲开始前按 9 暂时禁用此功能。（精灵图素材来自模组\"Vs Impostor Legacy\"。）",
 		"value": false
 	},
 	{
@@ -817,6 +817,13 @@
 		"name": "Widescreen mode",
 		"type": "bool",
 		"description": "When enabled, the visible game area automatically expands horizontally according to the window height without stretching the game. Restart required after changing.\n启用后，游戏画面的可视区域会根据窗口高度自动向左右扩展，不会拉伸画面。修改设置后需要重启游戏。",
+		"value": false
+	},
+	{
+		"save": "disableEGS",
+		"name": "Disable Easter Eggs",
+		"type": "bool",
+		"description": "If enabled, Toolbox's Easter Eggs won't show.\n开启后将不显示工具箱彩蛋。",
 		"value": false
 	},
 	{

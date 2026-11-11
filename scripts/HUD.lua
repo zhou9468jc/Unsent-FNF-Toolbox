@@ -15,6 +15,60 @@ local boxWidth, boxHeight, bottomOffset = 800, 120, 0
 local boxTag = 'unsentBottomHUDBackground'
 local imageName = 'unsentBottomHUDBackground'
 
+--==================================================
+--老祖宗gpt之手挫json解析器
+local JSON_NULL=setmetatable({},{__tostring=function()return"JSON_NULL"end}) local function parseJson(str) if type(str)~="string"then return nil end local pos,len=1,#str local function skip()while pos<=len and str:sub(pos,pos):match("%s")do pos=pos+1 end end local parseValue local function parseString() pos=pos+1 local out={} while pos<=len do local c=str:sub(pos,pos);pos=pos+1 if c=='"'then return table.concat(out) elseif c=="\\"then local e=str:sub(pos,pos);pos=pos+1 local escapes={['"']='"',["\\"]="\\",["/"]="/",b="\b",f="\f",n="\n",r="\r",t="\t"} if escapes[e]then out[#out+1]=escapes[e] elseif e=="u"then local h=str:sub(pos,pos+3);if not h:match("^%x%x%x%x$")then error("Invalid Unicode")end pos=pos+4 local cp=tonumber(h,16) if cp>=0xD800 and cp<=0xDBFF then if str:sub(pos,pos+1)~="\\u"then error("Invalid surrogate")end local l=str:sub(pos+2,pos+5);if not l:match("^%x%x%x%x$")then error("Invalid surrogate")end local lp=tonumber(l,16);if lp<0xDC00 or lp>0xDFFF then error("Invalid surrogate")end cp=0x10000+(cp-0xD800)*0x400+lp-0xDC00;pos=pos+6 elseif cp>=0xDC00 and cp<=0xDFFF then error("Unexpected low surrogate")end if cp<0x80 then out[#out+1]=string.char(cp) elseif cp<0x800 then out[#out+1]=string.char(0xC0+math.floor(cp/64),0x80+cp%64) elseif cp<0x10000 then out[#out+1]=string.char(0xE0+math.floor(cp/4096),0x80+math.floor(cp/64)%64,0x80+cp%64) else out[#out+1]=string.char(0xF0+math.floor(cp/262144),0x80+math.floor(cp/4096)%64,0x80+math.floor(cp/64)%64,0x80+cp%64)end else error("Invalid escape")end else if c:byte()<32 then error("Invalid control character")end;out[#out+1]=c end end error("Unterminated string") end local function parseNumber() local start=pos if str:sub(pos,pos)=="-"then pos=pos+1 end local c=str:sub(pos,pos) if c=="0"then pos=pos+1;if str:sub(pos,pos):match("%d")then error("Leading zero")end else if not c:match("[1-9]")then error("Invalid number")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end if str:sub(pos,pos)=="."then pos=pos+1;if not str:sub(pos,pos):match("%d")then error("Invalid fraction")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end c=str:sub(pos,pos) if c=="e"or c=="E"then pos=pos+1;c=str:sub(pos,pos);if c=="+"or c=="-"then pos=pos+1 end;if not str:sub(pos,pos):match("%d")then error("Invalid exponent")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end local n=tonumber(str:sub(start,pos-1));if n==nil then error("Invalid number")end;return n end local function parseArray() pos=pos+1;skip();local arr={} if str:sub(pos,pos)=="]"then pos=pos+1;return arr end while true do arr[#arr+1]=parseValue();skip();local c=str:sub(pos,pos);if c=="]"then pos=pos+1;return arr elseif c~=","then error("Expected ',' or ']'")end;pos=pos+1;skip()end end local function parseObject() pos=pos+1;skip();local obj={} if str:sub(pos,pos)=="}"then pos=pos+1;return obj end while true do if str:sub(pos,pos)~='"'then error("Expected object key")end local key=parseString();skip() if str:sub(pos,pos)~=":"then error("Expected ':'")end pos=pos+1;skip();obj[key]=parseValue();skip() local c=str:sub(pos,pos);if c=="}"then pos=pos+1;return obj elseif c~=","then error("Expected ',' or '}'")end;pos=pos+1;skip() end end parseValue=function() skip();local c=str:sub(pos,pos) if c=='"'then return parseString()elseif c=="{"then return parseObject()elseif c=="["then return parseArray()elseif c=="-"or c:match("%d")then return parseNumber()end for _,v in ipairs({{"true",true},{"false",false},{"null",JSON_NULL}})do if str:sub(pos,pos+#v[1]-1)==v[1]then pos=pos+#v[1];return v[2]end end error("Unexpected token at position "..pos) end local ok,result=pcall(function()local v=parseValue();skip();if pos<=len then error("Trailing content")end;return v end) if ok then return result end return nil end local function safeReadJson(value) local content=getTextFromFile(value) if content==nil or content==""then return nil end return parseJson(content) end
+--==================================================
+local function safeReadJson(value)
+    if UnsentToolbox_NFEVersion == "1.2.0" then
+        local success, result = pcall(readJson, value)
+        if success then return result end
+        return nil
+    end
+    local content = getTextFromFile(value)
+    if content == nil or content == "" then return nil end
+    return parseJson(content)
+end
+local languages = safeReadJson("data/language.json") or {HUD_ScoreText_Format = " Score: {1} | Misses: {2}{3} | Accuracy: {4}% | Rank: {5}"}--默认语言！！重要！！！
+local language = getModSetting("language")
+if language == nil then
+	local text =
+		"[Unsent's ToolBox] Error : "
+		..((languages["###GloBal_Language"] or {}).Language_ReadError or "Language_ReadError")
+	debugPrint(text,"red")
+	local message = tostring(text)
+		:gsub("\\", "\\\\")
+		:gsub("\r", "\\r")
+		:gsub("\n", "\\n")
+		:gsub("\t", "\\t")
+		:gsub('"', '\\"')
+	pcall(runHaxeCode, 'trace("' .. message .. '");')
+	language = "English"
+end
+if language == "###GloBal_Language" then
+	language = "English"
+end
+local lang =
+	languages[language]
+	or languages["English"]
+	or {}
+local Global_lang =
+	languages["###GloBal_Language"]
+	or {}
+local function getLang(isGlobal, key, ...)
+	local source = isGlobal and Global_lang or lang
+	local text = source[key]
+	if text == nil then
+		text = isGlobal and ("Global_" .. key) or key
+	end
+	for i, v in ipairs({...}) do
+		text = text:gsub("%{" .. i .. "%}", function()
+			return tostring(v)
+		end)
+	end
+	return text
+end
+
 -- ============================================================
 -- DOWNSCROLL DETECTION
 -- ============================================================
@@ -146,81 +200,6 @@ local function shouldKeepFC(fc)
     if fc == 'AP' or fc == 'FC' then return fc end
     if fc == 'SFC' or fc == 'GFC' or fc == 'BFC' then return 'FC' end
     return nil
-end
-
--- ============================================================
--- UPDATE CUSTOM RATING AND SCORE TEXT
--- ============================================================
-local function updateCustomRating()
-    if not enableCustomRating or not getProperty('scoreTxt.visible') then return end
-    local text = getProperty('scoreTxt.text')
-    if type(text) ~= 'string' or text == '' then return end
-
-    -- 中文字体
-    if language == 'Chinese' then
-        setTextFont('scoreTxt', 'unsentScoreText.ttf')
-        if not customRatingFontSizeSet then
-            customRatingOriginalFontSize = tonumber(getProperty('scoreTxt.size')) or 16
-            setTextSize('scoreTxt', customRatingOriginalFontSize + 4)
-            customRatingFontSizeSet = true
-        end
-    elseif customRatingFontSizeSet then
-        if customRatingOriginalFontSize then setTextSize('scoreTxt', customRatingOriginalFontSize) end
-        customRatingFontSizeSet = false
-    end
-
-    -- 仅识别 NFE HUD 的统计格式；其他引擎的文本不由本脚本改写
-    local isNFEText = text:match('^NPS:%s*') ~= nil
-        and text:find('|', 1, true) ~= nil
-        and (text:find('准确率:', 1, true) ~= nil
-            or text:find('Accuracy:', 1, true) ~= nil)
-    --if not isNFEText then return end
-
-    local ratingPercent = math.floor((tonumber(getProperty('ratingPercent')) or 0) * 10000 + 0.5) / 100
-    local score = tonumber(getProperty('songScore')) or 0
-    local misses = tonumber(getProperty('songMisses')) or 0
-    local missLimit = tonumber(getModSetting('missLimit'))
-    local accuracyText = string.format('%.2f', ratingPercent):gsub('0+$', ''):gsub('%.$', '')
-    local missText = ''
-    if missLimit and missLimit ~= -1 then missText = '/' .. tostring(missLimit) end
-
-    -- 移除脚本上一次添加的自定义评级，保留 NPS 前缀
-    local before = text:match('^(NPS:.-%|)')
-    if not before then return end
-
-    -- FC/AP 完全由 Toolbox 根据实时数据判定，不读取 NFE 原有标记
-    local fc = nil
-    if misses <= 0 then 
-		if customRating == 'N/A' then
-			fc = nil
-		elseif ratingPercent >= 100 then
-			fc = 'AP' 
-		else
-			fc = 'FC'
-		end
-	end
-    customRating = getCustomRating()
-
-    local newText
-    if language == 'Chinese' then
-        newText = before
-            .. ' 分数: ' .. score
-            .. ' | 失误: ' .. misses .. missText
-            .. ' | 准确率: ' .. accuracyText .. '%'
-            .. ' | 评级: ' .. customRating
-        if fc then newText = newText .. ' (' .. fc .. ')' end
-    else
-        -- NFE 英文 HUD：保留原始 NPS，使用引擎实时统计重建其余字段
-        newText = before
-            .. ' Score: ' .. score
-            .. ' | Misses: ' .. misses .. missText
-            .. ' | Accuracy: ' .. accuracyText .. '%'
-            .. ' Rank: ' .. customRating
-        if fc then newText = newText .. ' (' .. fc .. ')' end
-    end
-
-    --if newText ~= text then setProperty('scoreTxt.text', newText) end
-	setProperty('scoreTxt.text', newText)
 end
 
 -- ============================================================
@@ -609,10 +588,17 @@ local function updateCustomRating()
 
     -- 中文字体
     if language == 'Chinese' then
-        setTextFont('scoreTxt', 'unsentScoreText.ttf')
+		if getPropertyFromClass('PlayState', 'isPixelStage') == true then
+			setTextFont('scoreTxt', 'unsentScoreText-pixel.ttf')
+			setTextBorder('scoreTxt', 1.2, '000000')
+			setProperty('scoreTxt.letterSpacing', -1)
+		else
+			setTextFont('scoreTxt', 'unsentScoreText.ttf')
+		end
         if not customRatingFontSizeSet then
-            customRatingOriginalFontSize = tonumber(getProperty('scoreTxt.size')) or 16
-            setTextSize('scoreTxt', customRatingOriginalFontSize + 4)
+            --customRatingOriginalFontSize = tonumber(getProperty('scoreTxt.size')) or 16
+            --setTextSize('scoreTxt', customRatingOriginalFontSize + 4)
+			setTextSize('scoreTxt', 20)
             customRatingFontSizeSet = true
         end
     elseif customRatingFontSizeSet then
@@ -654,19 +640,11 @@ local function updateCustomRating()
 
     local newText
     if language == 'Chinese' then
-        newText = before
-            .. ' 分数: ' .. score
-            .. ' | 失误: ' .. misses .. missText
-            .. ' | 准确率: ' .. accuracyText .. '%'
-            .. ' | 评级: ' .. customRating
+        newText = before..getLang(false,"HUD_ScoreText_Format",score,misses,missText,accuracyText,customRating)
         if fc then newText = newText .. ' (' .. fc .. ')' end
     else
         -- NFE 英文 HUD：保留原始 NPS，使用引擎实时统计重建其余字段
-        newText = before
-            .. ' Score: ' .. score
-            .. ' | Misses: ' .. misses .. missText
-            .. ' | Accuracy: ' .. accuracyText .. '%'
-            .. ' Rank: ' .. customRating
+        newText = before..getLang(false,"HUD_ScoreText_Format",score,misses,missText,accuracyText,customRating)
         if fc then newText = newText .. ' (' .. fc .. ')' end
     end
 

@@ -1,0 +1,25 @@
+[
+	{
+		"save": "noNote",
+		"name": "Self-Deception 自欺欺人",
+		"description": "Enable Blind Play in a song With No Notes.  在没有音符的关卡开启Blind Play。"
+	},
+	{
+		"save": "faxian",
+		"name": "Caught! 被发现了！",
+		"description": "OH MY GOD!!!  不是哥们?",
+		"hidden": true
+	},
+	{
+		"save": "showcase",
+		"name": "Handcraftism 手搓主义",
+		"description": "Try to Disable Botplay on Showcase Mode.  尝试在展示模式关闭Botplay。"
+	},
+	{
+		"save": "press100",
+		"name": "What you DO?! 你在干什么？！",
+		"description": "Use Toolbox Shortcut Key 100 times on a song.  在一局使用工具箱快捷键100次",
+		"maxScore": 100,
+		"maxDecimals": 0
+	}
+]

@@ -16,7 +16,12 @@
 		"Version_Too_Old_Title":"Unsent's Toolbox - 引擎版本异常! - 版本过旧",
 		"Incorrect_Engine":"引擎版本错误！请使用NF引擎！\n让我猜猜你用的是Psych Engine版本是：{1}",
 		"Incorrect_Engine_Title":"Unsent's Toolbox - 引擎版本异常! - 未运行在NF",
-		
+		"HUD_ScoreText_Format":" 分数: {1} | 失误: {2}{3} | 准确率: {4}% | 评级: {5}",
+		"Auxiliary_File_Not_Found_old":"辅助脚本”AAAAADonTdelateThisUnsentToolBoxAuxiliaryScript.lua“不存在！\n部分脚本可能无法运行!",
+		"Auxiliary_File_Not_Found_Title_old":"Unsent's Toolbox - 辅助脚本异常!",
+		"Auxiliary_File_Not_Found":"脚本目录信息读取错误！\n部分脚本可能无法运行!",
+		"Auxiliary_File_Not_Found_Title":"Unsent's Toolbox - 目录信息读取异常!",
+	
 		"ModSetting_ReadError": "模组设置\"{1}\"读取错误(值为空)，将使用默认值:\"{2}\"",
 		
 		"FakeBotplay_ON": "Botplay文字：显示",
@@ -80,21 +85,33 @@
 		
 		"Window_Title_Paused":"暂停...",
 		"Window_Title_Gameover":"不是你怎么死了:D",
-		"Window_Title_GameStart":"歌曲开始"
+		"Window_Title_GameStart":"歌曲开始",
+		
+		"Easter_Egg_1_a":"一个神秘的声音在召唤你...",
+		"Easter_Egg_1_b":"qu pu mian bian ji qi , jia zai zhe ge pu mian: ",
+		"Easter_Egg_1_c":"\"what-fxxk\""
 	},
 	"English": {
 		"Language_Name": "English",
 		"Language_Current": "Current Language",
-		"Enable":"Enable",
-		"Disable":"Disable",
-		"Enabled":"Enabled",
-		"Disabled":"Disabled",
-		"Version_Too_Old":"Your NovaFlare Engine version is too old (below 1.2.0). Please update to a newer version!",
-		"Version_Too_Old_Title":"Unsent's Toolbox - Engine Version ERROR! - Too Old",
-		"Incorrect_Engine":"Incorrect engine version! PLEASE USE NovaFlare Engine!\n(Psych Engine {1})",
-		"Incorrect_Engine_Title":"Unsent's Toolbox - Engine Version ERROR! - Not NovaFlare",
+
+		"ON": "ON",
+		"OFF": "OFF",
+		"Enable": "Enable",
+		"Disable": "Disable",
+		"Enabled": "Enabled",
+		"Disabled": "Disabled",
+		"Version_Too_Old": "Your NovaFlare Engine version is too old (below 1.2.0). The script will try to continue running, but some features may not work correctly. Please update your engine.",
+		"Version_Too_Old_Title": "Unsent's Toolbox - Engine Version ERROR! - Too Old",
+		"Incorrect_Engine": "Incorrect engine! Please use NovaFlare Engine!\nLet me guess, you're using Psych Engine version {1}.",
+		"Incorrect_Engine_Title": "Unsent's Toolbox - Engine Version ERROR! - Not Running on NovaFlare",
+		"HUD_ScoreText_Format":" Score: {1} | Misses: {2}{3} | Accuracy: {4}% | Rank: {5}",
+		"Auxiliary_File_Not_Found_old":"Auxiliary script \"AAAAADonTdelateThisUnsentToolBoxAuxiliaryScript.lua\" is missing!\nSome scripts may not work properly.",
+		"Auxiliary_File_Not_Found_Title_old": "Unsent's Toolbox - Auxiliary Script Error!",
+		"Auxiliary_File_Not_Found":"Failed to read script directory information!\nSome scripts may not function correctly!",
+		"Auxiliary_File_Not_Found_Title":"Unsent's Toolbox - Directory Information Error!",
 		
-		"ModSetting_ReadError": "ERROR: Failed to read Toolbox Mod Setting: {1} (Value is Nil),Will Use Default Value : {2}",
+		"ModSetting_ReadError": "Failed to read mod setting \"{1}\" (value is nil). Using default value: \"{2}\"",
 
 		"FakeBotplay_ON": "Fake Botplay: ON",
 		"FakeBotplay_OFF": "Fake Botplay: OFF",
@@ -108,22 +125,20 @@
 		"SoftPause_OFF": "Soft Pause: OFF",
 		"SoftPause_Enable": "Soft Pause: Enabled",
 		"SoftPause_Text": "SOFT PAUSE\nPress {1} to Exit Soft Pause",
-
 		"SoftResume_Error": "Soft Resume Error: {1}",
 		"SoftPause_Timeout": "Soft Pause initialization timed out after 3 seconds!",
 
-		"Advanced_Debug":"Advanced Debug Mode",
-		"AD_Playback_Rate":"PlayBack Rate",
-		"AD_Scroll_Speed":"Scroll Speed",
-		"AD_Practice":"Practice Mode",
-		"AD_Botplay":"Botplay",
-		"AD_BPM":"BPM",
-		"AD_Song_Start":"Song Start",
-		"AD_Difficulty":"Difficulty",
+		"Advanced_Debug": "Advanced Debug Mode",
+		"AD_Playback_Rate": "Playback Rate",
+		"AD_Scroll_Speed": "Scroll Speed",
+		"AD_Practice": "Practice Mode",
+		"AD_Botplay": "Botplay",
+		"AD_BPM": "BPM",
+		"AD_Song_Start": "Song Start",
+		"AD_Difficulty": "Difficulty",
 
 		"Playback_Info": "Playback Rate {1} : {2} | Scroll Speed : {3} | Song Speed : {4}",
 		"Scroll_Info": "Scroll Speed {1} : {2} | Playback Rate : {3} | Song Speed : {4}",
-
 		"Playback_Reset": "Playback Rate RESET : {1} | Scroll Speed : {2} | Song Speed : {3}",
 		"Scroll_Reset": "Scroll Speed RESET : {1} | Playback Rate : {2} | Song Speed : {3}",
 
@@ -134,30 +149,33 @@
 		"Warning_Debug": "Debug output cannot be disabled while this option is enabled.",
 
 		"Error_Engine": "ERROR: NovaFlare Engine required!",
-		"Error_Stop": "Unsent's ToolBox stopped.",
+		"Error_Stop": "Unsent's Toolbox has stopped.",
+		"Developer_Loaded": "Unsent's Toolbox Loaded",
 
-		"Developer_Loaded": "Unsent's ToolBox Loaded",
-
-		"Warning_NoReset": "WARNING: No Reset is disabled!",
-		"Warning_EnableNoReset": "Please enable No Reset before using \"Reset Property\"!",
+		"Warning_NoReset": "WARNING: No Reset is disabled or the Toolbox default reset key is being used.",
+		"Warning_EnableNoReset": "Please enable No Reset or change the reset key before using the reset function.",
 
 		"Botplay_Disable": "Please turn OFF Botplay first!",
 
 		"Toolbox_Print_ON": "Toolbox Print: ON",
 		"Toolbox_Print_OFF": "Toolbox Print: OFF",
-		
-		"QuickCommand_CannotLoadJson":"QuickCommand : Cannot load json",
-		"QuickCommand_Loaded":"QuickCommand : Loaded {1} commands",
-		"QuickCommand_RunHaxeUnavailable":"QuickCommand : runHaxeCode unavailable",
-		"QuickCommand_LuaError":"QuickCommand Lua Error : {1}",
-		"QuickCommand_LuaRuntimeError":"QuickCommand Lua Runtime Error : {1}",
-		"QuickCommand_HScriptError":"QuickCommand HScript Error : {1}",
-		"QuickCommand_UnknownType":"QuickCommand : Unknown type : {1}",
-		"QuickCommand_Execute":"QuickCommand : Execute : {1}",
-		
-		"Window_Title_Paused":"PAUSED",
-		"Window_Title_Gameover":"GAMEOVER",
-		"Window_Title_GameStart":"SONGSTART"
+
+		"QuickCommand_CannotLoadJson": "QuickCommand: Cannot load JSON file",
+		"QuickCommand_Loaded": "QuickCommand: Loaded {1} commands",
+		"QuickCommand_RunHaxeUnavailable": "QuickCommand: runHaxeCode is unavailable",
+		"QuickCommand_LuaError": "QuickCommand Lua Error: {1}",
+		"QuickCommand_LuaRuntimeError": "QuickCommand Lua Runtime Error: {1}",
+		"QuickCommand_HScriptError": "QuickCommand HScript Error: {1}",
+		"QuickCommand_UnknownType": "QuickCommand: Unknown code type: {1}",
+		"QuickCommand_Execute": "QuickCommand: Executing: {1}",
+
+		"Window_Title_Paused": "PAUSED",
+		"Window_Title_Gameover": "GAMEOVER",
+		"Window_Title_GameStart": "SONG START",
+
+		"Easter_Egg_1_a": "A mysterious voice is calling you...",
+		"Easter_Egg_1_b": "/ɡoʊ tuː ðə tʃɑːrt ˈedɪtər ænd loʊd ðɪs tʃɑːrt/",
+		"Easter_Egg_1_c": "\"what-fxxk\""
 	},
 	"老牧师？？？": {
 		"91781367":"这是一个隐藏语言自己研究怎么装。",
