@@ -37,31 +37,16 @@ def update_pack(version, tag):
         data = json.load(f)
 
     desc = data.get("description", "")
-
-    desc = re.sub(
-        r"Version:\s*[^\n]+",
-        f"Version: {version}",
-        desc
-    )
-
-    desc = re.sub(
-        r"releases/tag/[^\s\"]+",
-        f"releases/tag/{tag}",
-        desc
-    )
+    desc = re.sub(r"Version:\s*[^\n]+", f"Version: {version}", desc)
+    desc = re.sub(r"releases/tag/[^\s\"]+", f"releases/tag/{tag}", desc)
 
     data["description"] = desc
+    data["UTB_version"] = version
 
     with open(PACK_FILE, "w", encoding="utf-8") as f:
-        json.dump(
-            data,
-            f,
-            ensure_ascii=False,
-            indent=4
-        )
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
     print("已更新 pack.json")
-
 
 def update_main_menu(version):
     if not MENU_FILE.exists():
