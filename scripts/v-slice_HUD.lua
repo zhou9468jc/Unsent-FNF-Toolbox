@@ -718,6 +718,14 @@ function onUpdatePost(elapsed)
     end
 end
 
+function noteMiss(id,dtrection,notetype,isSus)
+	if not isSus and originalHealthBar then
+		playSound(
+			'missnote' .. getRandomInt(1, 3),
+			1
+		)
+	end
+end
 -- ============================================================
 -- Destroy
 -- ============================================================
