@@ -1,10 +1,14 @@
 {
     "name": "Unsent's toolbox",
-    "description": "Version: 2.8\n\nA developer and extra functions toolbox designed for NovaFlare Engine 1.2.x.\n\nGitHub Repository:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/\n\nUpdate Log:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/releases/tag/v2.8",
+    "description": "Version: 2.9\n\nA developer and extra functions toolbox designed for NovaFlare Engine 1.2.x.\n\nGitHub Repository:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/\n\nUpdate Log:\nhttps://github.com/zhou9468jc/Unsent-FNF-Toolbox/releases/tag/v2.9",
     "restart": true,
     "runsGlobally": true,
-    "color": [243,188,144],
-    "UTB_version":"2.9",
-    "UTB_discription_Chinese": "Version2.9\n本版本添加了版本检测与欢迎页面，以及修复一些bug。",
-    "UTB_discription_English": "Version2.9\nThis version introduces version checking and a welcome screen, along with several bug fixes."
+    "color": [
+        243,
+        188,
+        144
+    ],
+    "UTB_version": "2.9",
+    "UTB_discription_Chinese": "Version2.9\n本版本添加了版本检测，欢迎页面以及成就系统以及修复一些bug。",
+    "UTB_discription_English": "Version2.9\nAdded version checking, a welcome screen, and an achievement system. Fixed several bugs."
 }
