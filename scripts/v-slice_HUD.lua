@@ -56,7 +56,7 @@ local pendingOpponentPushes = {
 }
 
 -- Strum Movement
-local strumMoved = false
+local strumMoved = true
 local originalStrumPositions = {}
 
 -- ============================================================

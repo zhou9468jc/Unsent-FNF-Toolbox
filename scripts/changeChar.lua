@@ -54,6 +54,16 @@ local function changeCharacter(side, newCharacter)
 end
 
 function onCreatePost()
+    -- 按 9 恢复原角色
+    if canDis and keyPressed('NINE') then
+        enableSystem = false
+
+        changeCharacter('bf', Dboyfriend)
+        changeCharacter('dad', Ddad)
+        changeCharacter('gf', Dgf)
+
+        return
+    end
     Dboyfriend = getProperty('boyfriend.curCharacter') or ''
     Ddad = getProperty('dad.curCharacter') or ''
     Dgf = getProperty('gf.curCharacter') or ''
@@ -149,5 +159,15 @@ function onUpdatePost()
 end
 
 function onSongStart()
+    -- 按 9 恢复原角色
+    if canDis and keyPressed('NINE') then
+        enableSystem = false
+
+        changeCharacter('bf', Dboyfriend)
+        changeCharacter('dad', Ddad)
+        changeCharacter('gf', Dgf)
+
+        return
+    end
     canDis = false
 end
