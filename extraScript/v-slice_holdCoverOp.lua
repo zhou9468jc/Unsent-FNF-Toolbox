@@ -370,7 +370,7 @@ local function startCover(
 	end
 
 	local duration =
-		((sustainLength / 1000) / rate) - (1 / 24)
+		((sustainLength / 1000) / rate) - (0.100 / rate)
 
 	runTimer(
 		timerName,

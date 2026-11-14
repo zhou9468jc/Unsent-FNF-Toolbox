@@ -189,7 +189,8 @@ local function startCover(direction, sustainLength)
     local rate = tonumber(getProperty('playbackRate')) or 1
     if rate <= 0 then rate = 1 end
 
-    local duration = (sustainLength / 1000 - 0.100) / rate - (1 / 24)
+	local duration =
+		((sustainLength / 1000) / rate) - (0.100 / rate)
     local timerName = 'opponentHoldCoverEnd' .. direction
 
     opponentEndTimers[direction] = timerName
