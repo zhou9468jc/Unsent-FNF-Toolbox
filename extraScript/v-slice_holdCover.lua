@@ -7,7 +7,7 @@
 -- ============================================================
 -- Settings
 -- ============================================================
-
+local limit = 0
 local enableHoldCover = getModSetting('holdCover')
 if enableHoldCover == nil then enableHoldCover = true end
 
@@ -351,7 +351,7 @@ end
 -- ============================================================
 
 local function startCover(direction, sustainLength)
-    if not sustainLength or sustainLength <= 100 then return end
+    if not sustainLength or sustainLength <= limit then return end
 
     local tag = covers[direction]
     if not tag then return end

@@ -13,7 +13,7 @@
 -- ============================================================
 -- Settings
 -- ============================================================
-
+local limit = 0
 local enableHoldCover = getModSetting('holdCover')
 
 if enableHoldCover == nil then
@@ -315,7 +315,7 @@ local function startCover(
 	sustainLength
 )
 
-	if not sustainLength or sustainLength <= 100 then
+	if not sustainLength or sustainLength <= limit then
 		return
 	end
 

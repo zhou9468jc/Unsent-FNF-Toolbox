@@ -1,5 +1,7 @@
+
 -- ============================================================
 -- Unsent's Custom Rating System
+-- V-Slice Style Rating & Combo
 -- ============================================================
 
 -- ============================================================
@@ -11,13 +13,12 @@ local TAG_PREFIX = 'UnsentToolbox_Rating_'
 local fileDir = 'Rattings/'
 local fileSCL = 1.05
 local numDir = ''
-local numSCL = 1.05
+local numSCL = 0.98
 local tipe = ''
 local tipe2 = ''
 local antiii = true
 
 local ratingOnStage = getModSetting('makeRatingsOnGame')
-
 
 RatingLimit = 2
 permiteRating = false
@@ -25,6 +26,33 @@ comboShowThreshold = 10
 
 local ratingUID = 0
 local isPixelStage = false
+
+local spriteByTween = {}
+local pendingTweens = {}
+local pixelPhysics = {}
+local activeComboSprites = {}
+
+-- 000 状态锁：直到正常 Combo 出现才解除
+local zeroComboActive = false
+
+-- ============================================================
+-- Physics & Fade Settings
+-- ============================================================
+
+local RATING_GRAVITY = 550
+
+-- 固定隐藏时间（单位：秒）
+local RATING_FADE_TIME = 0.25
+local RATING_FADE_DELAY = 0.3
+
+local COMBO_FADE_TIME = 0.25
+local COMBO_FADE_DELAY = 0.8
+
+local COMBO_SPACING = 43
+
+-- Pixel movement
+local PIXEL_PHYSICS_FPS = 24
+local PIXEL_PHYSICS_STEP = 1 / PIXEL_PHYSICS_FPS
 
 -- ============================================================
 -- Error Function
@@ -68,25 +96,47 @@ local function getAntialiasing()
         return false
     end
 
-    return getPropertyFromClass('ClientPrefs', 'globalAntialiasing')
+    return getPropertyFromClass(
+        'ClientPrefs',
+        'globalAntialiasing'
+    )
 end
 
 local function getDownscroll()
-    return getPropertyFromClass('ClientPrefs', 'data.downScroll') == true
+    return getPropertyFromClass(
+        'ClientPrefs',
+        'data.downScroll'
+    ) == true
 end
 
 local function getMiddleScroll()
-    return getPropertyFromClass('ClientPrefs', 'data.middleScroll') == true
+    return getPropertyFromClass(
+        'ClientPrefs',
+        'data.middleScroll'
+    ) == true
 end
--- 检测玩家箭头是否被其他脚本移动到中间
+
 local function getPlayerStrumsCentered()
-    local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
+    local screenWidth = getPropertyFromClass(
+        'flixel.FlxG',
+        'width'
+    )
+
     local totalX = 0
     local count = 0
 
     for i = 4, 7 do
-        local x = getPropertyFromGroup('strumLineNotes', i, 'x')
-        local width = getPropertyFromGroup('strumLineNotes', i, 'width')
+        local x = getPropertyFromGroup(
+            'strumLineNotes',
+            i,
+            'x'
+        )
+
+        local width = getPropertyFromGroup(
+            'strumLineNotes',
+            i,
+            'width'
+        )
 
         if x ~= nil and width ~= nil then
             totalX = totalX + x + width / 2
@@ -98,14 +148,354 @@ local function getPlayerStrumsCentered()
         return false
     end
 
-    local centerX = totalX / count
-    return centerX < screenWidth * 0.68
+    return totalX / count < screenWidth * 0.68
 end
 
--- 原生 Middle Scroll 或其他脚本移动玩家箭头到中间
 local function isMiddleLayout()
     return getMiddleScroll() or getPlayerStrumsCentered()
 end
+
+-- ============================================================
+-- Display Position
+-- ============================================================
+
+local function getRatingPosition()
+    if ratingOnStage then
+        return getProperty('boyfriend.x') - 180,
+               getProperty('boyfriend.y')
+    end
+
+    local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
+    local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
+
+    local x = screenWidth * 0.50 - 120
+    local y = screenHeight * 0.40 - 50
+
+    if isMiddleLayout() then
+        x = x - 450
+    end
+
+    return x, y
+end
+
+local function getComboPosition(index)
+    if ratingOnStage then
+        return getProperty('boyfriend.x') - 140
+            - index * COMBO_SPACING,
+            getProperty('boyfriend.y') + 150
+    end
+
+    local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
+    local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
+
+    local x = screenWidth * 0.50 - COMBO_SPACING * (index + 1)
+    local y = screenHeight * 0.40 + 50
+
+    if isMiddleLayout() then
+        x = x - 450
+    end
+
+    return x, y
+end
+
+-- ============================================================
+-- Physics System
+-- ============================================================
+
+local function applyPhysics(tag, vx, vy, ax, ay)
+    if isPixelStage then
+        setProperty(tag .. '.velocity.x', 0)
+        setProperty(tag .. '.velocity.y', 0)
+        setProperty(tag .. '.acceleration.x', 0)
+        setProperty(tag .. '.acceleration.y', 0)
+
+        pixelPhysics[tag] = {
+            x = getProperty(tag .. '.x'),
+            y = getProperty(tag .. '.y'),
+            vx = vx,
+            vy = vy,
+            ax = ax,
+            ay = ay,
+            accumulator = 0
+        }
+    else
+        setProperty(tag .. '.velocity.x', vx)
+        setProperty(tag .. '.velocity.y', vy)
+        setProperty(tag .. '.acceleration.x', ax)
+        setProperty(tag .. '.acceleration.y', ay)
+    end
+end
+
+local function applyRatingPhysics(tag)
+    applyPhysics(
+        tag,
+        -math.random(0, 10),
+        -math.random(140, 175),
+        0,
+        RATING_GRAVITY
+    )
+end
+
+local function applyComboPhysics(tag)
+    applyPhysics(
+        tag,
+        math.random(-5, 5),
+        -math.random(140, 160),
+        0,
+        math.random(200, 300)
+    )
+end
+
+-- ============================================================
+-- Pixel Physics Update
+-- ============================================================
+
+local function updatePixelPhysics(elapsed)
+    if not isPixelStage then
+        return
+    end
+
+    for tag, physics in pairs(pixelPhysics) do
+        if luaSpriteExists(tag) then
+            physics.accumulator = physics.accumulator + elapsed
+
+            while physics.accumulator >= PIXEL_PHYSICS_STEP do
+                local dt = PIXEL_PHYSICS_STEP
+
+                physics.vx = physics.vx + physics.ax * dt
+                physics.vy = physics.vy + physics.ay * dt
+
+                physics.x = physics.x + physics.vx * dt
+                physics.y = physics.y + physics.vy * dt
+
+                physics.accumulator = physics.accumulator
+                    - PIXEL_PHYSICS_STEP
+            end
+
+            setProperty(tag .. '.x', physics.x)
+            setProperty(tag .. '.y', physics.y)
+        else
+            pixelPhysics[tag] = nil
+        end
+    end
+end
+
+-- ============================================================
+-- Delayed Fade System
+-- ============================================================
+
+-- delay 和 duration 均为固定秒数
+local function scheduleFade(spriteTag, tweenTag, duration, delay)
+    local timerTag = TAG_PREFIX .. 'Start_' .. tweenTag
+
+    pendingTweens[timerTag] = {
+        sprite = spriteTag,
+        tween = tweenTag,
+        duration = duration
+    }
+
+    runTimer(timerTag, delay)
+end
+
+local function startFade(spriteTag, tweenTag, duration)
+    if not luaSpriteExists(spriteTag) then
+        pixelPhysics[spriteTag] = nil
+        activeComboSprites[spriteTag] = nil
+        return
+    end
+
+    spriteByTween[tweenTag] = spriteTag
+
+    doTweenAlpha(
+        tweenTag,
+        spriteTag,
+        0,
+        duration,
+        'quartIn'
+    )
+end
+
+-- ============================================================
+-- Create Rating
+-- ============================================================
+
+local function createRating(rating, uid)
+    local ratingImg = 'marvelous'
+
+    if rating == 'sick' then
+        ratingImg = 'sick'
+    elseif rating == 'good' then
+        ratingImg = 'good'
+    elseif rating == 'bad' then
+        ratingImg = 'bad'
+    elseif rating == 'shit' then
+        ratingImg = 'shit'
+    end
+
+    local tag = TAG_PREFIX .. 'Sprite_' .. uid
+    local tweenTag = TAG_PREFIX .. 'TweenRating_' .. uid
+
+    local x, y = getRatingPosition()
+
+    makeLuaSprite(
+        tag,
+        fileDir .. ratingImg .. tipe,
+        x,
+        y
+    )
+
+    setObjectCamera(
+        tag,
+        ratingOnStage and 'game' or 'hud'
+    )
+
+    setProperty(
+        tag .. '.antialiasing',
+        getAntialiasing()
+    )
+
+    scaleObject(tag, 0.6, 0.6)
+
+    setGraphicSize(
+        tag,
+        math.floor(
+            getProperty(tag .. '.width') * fileSCL
+        )
+    )
+
+    updateHitbox(tag)
+    addLuaSprite(tag, true)
+
+    applyRatingPhysics(tag)
+
+    scheduleFade(
+        tag,
+        tweenTag,
+        RATING_FADE_TIME,
+        RATING_FADE_DELAY
+    )
+end
+
+-- ============================================================
+-- Create Combo
+-- ============================================================
+
+local function createCombo(combo, uid)
+    -- 正常 Combo 出现时解除 000 锁定
+    if tonumber(combo) and tonumber(combo) > 0 then
+        zeroComboActive = false
+    end
+
+    local digits = string.format(
+        '%03d',
+        math.max(0, math.floor(combo))
+    )
+
+    local digitCount = #digits
+
+    RatingLimit = digitCount - 1
+
+    -- 从个位开始生成数字
+    for i = 0, digitCount - 1 do
+        local digit = tonumber(
+            digits:sub(digitCount - i, digitCount - i)
+        )
+
+        local tag = TAG_PREFIX
+            .. 'Combo_' .. uid .. '_' .. i
+
+        local tweenTag = TAG_PREFIX
+            .. 'TweenCombo_' .. uid .. '_' .. i
+
+        local x, y = getComboPosition(i)
+
+        makeLuaSprite(
+            tag,
+            numDir .. 'num' .. tipe2 .. digit,
+            x,
+            y
+        )
+
+        setObjectCamera(
+            tag,
+            ratingOnStage and 'game' or 'hud'
+        )
+
+        setProperty(
+            tag .. '.antialiasing',
+            getAntialiasing()
+        )
+
+        scaleObject(tag, 0.48, 0.48)
+
+        setGraphicSize(
+            tag,
+            math.floor(
+                getProperty(tag .. '.width') * numSCL
+            )
+        )
+
+        updateHitbox(tag)
+        addLuaSprite(tag, true)
+
+        activeComboSprites[tag] = true
+
+        applyComboPhysics(tag)
+
+        scheduleFade(
+            tag,
+            tweenTag,
+            COMBO_FADE_TIME,
+            COMBO_FADE_DELAY
+        )
+    end
+end
+
+-- ============================================================
+-- Miss Combo Override
+-- ============================================================
+
+local function hasVisibleCombo()
+    for tag in pairs(activeComboSprites) do
+        if luaSpriteExists(tag) then
+            local visible = getProperty(tag .. '.visible')
+            local alpha = getProperty(tag .. '.alpha')
+
+            if visible and alpha ~= nil and alpha > 0 then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+local function hideActiveCombo()
+    -- 只隐藏 Combo 数字，不隐藏 Rating 图片
+    for tag in pairs(activeComboSprites) do
+        if luaSpriteExists(tag) then
+            setProperty(tag .. '.visible', false)
+        end
+    end
+end
+
+function noteMiss(id, direction, noteType, isSustainNote)
+    if not permiteRating or isSustainNote or zeroComboActive then
+        return
+    end
+
+    if not hasVisibleCombo() then
+        return
+    end
+
+    hideActiveCombo()
+
+    -- 创建一次 000，并锁定后续失误
+    zeroComboActive = true
+    ratingUID = ratingUID + 1
+    createCombo(0, ratingUID)
+end
+
 -- ============================================================
 -- Create
 -- ============================================================
@@ -114,7 +504,10 @@ function onCreatePost()
     setProperty('showRating', false)
     setProperty('showComboNum', false)
 
-    isPixelStage = getPropertyFromClass('PlayState', 'isPixelStage') == true
+    isPixelStage = getPropertyFromClass(
+        'PlayState',
+        'isPixelStage'
+    ) == true
 
     if isPixelStage then
         fileDir = 'pixelUI/Rattings/'
@@ -125,6 +518,7 @@ function onCreatePost()
 
         tipe = ''
         tipe2 = ''
+
         antiii = false
     end
 
@@ -136,7 +530,7 @@ end
 -- ============================================================
 
 function onSongStart()
-    permiteRating = (songName ~= 'name')
+    permiteRating = songName ~= 'name'
 end
 
 -- ============================================================
@@ -148,6 +542,8 @@ function onUpdatePost(elapsed)
         setProperty('showRating', false)
         setProperty('showComboNum', false)
     end
+
+    updatePixelPhysics(elapsed)
 end
 
 -- ============================================================
@@ -184,175 +580,61 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
         return
     end
 
-    local strumTime = getPropertyFromGroup('notes', id, 'strumTime')
-    local songPos = getPropertyFromClass('Conductor', 'songPosition')
-    local rOffset = getPropertyFromClass('ClientPrefs', 'ratingOffset')
+    local strumTime = getPropertyFromGroup(
+        'notes',
+        id,
+        'strumTime'
+    )
+
+    local songPos = getPropertyFromClass(
+        'Conductor',
+        'songPosition'
+    )
+
+    local rOffset = getPropertyFromClass(
+        'ClientPrefs',
+        'ratingOffset'
+    )
 
     updateAccuracy(strumTime, songPos, rOffset)
 
-    local downscroll = getDownscroll()
-    local middleScroll = isMiddleLayout()
-
-    local downscrolloffset = downscroll and 10 or 0
-
-    -- Middle Scroll + HUD 时，评级和数字一起左移
-    local middleScrollOffset = (not ratingOnStage and middleScroll) and 300 or 0
-
-    local pbRate = 1
-
-    local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
-    local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
-
     ratingUID = ratingUID + 1
+
     local uid = ratingUID
 
-    -- ========================================================
-    -- Rating
-    -- ========================================================
-
-    local rating = getPropertyFromGroup('notes', id, 'rating')
-    local ratingImg = 'marvelous'
-
-    if rating == 'sick' then
-        ratingImg = 'sick'
-    elseif rating == 'good' then
-        ratingImg = 'good'
-    elseif rating == 'bad' then
-        ratingImg = 'bad'
-    elseif rating == 'shit' then
-        ratingImg = 'shit'
-    end
-
-    local ratinTag = TAG_PREFIX .. 'Sprite_' .. uid
-
-    makeLuaSprite(ratinTag, fileDir .. ratingImg .. tipe, 0, 0)
-
-    if ratingOnStage then
-        setObjectCamera(ratinTag, 'game')
-
-        setProperty(ratinTag .. '.x', getProperty('boyfriend.x') - 180)
-        setProperty(ratinTag .. '.y', getProperty('boyfriend.y'))
-    else
-        setObjectCamera(ratinTag, 'hud')
-
-        local ratingX = middleScroll and 180 or 480
-
-        setProperty(ratinTag .. '.x', ratingX)
-        setProperty(ratinTag .. '.y', 245)
-    end
-
-    setProperty(ratinTag .. '.antialiasing', getAntialiasing())
-
-    scaleObject(ratinTag, 0.6, 0.6)
-
-    setGraphicSize(
-        ratinTag,
-        math.floor(getProperty(ratinTag .. '.width') * fileSCL)
+    local rating = getPropertyFromGroup(
+        'notes',
+        id,
+        'rating'
     )
 
-    updateHitbox(ratinTag)
-    addLuaSprite(ratinTag, true)
-
-    setProperty(ratinTag .. '.acceleration.y', 550 * pbRate * pbRate)
-    setProperty(ratinTag .. '.velocity.y', -(math.random(140, 175) * pbRate))
-    setProperty(ratinTag .. '.velocity.x', -(math.random(0, 10) * pbRate))
-
-    doTweenAlpha(
-        TAG_PREFIX .. 'TweenRating_' .. uid,
-        ratinTag,
-        0,
-        0.8,
-        'quartIn'
-    )
-
-    -- ========================================================
-    -- Combo
-    -- ========================================================
+    createRating(rating, uid)
 
     if combo < comboShowThreshold then
         return
     end
 
-    RatingLimit = combo >= 1000 and 3 or 2
+    createCombo(combo, uid)
+end
 
-    local daLoop = 0
+-- ============================================================
+-- Timer Callback
+-- ============================================================
 
-    for i = 0, RatingLimit do
-        local tag = TAG_PREFIX .. 'Combo_' .. uid .. '_' .. i
+function onTimerCompleted(tag)
+    local data = pendingTweens[tag]
 
-        local digitVal = math.floor(combo / (10 ^ i) % 10)
-
-        local x = screenWidth * 0.35 + 145 - i * 43 + downscrolloffset
-        local y = screenHeight / 2 - 90 - downscrolloffset * 3
-
-        makeLuaSprite(
-            tag,
-            numDir .. 'num' .. tipe2 .. digitVal,
-            x,
-            y
-        )
-
-        if ratingOnStage then
-            setObjectCamera(tag, 'game')
-
-            setProperty(
-                tag .. '.x',
-                getProperty('boyfriend.x') - 180 + (-43 * daLoop) + 40
-            )
-
-            setProperty(
-                tag .. '.y',
-                getProperty('boyfriend.y') + 150
-            )
-        else
-            setObjectCamera(tag, 'hud')
-
-            setProperty(
-                tag .. '.x',
-                520 + (-43 * daLoop) + 40 - middleScrollOffset
-            )
-
-            setProperty(tag .. '.y', 350)
-        end
-
-        setProperty(tag .. '.antialiasing', getAntialiasing())
-
-        scaleObject(tag, 0.48, 0.48)
-
-        setProperty(
-            tag .. '.acceleration.y',
-            math.random(200, 300) * pbRate * pbRate
-        )
-
-        setProperty(
-            tag .. '.velocity.y',
-            -(math.random(140, 160) * pbRate)
-        )
-
-        setProperty(
-            tag .. '.velocity.x',
-            -(math.random(-5, 5) * pbRate)
-        )
-
-        doTweenAlpha(
-            TAG_PREFIX .. 'TweenCombo_' .. uid .. '_' .. i,
-            tag,
-            0,
-            1,
-            'quartIn'
-        )
-
-        daLoop = daLoop + 1
-
-        addLuaSprite(tag, true)
-
-        setGraphicSize(
-            tag,
-            math.floor(getProperty(tag .. '.width') * numSCL)
-        )
-
-        updateHitbox(tag)
+    if not data then
+        return
     end
+
+    pendingTweens[tag] = nil
+
+    startFade(
+        data.sprite,
+        data.tween,
+        data.duration
+    )
 end
 
 -- ============================================================
@@ -360,29 +642,17 @@ end
 -- ============================================================
 
 function onTweenCompleted(tag)
-    if tag:sub(1, #TAG_PREFIX) ~= TAG_PREFIX then
+    local spriteTag = spriteByTween[tag]
+
+    if not spriteTag then
         return
     end
 
-    local spriteTag
+    spriteByTween[tag] = nil
+    pixelPhysics[spriteTag] = nil
+    activeComboSprites[spriteTag] = nil
 
-    local uid = tag:match(
-        '^' .. TAG_PREFIX .. 'TweenRating_(%d+)$'
-    )
-
-    if uid then
-        spriteTag = TAG_PREFIX .. 'Sprite_' .. uid
-    else
-        local comboUID, digit = tag:match(
-            '^' .. TAG_PREFIX .. 'TweenCombo_(%d+)_(%d+)$'
-        )
-
-        if comboUID and digit then
-            spriteTag = TAG_PREFIX .. 'Combo_' .. comboUID .. '_' .. digit
-        end
-    end
-
-    if spriteTag then
+    if luaSpriteExists(spriteTag) then
         removeLuaSprite(spriteTag, true)
     end
 end
@@ -401,7 +671,10 @@ function showMsDiffOnScreen(diff)
 
     Ratingers(diff)
 
-    lastMsShowUp = getPropertyFromClass('Conductor', 'songPosition')
+    lastMsShowUp = getPropertyFromClass(
+        'Conductor',
+        'songPosition'
+    )
 end
 
 function Ratingers(diff)
@@ -429,7 +702,8 @@ function handleNoteDiff(diff)
     elseif maxms <= zero then
         return max_points * erf((zero - maxms) / dev)
     elseif maxms <= max_boo_weight then
-        return (maxms - zero) * miss_weight / (max_boo_weight - zero)
+        return (maxms - zero) * miss_weight
+            / (max_boo_weight - zero)
     else
         return miss_weight
     end
