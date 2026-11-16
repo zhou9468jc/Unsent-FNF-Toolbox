@@ -34,6 +34,7 @@ local activeComboSprites = {}
 
 -- 000 状态锁：直到正常 Combo 出现才解除
 local zeroComboActive = false
+local lastCombo = 0
 
 -- ============================================================
 -- Physics & Fade Settings
@@ -455,43 +456,20 @@ end
 -- Miss Combo Override
 -- ============================================================
 
-local function hasVisibleCombo()
-    for tag in pairs(activeComboSprites) do
-        if luaSpriteExists(tag) then
-            local visible = getProperty(tag .. '.visible')
-            local alpha = getProperty(tag .. '.alpha')
-
-            if visible and alpha ~= nil and alpha > 0 then
-                return true
-            end
-        end
-    end
-
-    return false
-end
-
-local function hideActiveCombo()
-    -- 只隐藏 Combo 数字，不隐藏 Rating 图片
-    for tag in pairs(activeComboSprites) do
-        if luaSpriteExists(tag) then
-            setProperty(tag .. '.visible', false)
-        end
-    end
-end
-
 function noteMiss(id, direction, noteType, isSustainNote)
     if not permiteRating or isSustainNote or zeroComboActive then
         return
     end
 
-    if not hasVisibleCombo() then
+    if lastCombo < comboShowThreshold then
+        lastCombo = 0
         return
     end
 
-    hideActiveCombo()
-
-    -- 创建一次 000，并锁定后续失误
+    -- 创建一次新的 000，不隐藏已经存在的 Combo 数字
     zeroComboActive = true
+    lastCombo = 0
+
     ratingUID = ratingUID + 1
     createCombo(0, ratingUID)
 end
@@ -531,6 +509,8 @@ end
 
 function onSongStart()
     permiteRating = songName ~= 'name'
+    lastCombo = 0
+    zeroComboActive = false
 end
 
 -- ============================================================
@@ -579,6 +559,8 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
     if isSustainNote or combo == nil then
         return
     end
+
+    lastCombo = combo
 
     local strumTime = getPropertyFromGroup(
         'notes',
