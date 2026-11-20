@@ -47,7 +47,7 @@ local RATING_FADE_TIME = 0.25
 local RATING_FADE_DELAY = 0.3
 
 local COMBO_FADE_TIME = 0.25
-local COMBO_FADE_DELAY = 0.8
+local COMBO_FADE_DELAY = 0.7
 
 local COMBO_SPACING = 43
 
@@ -169,7 +169,7 @@ local function getRatingPosition()
     local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
     local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
 
-    local x = screenWidth * 0.50 - 120
+    local x = screenWidth * 0.50 - 136
     local y = screenHeight * 0.40 - 50
 
     if isMiddleLayout() then
@@ -190,7 +190,7 @@ local function getComboPosition(index)
     local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
 
     local x = screenWidth * 0.50 - COMBO_SPACING * (index + 1)
-    local y = screenHeight * 0.40 + 50
+    local y = screenHeight * 0.40 + 40
 
     if isMiddleLayout() then
         x = x - 450
