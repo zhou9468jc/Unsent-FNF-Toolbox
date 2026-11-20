@@ -830,7 +830,7 @@
 		"save": "noCheckVer",
 		"name": "Disable Toolbox Version Check",
 		"type": "bool",
-		"description": "Disable automatic version checks and update notifications.\n关闭自动版本检查和更新提示。"
+		"description": "Disable automatic version checks and update notifications.\n关闭自动版本检查和更新提示。",
 		"value": false
 	},
 	{

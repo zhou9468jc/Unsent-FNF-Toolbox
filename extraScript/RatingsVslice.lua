@@ -7,7 +7,6 @@
 -- ============================================================
 -- Settings
 -- ============================================================
-
 local TAG_PREFIX = 'UnsentToolbox_Rating_'
 
 local fileDir = 'Rattings/'
@@ -47,9 +46,10 @@ local RATING_FADE_TIME = 0.25
 local RATING_FADE_DELAY = 0.3
 
 local COMBO_FADE_TIME = 0.25
-local COMBO_FADE_DELAY = 0.7
+local COMBO_FADE_DELAY = 0.6
 
-local COMBO_SPACING = 43
+-- 连击数字间距，同时决定四位数及以上的整体偏移
+local COMBO_SPACING = 38
 
 -- Pixel movement
 local PIXEL_PHYSICS_FPS = 24
@@ -179,17 +179,21 @@ local function getRatingPosition()
     return x, y
 end
 
-local function getComboPosition(index)
+local function getComboPosition(index, digitCount)
+    -- 超过三位数后，每增加一位，整个数字组向右移动一个数字间距
+    local offset = math.max(0, digitCount - 3) * COMBO_SPACING
+
     if ratingOnStage then
         return getProperty('boyfriend.x') - 140
-            - index * COMBO_SPACING,
+            - index * COMBO_SPACING + offset,
             getProperty('boyfriend.y') + 150
     end
 
     local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
     local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
 
-    local x = screenWidth * 0.50 - COMBO_SPACING * (index + 1)
+    local x = screenWidth * 0.50
+        - COMBO_SPACING * (index + 1) + offset - 15
     local y = screenHeight * 0.40 + 40
 
     if isMiddleLayout() then
@@ -408,7 +412,8 @@ local function createCombo(combo, uid)
         local tweenTag = TAG_PREFIX
             .. 'TweenCombo_' .. uid .. '_' .. i
 
-        local x, y = getComboPosition(i)
+        -- 根据总位数调整整体位置
+        local x, y = getComboPosition(i, digitCount)
 
         makeLuaSprite(
             tag,
