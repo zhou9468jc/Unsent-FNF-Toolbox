@@ -420,6 +420,18 @@
 		]
 	},
 	{
+		"save": "GhostTapping",
+		"name": "Ghost Tapping",
+		"type": "string",
+		"description": "Configure Ghost Tapping behavior.\n设置空敲判定行为。",
+		"value": "Engine",
+		"options": [
+			"Engine",
+			"V-Slice Mobile",
+			"UTB Punishment",
+		]
+	},
+	{
 		"save": "ghostTapPunishment",
 		"name": "Ghost Tap Punishment",
 		"type": "bool",
