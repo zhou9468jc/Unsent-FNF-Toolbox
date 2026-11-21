@@ -7,7 +7,7 @@
 -- ============================================================
 -- Settings
 -- ============================================================
-local limit = 0
+local limit = 50
 local enableHoldCover = getModSetting('holdCover')
 if enableHoldCover == nil then enableHoldCover = true end
 

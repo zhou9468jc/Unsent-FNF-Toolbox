@@ -420,8 +420,9 @@
 		]
 	},
 	{
-		"save": "GhostTapping",
-		"name": "Ghost Tapping",
+		"save": "ghostTapping",
+		"name": "   Ghost Tapping",
+		"format": "  %v",
 		"type": "string",
 		"description": "Configure Ghost Tapping behavior.\n设置空敲判定行为。",
 		"value": "Engine",
@@ -431,13 +432,13 @@
 			"UTB Punishment",
 		]
 	},
-	{
-		"save": "ghostTapPunishment",
-		"name": "Ghost Tap Punishment",
-		"type": "bool",
-		"description": "Enable Ghost Tap punishment. If disabled, Ghost Taps will not be counted or punished.\n开启后限制空敲频率放止乱按。",
-		"value": false
-	},
+//	{
+//		"save": "ghostTapPunishment",
+//		"name": "Ghost Tap Punishment",
+//		"type": "bool",
+//		"description": "Enable Ghost Tap punishment. If disabled, Ghost Taps will not be counted or punished.\n开启后限制空敲频率放止乱按。",
+//		"value": false
+//	},
 	{
 		"save": "ghostTapLimit",
 		"name": "   Ghost Tap Limit  :",
