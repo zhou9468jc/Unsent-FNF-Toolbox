@@ -6,3 +6,7 @@ function onDestroy()
 		'Time Left'
 	)
 end
+debugPrint(ghostTapping,"cyan")
+function onGhostTap(a)
+	debugPrint(tostring(a or "nil"),"lime")
+end

@@ -17,6 +17,7 @@
 		"Incorrect_Engine":"引擎版本错误！请使用NF引擎！\n让我猜猜你用的是Psych Engine版本是：{1}",
 		"Incorrect_Engine_Title":"Unsent's Toolbox - 引擎版本异常! - 未运行在NF",
 		"HUD_ScoreText_Format":" 分数: {1} | 失误: {2}{3} | 准确率: {4}% | 评级: {5}",
+		"HUD_ScoreText_Format_hadGT":" 分数: {1} | 失误: {2}{3} | 空敲: {4} | 准确率: {5}% | 评级: {6}",
 		"Auxiliary_File_Not_Found_old":"辅助脚本”AAAAADonTdelateThisUnsentToolBoxAuxiliaryScript.lua“不存在！\n部分脚本可能无法运行!",
 		"Auxiliary_File_Not_Found_Title_old":"Unsent's Toolbox - 辅助脚本异常!",
 		"Auxiliary_File_Not_Found":"脚本目录信息读取错误！\n部分脚本可能无法运行!",
@@ -98,6 +99,8 @@
 		"Window_Title_Paused":"暂停...",
 		"Window_Title_Gameover":"不是你怎么死了:D",
 		"Window_Title_GameStart":"歌曲开始",
+		"Window_Title_AP": "完美bro！！！",
+		"Window_Title_FC": "全连！",
 		
 		"Easter_Egg_1_a":"一个神秘的声音在召唤你...",
 		"Easter_Egg_1_b":"qu pu mian bian ji qi , jia zai zhe ge pu mian: ",
@@ -118,6 +121,7 @@
 		"Incorrect_Engine": "Incorrect engine! Please use NovaFlare Engine!\nLet me guess, you're using Psych Engine version {1}.",
 		"Incorrect_Engine_Title": "Unsent's Toolbox - Engine Version ERROR! - Not Running on NovaFlare",
 		"HUD_ScoreText_Format":" Score: {1} | Misses: {2}{3} | Accuracy: {4}% | Rank: {5}",
+		"HUD_ScoreText_Format_hadGT":" Score: {1} | Misses: {2}{3} | GhostTaps: {4} | Accuracy: {5}% | Rank: {6}",
 		"Auxiliary_File_Not_Found_old":"Auxiliary script \"AAAAADonTdelateThisUnsentToolBoxAuxiliaryScript.lua\" is missing!\nSome scripts may not work properly.",
 		"Auxiliary_File_Not_Found_Title_old": "Unsent's Toolbox - Auxiliary Script Error!",
 		"Auxiliary_File_Not_Found":"Failed to read script directory information!\nSome scripts may not function correctly!",
@@ -196,6 +200,8 @@
 		"Window_Title_Paused": "PAUSED",
 		"Window_Title_Gameover": "GAMEOVER",
 		"Window_Title_GameStart": "SONG START",
+		"Window_Title_AP": "All Perfect!!!",
+		"Window_Title_FC": "Full Combo!",
 
 		"Easter_Egg_1_a": "A mysterious voice is calling you...",
 		"Easter_Egg_1_b": "/ɡoʊ tuː ðə tʃɑːrt ˈedɪtər ænd loʊd ðɪs tʃɑːrt/",

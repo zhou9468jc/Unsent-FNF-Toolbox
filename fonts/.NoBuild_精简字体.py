@@ -17,7 +17,7 @@ KEEP_UNICODE_RANGES = range(0x0020, 0x007F)
 
 # NFE 中文评级 HUD 需要的中文及额外符号
 KEEP_TEXT = (
-    "分数失误准确率评级"
+    "分数失误空敲准确率评级"
     "等级完美全连"
     "NPSMaxScoreMissesAccuracyRank"
     "APFCGREATGOOD"

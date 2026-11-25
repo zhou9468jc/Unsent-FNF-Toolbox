@@ -491,13 +491,7 @@ function punishGhostTap(direction)
 	end
 
 	-- 触发 Miss 回调
-	callOnLuas(
-		'noteMiss',
-		0,
-		direction,
-		'',
-		false
-	)
+	callOnLuas('noteMiss',{0,direction,'',false})
 
 	-- 播放 Miss 动画
 	local animation =

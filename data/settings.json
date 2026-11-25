@@ -413,7 +413,7 @@
 		"save": "titleGhostTap",
 		"name": "--Ghost Tap Settings--",
 		"type": "string",
-		"description": "Configure Ghost Tap punishment settings.\n设置空敲频率限制。",
+		"description": "Configure Ghost Tapping behavior and punishment settings.\n设置空敲判定行为和频率限制。",
 		"value": " ",
 		"options": [
 			" "
@@ -422,7 +422,7 @@
 	{
 		"save": "ghostTapping",
 		"name": "   Ghost Tapping",
-		"format": "  %v",
+		"format": "   %v",
 		"type": "string",
 		"description": "Configure Ghost Tapping behavior.\n设置空敲判定行为。",
 		"value": "Engine",
@@ -615,6 +615,13 @@
 		"name": "Better BF/GF Style",
 		"type": "bool",
 		"description": "When enabled, replaces BF and GF with improved sprites. If any issues occur, press 9 before the song starts to temporarily disable this feature. (Spritesheets are from the mod \"Vs Impostor Legacy\".)\n开启后，将 BF 和 GF 替换为改良版精灵图。如果出现问题，请在歌曲开始前按 9 暂时禁用此功能。（精灵图素材来自模组\"Vs Impostor Legacy\"。）",
+		"value": false
+	},
+	{
+		"save": "moreTitle",
+		"name": "More WindowTitle Info",
+		"type": "bool",
+		"description": "Display additional information in the game window title.\n开启显示更详细的窗口标题信息",
 		"value": false
 	},
 	{

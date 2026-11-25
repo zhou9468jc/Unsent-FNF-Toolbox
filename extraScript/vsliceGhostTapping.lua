@@ -1,3 +1,4 @@
+
 -- ============================================================
 -- Unsent's Directional Ghost Tap
 -- NovaFlare Engine 1.2.x
@@ -6,7 +7,7 @@
 local enabled = true
 local missHealth = 0.07
 local missSound = true
-
+local originalSetting = nil
 local hitNormalNote = false
 local currentKey = -1
 
@@ -26,20 +27,13 @@ local function punish(direction)
     setProperty('songScore', getProperty('songScore') - 10)
 
     if missSound then
-        playSound(
-            'missnote' .. getRandomInt(1, 3),
-            1
-        )
+        playSound('missnote' .. getRandomInt(1, 3), 1)
     end
 
-    callOnLuas('onGhostTap', direction)
+    callOnLuas('onGhostTap', {direction})
 
     if getProperty('boyfriend.hasMissAnimations') then
-        characterPlayAnim(
-            'boyfriend',
-            missAnimations[direction + 1],
-            true
-        )
+        characterPlayAnim('boyfriend', missAnimations[direction + 1], true)
     end
 end
 
@@ -75,12 +69,10 @@ function onKeyPress(key)
         return
     end
 
-    -- Only process the input that was initialized by preKeyPress.
     if currentKey ~= key then
         return
     end
 
-    -- A normal note was hit during this input.
     if hitNormalNote then
         currentKey = -1
         return
@@ -88,6 +80,7 @@ function onKeyPress(key)
 
     local currentHasNote = false
     local otherHasNote = false
+    local sustainActive = false
 
     local noteCount = getProperty('notes.length')
 
@@ -99,11 +92,15 @@ function onKeyPress(key)
         local wasGoodHit = getProperty(prefix .. 'wasGoodHit')
         local tooLate = getProperty(prefix .. 'tooLate')
         local blockHit = getProperty(prefix .. 'blockHit')
+        local isSustain = getProperty(prefix .. 'isSustainNote')
+        local direction = getProperty(prefix .. 'noteData')
+
+        if mustPress and isSustain and wasGoodHit and not tooLate then
+            sustainActive = true
+        end
 
         if mustPress and canBeHit and not wasGoodHit
         and not tooLate and not blockHit then
-            local direction = getProperty(prefix .. 'noteData')
-
             if direction == key then
                 currentHasNote = true
             elseif direction >= 0 and direction <= 3 then
@@ -112,7 +109,8 @@ function onKeyPress(key)
         end
     end
 
-    if not currentHasNote and otherHasNote then
+    -- Normal ghost tap OR ghost tap during an active sustain.
+    if not currentHasNote and (otherHasNote or sustainActive) then
         punish(key)
     end
 
@@ -120,8 +118,27 @@ function onKeyPress(key)
     hitNormalNote = false
 end
 
+-- ============================================================
+-- Cleanup
+-- ============================================================
+
 function onUpdatePost(elapsed)
-    -- Prevent stale input state from affecting the next key press.
     currentKey = -1
     hitNormalNote = false
+end
+
+-- ============================================================
+-- Engine Settings
+-- ============================================================
+
+function onCreate()
+    originalSetting = getPropertyFromClass('backend.ClientPrefs', 'ghostTapping')
+
+    if originalSetting == false and enabled == true then
+        setPropertyFromClass('backend.ClientPrefs', 'ghostTapping', true)
+    end
+end
+
+function onDestroy()
+    setPropertyFromClass('backend.ClientPrefs', 'ghostTapping', originalSetting)
 end

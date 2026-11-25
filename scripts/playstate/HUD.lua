@@ -1,12 +1,13 @@
 -- ============================================================
 -- Unsent - HUD Background
+-- 屎山代码改了就炸
 -- ============================================================
 
 local bottomBGEnabled = getModSetting('unsentBottomHUDBackground')
 local showcase = getModSetting('showCaseMode')
 local bottomBGAlpha = tonumber(getModSetting('unsentBottomHUDBackgroundAlpha'))
 
-if bottomBGEnabled == nil then bottomBGEnabled = true end
+if bottomBGEnabled == nil then bottomBGEnabled = false end
 if bottomBGAlpha == nil then bottomBGAlpha = 0.65 end
 
 bottomBGAlpha = math.max(0, math.min(1, bottomBGAlpha))
@@ -14,13 +15,14 @@ bottomBGAlpha = math.max(0, math.min(1, bottomBGAlpha))
 local boxWidth, boxHeight, bottomOffset = 800, 120, 0
 local boxTag = 'unsentBottomHUDBackground'
 local imageName = 'unsentBottomHUDBackground'
+local ghostTapC = 0
 
 --==================================================
 --老祖宗gpt之手挫json解析器
-local JSON_NULL=setmetatable({},{__tostring=function()return"JSON_NULL"end}) local function parseJson(str) if type(str)~="string"then return nil end local pos,len=1,#str local function skip()while pos<=len and str:sub(pos,pos):match("%s")do pos=pos+1 end end local parseValue local function parseString() pos=pos+1 local out={} while pos<=len do local c=str:sub(pos,pos);pos=pos+1 if c=='"'then return table.concat(out) elseif c=="\\"then local e=str:sub(pos,pos);pos=pos+1 local escapes={['"']='"',["\\"]="\\",["/"]="/",b="\b",f="\f",n="\n",r="\r",t="\t"} if escapes[e]then out[#out+1]=escapes[e] elseif e=="u"then local h=str:sub(pos,pos+3);if not h:match("^%x%x%x%x$")then error("Invalid Unicode")end pos=pos+4 local cp=tonumber(h,16) if cp>=0xD800 and cp<=0xDBFF then if str:sub(pos,pos+1)~="\\u"then error("Invalid surrogate")end local l=str:sub(pos+2,pos+5);if not l:match("^%x%x%x%x$")then error("Invalid surrogate")end local lp=tonumber(l,16);if lp<0xDC00 or lp>0xDFFF then error("Invalid surrogate")end cp=0x10000+(cp-0xD800)*0x400+lp-0xDC00;pos=pos+6 elseif cp>=0xDC00 and cp<=0xDFFF then error("Unexpected low surrogate")end if cp<0x80 then out[#out+1]=string.char(cp) elseif cp<0x800 then out[#out+1]=string.char(0xC0+math.floor(cp/64),0x80+cp%64) elseif cp<0x10000 then out[#out+1]=string.char(0xE0+math.floor(cp/4096),0x80+math.floor(cp/64)%64,0x80+cp%64) else out[#out+1]=string.char(0xF0+math.floor(cp/262144),0x80+math.floor(cp/4096)%64,0x80+math.floor(cp/64)%64,0x80+cp%64)end else error("Invalid escape")end else if c:byte()<32 then error("Invalid control character")end;out[#out+1]=c end end error("Unterminated string") end local function parseNumber() local start=pos if str:sub(pos,pos)=="-"then pos=pos+1 end local c=str:sub(pos,pos) if c=="0"then pos=pos+1;if str:sub(pos,pos):match("%d")then error("Leading zero")end else if not c:match("[1-9]")then error("Invalid number")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end if str:sub(pos,pos)=="."then pos=pos+1;if not str:sub(pos,pos):match("%d")then error("Invalid fraction")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end c=str:sub(pos,pos) if c=="e"or c=="E"then pos=pos+1;c=str:sub(pos,pos);if c=="+"or c=="-"then pos=pos+1 end;if not str:sub(pos,pos):match("%d")then error("Invalid exponent")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end local n=tonumber(str:sub(start,pos-1));if n==nil then error("Invalid number")end;return n end local function parseArray() pos=pos+1;skip();local arr={} if str:sub(pos,pos)=="]"then pos=pos+1;return arr end while true do arr[#arr+1]=parseValue();skip();local c=str:sub(pos,pos);if c=="]"then pos=pos+1;return arr elseif c~=","then error("Expected ',' or ']'")end;pos=pos+1;skip()end end local function parseObject() pos=pos+1;skip();local obj={} if str:sub(pos,pos)=="}"then pos=pos+1;return obj end while true do if str:sub(pos,pos)~='"'then error("Expected object key")end local key=parseString();skip() if str:sub(pos,pos)~=":"then error("Expected ':'")end pos=pos+1;skip();obj[key]=parseValue();skip() local c=str:sub(pos,pos);if c=="}"then pos=pos+1;return obj elseif c~=","then error("Expected ',' or '}'")end;pos=pos+1;skip() end end parseValue=function() skip();local c=str:sub(pos,pos) if c=='"'then return parseString()elseif c=="{"then return parseObject()elseif c=="["then return parseArray()elseif c=="-"or c:match("%d")then return parseNumber()end for _,v in ipairs({{"true",true},{"false",false},{"null",JSON_NULL}})do if str:sub(pos,pos+#v[1]-1)==v[1]then pos=pos+#v[1];return v[2]end end error("Unexpected token at position "..pos) end local ok,result=pcall(function()local v=parseValue();skip();if pos<=len then error("Trailing content")end;return v end) if ok then return result end return nil end local function safeReadJson(value) local content=getTextFromFile(value) if content==nil or content==""then return nil end return parseJson(content) end
+local JSON_NULL=setmetatable({},{__tostring=function()return"JSON_NULL"end}) local function parseJson(str) if type(str)~="string"then return nil end local pos,len=1,#str local function skip()while pos<=len and str:sub(pos,pos):match("%s")do pos=pos+1 end end local parseValue local function parseString() pos=pos+1 local out={} while pos<=len do local c=str:sub(pos,pos);pos=pos+1 if c=='"'then return table.concat(out) elseif c=="\\"then local e=str:sub(pos,pos);pos=pos+1 local escapes={['"']='"',["\\"]="\\",["/"]="/",b="\b",f="\f",n="\n",r="\r",t="\t"} if escapes[e]then out[#out+1]=escapes[e] elseif e=="u"then local h=str:sub(pos,pos+3);if not h:match("^%x%x%x%x$")then error("Invalid Unicode")end pos=pos+4 local cp=tonumber(h,16) if cp>=0xD800 and cp<=0xDBFF then if str:sub(pos,pos+1)~="\\u"then error("Invalid surrogate")end local l=str:sub(pos+2,pos+5);if not l:match("^%x%x%x%x$")then error("Invalid surrogate")end local lp=tonumber(l,16);if lp<0xDC00 or lp>0xDFFF then error("Invalid surrogate")end cp=0x10000+(cp-0xD800)*0x400+lp-0xDC00;pos=pos+6 elseif cp>=0xDC00 and cp<=0xDFFF then error("Unexpected low surrogate")end if cp<0x80 then out[#out+1]=string.char(cp) elseif cp<0x800 then out[#out+1]=string.char(0xC0+math.floor(cp/64),0x80+cp%64) elseif cp<0x10000 then out[#out+1]=string.char(0xE0+math.floor(cp/4096),0x80+math.floor(cp/64)%64,0x80+cp%64) else out[#out+1]=string.char(0xF0+math.floor(cp/262144),0x80+math.floor(cp/4096)%64,0x80+math.floor(cp/64)%64,0x80+cp%64)end else error("Invalid escape")end else if c:byte()<32 then error("Invalid control character")end;out[#out+1]=c end end error("Unterminated string") end local function parseNumber() local start=pos if str:sub(pos,pos)=="-"then pos=pos+1 end local c=str:sub(pos,pos) if c=="0"then pos=pos+1;if str:sub(pos,pos):match("%d")then error("Leading zero")end else if not c:match("[1-9]")then error("Invalid number")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end if str:sub(pos,pos)=="."then pos=pos+1;if not str:sub(pos,pos):match("%d")then error("Invalid fraction")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end c=str:sub(pos,pos) if c=="e"or c=="E"then pos=pos+1;c=str:sub(pos,pos);if c=="+"or c=="-"then pos=pos+1 end;if not str:sub(pos,pos):match("%d")then error("Invalid exponent")end;while str:sub(pos,pos):match("%d")do pos=pos+1 end end local n=tonumber(str:sub(start,pos-1));if n==nil then error("Invalid number")end;return n end local function parseArray() pos=pos+1;skip();local arr={} if str:sub(pos,pos)=="]"then pos=pos+1;return arr end while true do arr[#arr+1]=parseValue();skip();local c=str:sub(pos,pos);if c=="]"then pos=pos+1;return arr elseif c~=","then error("Expected ',' or ']'")end;pos=pos+1;skip()end end local function parseObject() pos=pos+1;skip();local obj={} if str:sub(pos,pos)=="}"then pos=pos+1;return obj end while true do if str:sub(pos,pos)~='"'then error("Expected object key")end local key=parseString();skip() if str:sub(pos,pos)~=":"then error("Expected ':'")end pos=pos+1;skip();obj[key]=parseValue();skip() local c=str:sub(pos,pos);if c=="}"then pos=pos+1;return obj elseif c~=","then error("Expected ',' or '}'")end;pos=pos+1;skip() end end parseValue=function() skip();local c=str:sub(pos,pos) if c=='"'then return parseString()elseif c=="{"then return parseObject()elseif c=="["then return parseArray()elseif c=="-"or c:match("%d")then return parseNumber()end for _,v in ipairs({{"true",true},{"false",false},{"null",JSON_NULL}})do if str:sub(pos,pos+#v[1]-1)==v[1]then pos=pos+#v[1];return v[2]end end error("Unexpected token at position "..pos) end local ok,result=pcall(function()local v=parseValue();skip();if pos<=len then error("Trailing content")end;return v end) if ok then return result end return nil end
 --==================================================
 local function safeReadJson(value)
-    if UnsentToolbox_NFEVersion == "1.2.0" then
+    if type(readJson) == "function" then
         local success, result = pcall(readJson, value)
         if success then return result end
         return nil
@@ -29,7 +31,7 @@ local function safeReadJson(value)
     if content == nil or content == "" then return nil end
     return parseJson(content)
 end
-local languages = safeReadJson("data/language.json") or {HUD_ScoreText_Format = " Score: {1} | Misses: {2}{3} | Accuracy: {4}% | Rank: {5}"}--默认语言！！重要！！！
+local languages = safeReadJson("data/language.json") or {HUD_ScoreText_Format = " Score: {1} | Misses: {2}{3} | Accuracy: {4}% | Rank: {5}",HUD_ScoreText_Format_hadGT = " Score: {1} | Misses: {2}{3} | GhostTaps: {4} | Accuracy: {5}% | Rank: {6}"}--默认语言！！重要！！！
 local language = getModSetting("language")
 if language == nil then
 	local text =
@@ -69,382 +71,9 @@ local function getLang(isGlobal, key, ...)
 	return text
 end
 
--- ============================================================
--- DOWNSCROLL DETECTION
--- ============================================================
-
-local function isDownScrollEnabled()
-    local success, value = pcall(function()
-        return getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')
-    end)
-
-    if success and value ~= nil then
-        return value == true
-    end
-
-    success, value = pcall(function()
-        return getPropertyFromClass('ClientPrefs', 'data.downScroll')
-    end)
-
-    if success and value ~= nil then
-        return value == true
-    end
-
-    return false
+function onGhostTap()
+	ghostTapC = ghostTapC + 1
 end
-
-function onCreatePost()
-    if not bottomBGEnabled or showcase == true then return end
-    -- 根据游戏 Downscroll 设置选择背景
-    if isDownScrollEnabled() then
-        imageName = 'unsentBottomHUDBackground_down'
-    end
-    local screenWidth = getPropertyFromClass('flixel.FlxG', 'width')
-    local screenHeight = getPropertyFromClass('flixel.FlxG', 'height')
-
-    local x = math.floor((screenWidth - boxWidth) / 2)
-	local y
-
-	if isDownScrollEnabled() then
-		y = 0 - bottomOffset
-	else
-		y = screenHeight - boxHeight - bottomOffset
-	end
-
-    makeLuaSprite(boxTag, imageName, x, y)
-    setGraphicSize(boxTag, boxWidth, boxHeight)
-    updateHitbox(boxTag)
-
-    setObjectCamera(boxTag, 'hud')
-    setProperty(boxTag .. '.alpha', bottomBGAlpha)
-
-    addLuaSprite(boxTag, false)
-    setObjectOrder(boxTag, 0)
-
-
-	if isDownScrollEnabled() then
-		local value = 30
-		setProperty('healthBar.y', getProperty('healthBar.y') - value)
-		setProperty('healthBarBG.y', getProperty('healthBarBG.y') - value)
-		if not getModSetting("originalHealthBar") == true then
-			setProperty('scoreTxt.y', getProperty('scoreTxt.y') - value - 3)
-		end
-		setProperty('iconP1.y', getProperty('iconP1.y') - (value / 1.8))
-		setProperty('iconP2.y', getProperty('iconP2.y') - (value / 1.8))
-	else
-		setProperty('iconP1.y', getProperty('iconP1.y') + 8)
-		setProperty('iconP2.y', getProperty('iconP2.y') + 8)
-	end
-end
-
--- ============================================================
--- CONFIG
--- ============================================================
-local enableCustomRating = getModSetting('betterRank')
-local language = getModSetting('language')
-if enableCustomRating == nil then enableCustomRating = true end
-if language == nil then language = "english" end
-
--- ============================================================
--- Unsent Custom Final Rating | NFE 1.2.2
--- ============================================================
-local customRating = 'N/A'
-local customRatingFontSizeSet = false
-local customRatingOriginalFontSize = nil
-
--- ============================================================
--- CUSTOM RATING
--- ============================================================
-local function getCustomRating(isScoreCol)
-    local ratingPercent = tonumber(getProperty('ratingPercent'))
-    if ratingPercent == nil then return 'N/A' end
-    local percent = math.floor(ratingPercent * 10000) / 100
-
-    local ranks = {
-        {99.5, 'P', 'FF69B4'},
-        {98, 'E', 'FEDC21'},
-        {96, 'SSS', 'FFA500'},
-        {94, 'SS', 'FFFF00'},
-        {92, 'S+', '87CEBB'},
-        {90, 'S', '87CEBB'},
-        {85, 'A+', '6666FF', true},
-        {80, 'A', '0000FF', true},
-        {75, 'Great', 'C0C0C0'},
-        {70, 'Good', 'C77C3C'},
-        {60, 'B', '00008B'},
-        {50, 'C', 'D2691E'},
-        {40, 'D', '808080'},
-        {30, 'F', 'D3D3D3'},
-        {20, 'F-', 'D3D3D3'},
-        {10, 'You SUCK!', '404040'}
-    }
-
-    for _, rank in ipairs(ranks) do
-        local matched = rank[4] and percent > rank[1] or percent >= rank[1]
-        if matched then
-            return isScoreCol and rank[3] or rank[2]
-        end
-    end
-
-    if percent > 0 then
-        return isScoreCol and 'FFFFFF' or 'You Not Playing!'
-    end
-
-    return 'N/A'
-end
-
--- ============================================================
--- FC LABEL
--- ============================================================
-local function shouldKeepFC(fc)
-    if fc == 'AP' or fc == 'FC' then return fc end
-    if fc == 'SFC' or fc == 'GFC' or fc == 'BFC' then return 'FC' end
-    return nil
-end
-
--- ============================================================
--- COLOR CONFIG
--- ============================================================
-local scoreColors = {
-    White='FFFFFF', Black='000000',
-    Red='FF0000', DarkRed='8B0000',
-    Green='00FF00', DarkGreen='006400',
-    Blue='0000FF', DarkBlue='00008B',
-    SkyBlue='87CEEB', DodgerBlue='1E90FF',
-    Cyan='00FFFF', Teal='008080',
-    Yellow='FFFF00', Gold='FFD700',
-    Orange='FFA500', Coral='FF7F50',
-    Purple='800080', Violet='EE82EE',
-    Pink='FF69B4', HotPink='FF1493',
-    Magenta='FF00FF',
-    Brown='A52A2A', Chocolate='D2691E',
-    Gray='808080', DarkGray='404040',
-    LightGray='D3D3D3', Silver='C0C0C0'
-}
-
-local scoreColorList = {
-    'FFFFFF','000000','FF0000','8B0000',
-    '00FF00','006400','0000FF','00008B',
-    '87CEEB','1E90FF','00FFFF','008080',
-    'FFFF00','FFD700','FFA500','FF7F50',
-    '800080','EE82EE','FF69B4','FF1493',
-    'FF00FF','A52A2A','D2691E','808080',
-    '404040','D3D3D3','C0C0C0'
-}
-
-local rainbowTime = 0
-
--- ============================================================
--- COLOR HELPERS
--- ============================================================
-local function hexToRGB(hex)
-    return tonumber(hex:sub(1,2),16),
-        tonumber(hex:sub(3,4),16),
-        tonumber(hex:sub(5,6),16)
-end
-
-local function rgbToHex(r,g,b)
-    return string.format('%02X%02X%02X',
-        math.floor(math.max(0,math.min(255,r))),
-        math.floor(math.max(0,math.min(255,g))),
-        math.floor(math.max(0,math.min(255,b))))
-end
-
-local function clampColor(value)
-    value = tonumber(value) or 255
-    return math.floor(math.max(0,math.min(255,value)))
-end
-
-local function isValidHexColor(color)
-    return type(color) == 'string'
-        and color:match('^%x%x%x%x%x%x$') ~= nil
-end
-
--- ============================================================
--- SMOOTH RANK COLOR
--- ============================================================
-local rankCurrentColor = nil
-local rankTransitionSpeed = 5
-
-local function smoothRankColor(target, elapsed)
-    if not isValidHexColor(target) then
-        return rankCurrentColor or 'FFFFFF'
-    end
-
-    if not isValidHexColor(rankCurrentColor) then
-        rankCurrentColor = target
-        return target
-    end
-
-    local cr,cg,cb = hexToRGB(rankCurrentColor)
-    local tr,tg,tb = hexToRGB(target)
-
-    -- 帧率无关的指数平滑
-    local dt = math.max(0, tonumber(elapsed) or 0)
-    local factor = 1 - math.exp(-rankTransitionSpeed * dt)
-
-    local r = cr + (tr-cr)*factor
-    local g = cg + (tg-cg)*factor
-    local b = cb + (tb-cb)*factor
-
-    rankCurrentColor = rgbToHex(r,g,b)
-
-    -- 接近目标时直接完成
-    local nr,ng,nb = hexToRGB(rankCurrentColor)
-    if math.abs(nr-tr) <= 1 and math.abs(ng-tg) <= 1 and math.abs(nb-tb) <= 1 then
-        rankCurrentColor = target
-    end
-
-    return rankCurrentColor
-end
-
--- ============================================================
--- RAINBOW
--- ============================================================
-local function getRainbowColor(elapsed)
-    local speed = tonumber(getModSetting('rainbowSpeed')) or 1
-    rainbowTime = rainbowTime + (tonumber(elapsed) or 0) * speed
-
-    local count = #scoreColorList
-    local pos = rainbowTime % count
-    local index = math.floor(pos) + 1
-    local nextIndex = index % count + 1
-    local t = pos - math.floor(pos)
-
-    local r1,g1,b1 = hexToRGB(scoreColorList[index])
-    local r2,g2,b2 = hexToRGB(scoreColorList[nextIndex])
-
-    return rgbToHex(
-        r1+(r2-r1)*t,
-        g1+(g2-g1)*t,
-        b1+(b2-b1)*t
-    )
-end
-
--- ============================================================
--- GET SCORE TEXT COLOR
--- ============================================================
-local function getScoreTextColor(elapsed)
-    local color = getModSetting('scoreTextColor')
-
-    if color == 'Rainbow' then
-        return getRainbowColor(elapsed or 0)
-
-    elseif color == 'Follow Rank' then
-        return getCustomRating(true)
-
-    elseif color == 'Follow Player' or color == 'Follow Op.' then
-        local prefix = color == 'Follow Player' and 'boyfriend' or 'dad'
-        local r = tonumber(getProperty(prefix .. '.healthColorArray[0]'))
-        local g = tonumber(getProperty(prefix .. '.healthColorArray[1]'))
-        local b = tonumber(getProperty(prefix .. '.healthColorArray[2]'))
-
-        if r and g and b then
-            return rgbToHex(r,g,b)
-        end
-
-    elseif color == 'Custom' then
-        return string.format('%02X%02X%02X',
-            clampColor(getModSetting('textColorR')),
-            clampColor(getModSetting('textColorG')),
-            clampColor(getModSetting('textColorB')))
-
-    elseif scoreColors[color] then
-        return scoreColors[color]
-    end
-
-    return nil
-end
-
--- ============================================================
--- APPLY COLOR
--- ============================================================
--- 仅在 Follow Rank 模式下，BotPlay 开启后才永久锁定白色
-local botPlayWasEnabled = false
-
-local function isBotPlayActive()
-    return getProperty('cpuControlled') == true
-end
-
-local function scoreTextColorCreate()
-    local mode = getModSetting('scoreTextColor')
-    if mode == 'Follow Rank' and isBotPlayActive() then
-        botPlayWasEnabled = true
-    end
-
-    if mode == 'Follow Rank' and botPlayWasEnabled then
-        rankCurrentColor = nil
-        setTextColor('scoreTxt', 'FFFFFF')
-        return
-    end
-
-    local color = getScoreTextColor(0)
-
-    if mode == 'Follow Rank' and isValidHexColor(color) then
-        rankCurrentColor = color
-    end
-
-    if isValidHexColor(color) then
-        setTextColor('scoreTxt',color)
-    end
-end
-
-local function scoreTextColorUpdate(elapsed)
-    local mode = getModSetting('scoreTextColor')
-
-    -- 仅 Follow Rank 模式记录 BotPlay；其他颜色模式完全沿用原有逻辑
-    if mode == 'Follow Rank' and isBotPlayActive() then
-        botPlayWasEnabled = true
-    end
-
-    -- 只在 Follow Rank 模式下锁白色，避免影响其他颜色选项
-    if mode == 'Follow Rank' and botPlayWasEnabled then
-        rankCurrentColor = nil
-        setTextColor('scoreTxt', 'FFFFFF')
-        return
-    end
-
-    local color = getScoreTextColor(elapsed)
-
-    if mode == 'Follow Rank' then
-        color = smoothRankColor(color,elapsed)
-    else
-        -- 切换其他模式时重置渐变起点
-        rankCurrentColor = nil
-    end
-
-    if isValidHexColor(color) then
-        setTextColor('scoreTxt',color)
-    end
-end
-
--- ============================================================
--- UPDATE
--- ============================================================
-function onCreate()
-    scoreTextColorCreate()
-end
-
-function onUpdatePost(elapsed)
-    updateCustomRating()
-    scoreTextColorUpdate(elapsed)
-end-- ============================================================
--- Unsent - HUD Background
--- ============================================================
-
-local bottomBGEnabled = getModSetting('unsentBottomHUDBackground')
-local showcase = getModSetting('showCaseMode')
-local bottomBGAlpha = tonumber(getModSetting('unsentBottomHUDBackgroundAlpha'))
-
-if bottomBGEnabled == nil then bottomBGEnabled = true end
-if bottomBGAlpha == nil then bottomBGAlpha = 0.65 end
-
-bottomBGAlpha = math.max(0, math.min(1, bottomBGAlpha))
-
-local boxWidth, boxHeight, bottomOffset = 800, 120, 0
-local boxTag = 'unsentBottomHUDBackground'
-local imageName = 'unsentBottomHUDBackground'
-
 -- ============================================================
 -- DOWNSCROLL DETECTION
 -- ============================================================
@@ -593,7 +222,7 @@ local function updateCustomRating()
 			setTextBorder('scoreTxt', 1.2, '000000')
 			setProperty('scoreTxt.letterSpacing', -1)
 		else
-			setTextFont('scoreTxt', 'unsentScoreText.ttf')
+			setTextFont('scoreTxt', 'unsentScoreText-CN.ttf')
 		end
         if not customRatingFontSizeSet then
             --customRatingOriginalFontSize = tonumber(getProperty('scoreTxt.size')) or 16
@@ -639,14 +268,16 @@ local function updateCustomRating()
     customRating = getCustomRating()
 
     local newText
-    if language == 'Chinese' then
-        newText = before..getLang(false,"HUD_ScoreText_Format",score,misses,missText,accuracyText,customRating)
-        if fc then newText = newText .. ' (' .. fc .. ')' end
-    else
-        -- NFE 英文 HUD：保留原始 NPS，使用引擎实时统计重建其余字段
-        newText = before..getLang(false,"HUD_ScoreText_Format",score,misses,missText,accuracyText,customRating)
-        if fc then newText = newText .. ' (' .. fc .. ')' end
-    end
+	if (getModSetting("ghostTapping") or "Engine") ~= "Engine" then
+		newText = before..getLang(false,"HUD_ScoreText_Format_hadGT",score,misses,missText,ghostTapC,accuracyText,customRating)
+		if fc then newText = newText .. ' (' .. fc .. ')' end
+	elseif ghostTapping == false then
+		newText = before..getLang(false,"HUD_ScoreText_Format_hadGT",score,math.max(0,misses-ghostTapC),missText,ghostTapC,accuracyText,customRating)
+		if fc then newText = newText .. ' (' .. fc .. ')' end
+	else
+		newText = before..getLang(false,"HUD_ScoreText_Format",score,misses,missText,accuracyText,customRating)
+		if fc then newText = newText .. ' (' .. fc .. ')' end
+	end
 
     --if newText ~= text then setProperty('scoreTxt.text', newText) end
 	setProperty('scoreTxt.text', newText)
