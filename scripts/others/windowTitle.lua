@@ -151,7 +151,7 @@ local function setTitle(code, value)
             suffix = suffix .. " - " .. tostring(songName or "")
                 .. "―" .. Difficulty
                 .. " - " .. getLang(false, "Window_Title_Gameover")
-                .. tostring(deaths or "Unknown") .. "Deaths"
+                .. " - " .. tostring(deaths or "Unknown") .. " Deaths"
 
         elseif code == 4 then
             suffix = suffix .. " - " .. tostring(songName or "")

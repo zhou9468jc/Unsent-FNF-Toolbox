@@ -30,7 +30,7 @@ local function punish(direction)
         playSound('missnote' .. getRandomInt(1, 3), 1)
     end
 
-    callOnLuas('onGhostTap', {direction})
+    callOnScripts('onGhostTap', {direction})
 
     if getProperty('boyfriend.hasMissAnimations') then
         characterPlayAnim('boyfriend', missAnimations[direction + 1], true)
