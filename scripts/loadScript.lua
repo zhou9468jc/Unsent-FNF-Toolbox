@@ -65,7 +65,25 @@ local function getLang(isGlobal, key, ...)
 	return text
 end
 
-local function loadAuxiliaryScripts()
+local scriptPath = debug.getinfo(1, 'S').source:sub(2):gsub('\\', '/')
+local modDirectory = scriptPath:match('^(.*)/')
+
+-- 回退到模组根目录
+modDirectory = modDirectory:match('^(.*)/[^/]+$') or modDirectory
+
+local gitFiles = directoryFileList(modDirectory .. '/.git')
+local hasGit = gitFiles ~= nil and #gitFiles > 0
+if hasGit and not (getTextFromFile(".NoBuild_UTB_Developer_dont_warnning_me_source_code") ~= nil) then
+	runHaxeCode([[
+		FlxG.stage.window.alert(
+			"]]..getLang(false,"Use_Git_Code")..[[",
+			"]]..getLang(false,"Use_Git_Code_Title")..[["
+		);
+	]])
+	debugPrint("[Unsent's Toolbox] "..getLang(false,"Use_Git_Code"):gsub('[\r\n]', ' '),"yellow")
+end
+
+local function loadScripts()
     local info = debug.getinfo(1, 'S')
     local scriptPath = info and info.source or nil
     if type(scriptPath) ~= 'string' or scriptPath == '' then
@@ -107,7 +125,7 @@ local function loadAuxiliaryScripts()
     return true
 end
 
-if not loadAuxiliaryScripts() then
+if not loadScripts() then
 	runHaxeCode([[
 		FlxG.stage.window.alert(
 			"]]..getLang(false,"Auxiliary_File_Not_Found")..[[",
