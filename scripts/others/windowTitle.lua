@@ -140,7 +140,7 @@ local function setTitle(code, value)
 				
 		elseif botPlay == true then
             suffix = suffix .. " - " .. tostring(songName or "")
-                .. "―" .. Difficulty .. " -  Botplay"
+                .. "―" .. Difficulty .. " - Botplay"
 				
         elseif code == 1 then
             suffix = suffix .. " - " .. tostring(songName or "")

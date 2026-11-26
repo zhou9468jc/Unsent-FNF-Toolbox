@@ -488,7 +488,7 @@ function onCreate()
     end
 
     if enable then
-        if runMode == 'VSlice mode' then
+        if runMode == 'VSlice Mode' then
             addLuaScript('extraScript/lerp-VSlice.lua')
         elseif runMode == 'UTB Old Mode' then
             addLuaScript('extraScript/lerp-old.lua')
