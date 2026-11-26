@@ -137,7 +137,11 @@ local function setTitle(code, value)
 		if getModSetting("showCaseMode") == true then
             suffix = suffix .. " - " .. tostring(songName or "")
                 .. "―" .. Difficulty .. " - Showcase"
-		
+				
+		elseif botPlay == true then
+            suffix = suffix .. " - " .. tostring(songName or "")
+                .. "―" .. Difficulty .. " -  Botplay"
+				
         elseif code == 1 then
             suffix = suffix .. " - " .. tostring(songName or "")
                 .. "―" .. Difficulty .. " - " .. Combo .. " Combo"
