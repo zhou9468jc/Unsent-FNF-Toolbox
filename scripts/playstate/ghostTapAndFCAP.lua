@@ -21,6 +21,7 @@ local enableGhostTapPunishment = false
 local ghosttapping = getModSetting("ghostTapping") or "Engine"
 if ghosttapping == "V-Slice Mobile" then
 	addLuaScript("extraScript/vsliceGhostTapping.lua")
+	close()
 elseif ghosttapping == "UTB Punishment" then
 	enableGhostTapPunishment = true
 end
@@ -491,7 +492,7 @@ function punishGhostTap(direction)
 	end
 
 	-- 触发 Miss 回调
-	callOnLuas('noteMiss',{0,direction,'',false})
+	callOnScripts('noteMiss',{0,direction,'',false})
 
 	-- 播放 Miss 动画
 	local animation =
