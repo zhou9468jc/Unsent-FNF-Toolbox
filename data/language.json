@@ -36,6 +36,8 @@
 		"Welcome_Update_Button": "前往更新",
 		"Welcome_Ignore_Button": "忽略",
 		"Welcome_NoCheckVer": "不再询问",
+		"ModSetting_Loading": "正在加载设置...",
+		"ModSetting_GlobalMenuHint": "按下 Shift + F6 可在任意界面打开工具箱设置菜单",
 
 		"ModSetting_ReadError": "模组设置\"{1}\"读取错误(值为空)，将使用默认值:\"{2}\"",
 		
@@ -142,6 +144,8 @@
 		"Welcome_Update_Button": "Update",
 		"Welcome_Ignore_Button": "Ignore",
 		"Welcome_NoCheckVer": "Don't Ask Again",
+		"ModSetting_Loading": "Loading settings...",
+		"ModSetting_GlobalMenuHint": "Press SHIFT + F6 to open Toolbox's settings from any screen.",
 		
 		"ModSetting_ReadError": "Failed to read mod setting \"{1}\" (value is nil). Using default value: \"{2}\"",
 

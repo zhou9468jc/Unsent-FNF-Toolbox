@@ -854,6 +854,20 @@
 		"value": false
 	},
 	{
+		"save": "mouseXY",
+		"name": "Mouse Position",
+		"type": "bool",
+		"description": "If enabled, the current mouse coordinates will be displayed next to the cursor.\n开启后，会在鼠标指针旁边显示当前鼠标坐标。",
+		"value": false
+	},
+	{
+		"save": "mouseDisplayFix",
+		"name": "Mouse Cursor Fix",
+		"type": "bool",
+		"description": "If enabled, the mouse cursor will be kept above other game elements.\n开启后，会修复鼠标指针被其他游戏元素遮挡的问题。",
+		"value": false
+	},
+	{
 		"save": "muse",
 		"name": "MuseDash",
 		"type": "bool",
