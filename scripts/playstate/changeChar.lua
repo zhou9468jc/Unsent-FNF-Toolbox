@@ -16,6 +16,7 @@ local Dgf = ''
 
 local canDis = true
 local pendingSync = {}
+count = 0
 
 local function contains(str, keyword)
     return str and str:lower():find(keyword, 1, true) ~= nil
@@ -55,13 +56,13 @@ end
 
 function onCreatePost()
     -- 按 9 恢复原角色
-    if canDis and keyPressed('NINE') then
+    if (canDis or count ~= 10) and keyPressed('NINE') then
         enableSystem = false
 
         changeCharacter('bf', Dboyfriend)
         changeCharacter('dad', Ddad)
         changeCharacter('gf', Dgf)
-
+		count = 10
         return
     end
     Dboyfriend = getProperty('boyfriend.curCharacter') or ''
@@ -71,13 +72,13 @@ end
 
 function onUpdate()
     -- 按 9 恢复原角色
-    if canDis and keyPressed('NINE') then
+    if (canDis or count ~= 10) and keyPressed('NINE') then
         enableSystem = false
 
         changeCharacter('bf', Dboyfriend)
         changeCharacter('dad', Ddad)
         changeCharacter('gf', Dgf)
-
+		count = 10
         return
     end
 
@@ -160,14 +161,26 @@ end
 
 function onSongStart()
     -- 按 9 恢复原角色
-    if canDis and keyPressed('NINE') then
+    if (canDis or count ~= 10) and keyPressed('NINE') then
         enableSystem = false
 
         changeCharacter('bf', Dboyfriend)
         changeCharacter('dad', Ddad)
         changeCharacter('gf', Dgf)
-
+		count = 10
         return
     end
     canDis = false
+end
+
+function onCountdownTick(c)
+	count = count + c
+end
+
+function onEvent(n,v,b)
+	if n == "Change Character" and contains(v,"unsent") and contains(b,"unsent") then
+		Dboyfriend = getProperty('boyfriend.curCharacter') or ''
+		Ddad = getProperty('dad.curCharacter') or ''
+		Dgf = getProperty('gf.curCharacter') or ''
+	end
 end
