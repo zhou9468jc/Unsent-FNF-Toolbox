@@ -21,7 +21,6 @@ local enableGhostTapPunishment = false
 local ghosttapping = getModSetting("ghostTapping") or "Engine"
 if ghosttapping == "V-Slice Mobile" then
 	addLuaScript("extraScript/vsliceGhostTapping.lua")
-	close()
 elseif ghosttapping == "UTB Punishment" then
 	enableGhostTapPunishment = true
 end
