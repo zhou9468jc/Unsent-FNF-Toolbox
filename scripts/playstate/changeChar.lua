@@ -178,7 +178,7 @@ function onCountdownTick(c)
 end
 
 function onEvent(n,v,b)
-	if n == "Change Character" and contains(v,"unsent") and contains(b,"unsent") then
+	if n == "Change Character" and not contains(b,"unsent") then
 		Dboyfriend = getProperty('boyfriend.curCharacter') or ''
 		Ddad = getProperty('dad.curCharacter') or ''
 		Dgf = getProperty('gf.curCharacter') or ''
